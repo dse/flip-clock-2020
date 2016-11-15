@@ -168,39 +168,6 @@ var FlipClock = (function() {
             }.bind(this), 50);
         }.bind(this), 50);
     };
-    
-    Flipper.prototype.animate2 = function(currentText, newText, nextState) {
-        var flip = E("span", "flip");
-        var flip1 = E("span", "flip1");
-        var flip2 = E("span", "flip2");
-        var flip1Text = T("");
-        var flip2Text = T("");
-        this.inner.appendChild(flip);
-        flip.appendChild(flip1);
-        flip.appendChild(flip2);
-        flip1.appendChild(flip1Text);
-        flip2.appendChild(flip2Text);
-        flip1Text.data = currentText;
-        flip2Text.data = newText;
-        flip.style.display = "inline-block";
-        this.topText.data = newText;
-        this.audio.play();
-        setTimeout(function() {
-            setTimeout(function() {
-                this.bottomText.data = newText;
-                flip.style.display = "none";
-                flip.className = "flip";
-                this.state = nextState;
-                flip1.removeChild(flip1Text);
-                flip2.removeChild(flip2Text);
-                flip.removeChild(flip1);
-                flip.removeChild(flip2);
-                this.inner.removeChild(flip);
-                this.setNextState();
-            }.bind(this), 125);
-            flip.className = "flip flipped";
-        }.bind(this), 10);
-    };
 
     return FlipClock;
 }());
