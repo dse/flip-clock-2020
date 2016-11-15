@@ -61,7 +61,6 @@ body {
                     color: darken($flipper-foreground, $flipper-darken-bottom);
                     clip: rect($line-height / 2, auto, auto, auto);
                 }
-
                 .flip11 {
                     border-radius: $border-radius;
                     position: absolute;
@@ -87,49 +86,6 @@ body {
                     display: none;
                     -webkit-transform: scaleY(0.75);
                     transform: scaleY(0.75);
-                }
-                
-                .flip {
-                    display: none;
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    .flip1 {
-                        border-radius: $border-radius;
-                        position: absolute;
-                        top: 0; left: 0;
-                        width: 100%; height: 100%;
-                        display: inline-block;
-                        text-align: center;
-                        background: darken($flipper-background, $flipper-darken-top);
-                        color: darken($flipper-foreground, $flipper-darken-top);
-                        -webkit-backface-visibility: hidden;
-                        backface-visibility: hidden;
-                        clip: rect(auto, auto, $line-height / 2, auto);
-                    }
-                    .flip2 {
-                        border-radius: $border-radius;
-                        position: absolute;
-                        top: 0; left: 0;
-                        width: 100%; height: 100%;
-                        display: inline-block;
-                        text-align: center;
-                        background: darken($flipper-background, $flipper-darken-bottom);
-                        color: darken($flipper-foreground, $flipper-darken-bottom);
-                        -webkit-backface-visibility: hidden;
-                        backface-visibility: hidden;
-                        -webkit-transform: rotateX(180deg);
-                        transform: rotateX(180deg);
-                        clip: rect($line-height / 2, auto, auto, auto);
-                    }
-                    -webkit-transform-style: preserve-3d;
-                    transform-style: preserve-3d;
-                    -webkit-transition: all $flipper-transition-time;
-                    transition: all $flipper-transition-time;
-                    &.flipped {
-                        -webkit-transform: rotateX(180deg);
-                        transform: rotateX(180deg);
-                    }
                 }
             }
         }
