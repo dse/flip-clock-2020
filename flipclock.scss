@@ -1,0 +1,138 @@
+$line-height: 1.25em;
+$border-radius: 0.125em;
+$padding: 0.125em;
+$gutter: 0.125em;
+$background: #333333;
+$flipper-background: #333333;
+$flipper-foreground: #ffffff;
+$flipper-darken-top: 10%;
+$flipper-darken-bottom: 5%;
+$flipper-transition-time: 100ms;
+
+#flipClock {
+    font-size: 15vw;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+body {
+    background: $background;
+    .flipClock {
+        .flipper + .flipper {
+            margin-left: $gutter;
+        }
+        .flipper {
+            background: black;
+            border-radius: $border-radius + $padding;
+            padding: $padding;
+            display: inline-block;
+            .inner {
+                line-height: $line-height;
+                display: inline-block;
+                position: relative;
+                &:before {
+                    content: "XX";
+                }
+                .top {
+                    border-radius: $border-radius;
+                    position: absolute;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    display: inline-block;
+                    text-align: center;
+                    background: darken($flipper-background, $flipper-darken-top);
+                    color: darken($flipper-foreground, $flipper-darken-top);
+                    clip: rect(auto, auto, $line-height / 2, auto);
+                }
+                .bottom {
+                    border-radius: $border-radius;
+                    position: absolute;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    display: inline-block;
+                    text-align: center;
+                    background: darken($flipper-background, $flipper-darken-bottom);
+                    color: darken($flipper-foreground, $flipper-darken-bottom);
+                    clip: rect($line-height / 2, auto, auto, auto);
+                }
+
+                .flip11 {
+                    border-radius: $border-radius;
+                    position: absolute;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    text-align: center;
+                    background: darken($flipper-background, $flipper-darken-top);
+                    color: darken($flipper-foreground, $flipper-darken-top);
+                    clip: rect(auto, auto, $line-height / 2, auto);
+                    display: none;
+                    -webkit-transform: scaleY(0.75);
+                    transform: scaleY(0.75);
+                }
+                .flip22 {
+                    border-radius: $border-radius;
+                    position: absolute;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    text-align: center;
+                    background: darken($flipper-background, $flipper-darken-bottom);
+                    color: darken($flipper-foreground, $flipper-darken-bottom);
+                    clip: rect($line-height / 2, auto, auto, auto);
+                    display: none;
+                    -webkit-transform: scaleY(0.75);
+                    transform: scaleY(0.75);
+                }
+                
+                .flip {
+                    display: none;
+                    position: absolute;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    .flip1 {
+                        border-radius: $border-radius;
+                        position: absolute;
+                        top: 0; left: 0;
+                        width: 100%; height: 100%;
+                        display: inline-block;
+                        text-align: center;
+                        background: darken($flipper-background, $flipper-darken-top);
+                        color: darken($flipper-foreground, $flipper-darken-top);
+                        -webkit-backface-visibility: hidden;
+                        backface-visibility: hidden;
+                        clip: rect(auto, auto, $line-height / 2, auto);
+                    }
+                    .flip2 {
+                        border-radius: $border-radius;
+                        position: absolute;
+                        top: 0; left: 0;
+                        width: 100%; height: 100%;
+                        display: inline-block;
+                        text-align: center;
+                        background: darken($flipper-background, $flipper-darken-bottom);
+                        color: darken($flipper-foreground, $flipper-darken-bottom);
+                        -webkit-backface-visibility: hidden;
+                        backface-visibility: hidden;
+                        -webkit-transform: rotateX(180deg);
+                        transform: rotateX(180deg);
+                        clip: rect($line-height / 2, auto, auto, auto);
+                    }
+                    -webkit-transform-style: preserve-3d;
+                    transform-style: preserve-3d;
+                    -webkit-transition: all $flipper-transition-time;
+                    transition: all $flipper-transition-time;
+                    &.flipped {
+                        -webkit-transform: rotateX(180deg);
+                        transform: rotateX(180deg);
+                    }
+                }
+            }
+        }
+    }
+}
+
