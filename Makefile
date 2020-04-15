@@ -1,3 +1,3 @@
-flipclock.css: flipclock.scss
-	sass $< $@
+# flipclock.css: flipclock.scss
+# 	sass $< $@
 
