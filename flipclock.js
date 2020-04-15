@@ -148,24 +148,26 @@ var FlipClock = (function () {
         this.element = e;
     }
 
+    FlipClock.segmentDelay = 50;
+
     FlipClock.prototype.setTime = function (date) {
         if (this.segments.year) {
-            this.segments.year.setDesiredValue(date.getFullYear());
+            this.segments.year.setDesiredValue(date.getFullYear(), 3 * FlipClock.segmentDelay);
         }
         if (this.segments.month) {
-            this.segments.month.setDesiredValue(date.getMonth());
+            this.segments.month.setDesiredValue(date.getMonth(), 2 * FlipClock.segmentDelay);
         }
         if (this.segments.date) {
-            this.segments.date.setDesiredValue(date.getDate());
+            this.segments.date.setDesiredValue(date.getDate(), FlipClock.segmentDelay);
         }
         if (this.segments.day) {
             this.segments.day.setDesiredValue(date.getDay());
         }
         if (this.segments.hour) {
-            this.segments.hour.setDesiredValue(date.getHours());
+            this.segments.hour.setDesiredValue(date.getHours(), 2 * FlipClock.segmentDelay);
         }
         if (this.segments.minute) {
-            this.segments.minute.setDesiredValue(date.getMinutes());
+            this.segments.minute.setDesiredValue(date.getMinutes(), FlipClock.segmentDelay);
         }
         if (this.segments.second) {
             this.segments.second.setDesiredValue(date.getSeconds());
@@ -250,14 +252,20 @@ var FlipClock = (function () {
         this.audio.src = 'tick8.wav';
     }
 
-    Segment.prototype.setDesiredValue = function (value) {
+    Segment.prototype.setDesiredValue = function (value, delay) {
         if ('startAt' in this) {
-            return this.setDesiredState(value - this.startAt);
+            return this.setDesiredState(value - this.startAt, delay);
         }
-        return this.setDesiredState(value);
+        return this.setDesiredState(value, delay);
     };
 
-    Segment.prototype.setDesiredState = function (stateIndex) {
+    Segment.prototype.setDesiredState = function (stateIndex, delay) {
+        if (delay) {
+            setTimeout(function () {
+                this.setDesiredState(stateIndex);
+            }.bind(this), delay);
+            return;
+        }
         this.desiredState = stateIndex;
         if (!this.moving) {
             this.moving = true;
@@ -338,4 +346,3 @@ var FlipClock = (function () {
 
     return FlipClock;
 }());
-
