@@ -1,8 +1,24 @@
+var now = new Date();
+var testRollover;
+
+// testRollover = 2000000000000;
+// testRollover = 1609477200000;
+var nowMS;
+var incrMS;
+
+if (testRollover) {
+    nowMS = now.getTime();
+    incrMS = testRollover - 20000 - nowMS;
+}
+
 var Ticker = (function () {
     function Ticker() {
     }
     Ticker.prototype.start = function () {
         var date = new Date();
+        if (testRollover) {
+            date.setTime(date.getTime() + incrMS);
+        }
         this.callback(date);
         this.timeout = setTimeout(function () {
             this.start();
@@ -202,7 +218,7 @@ var FlipClock = (function () {
         this.segments.epoch.forEach(function (segment) {
             segment.setDesiredValue(ms % 10, delay);
             ms = Math.floor(ms / 10);
-            delay += FlipClock.segmentDelay;
+            delay += FlipClock.segmentDelay / 4;
         });
     };
 
@@ -357,9 +373,7 @@ var FlipClock = (function () {
         flipBottomText.data = newText;
         flipTop.style.display = 'inline-block';
         this.topText.data = newText;
-        if (document.hasFocus()) {
-            this.audio.play();
-        }
+        this.audio.play();
         setTimeout(function () {
             flipTopInner.removeChild(flipTopText);
             this.inner.removeChild(flipTop);
