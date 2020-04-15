@@ -1,0 +1,17 @@
+{
+  "name": "c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "flipclock.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "foundation-sites": "^6.6.3",
+    "jquery": "^3.5.0",
+    "what-input": "^5.2.7"
+  }
+}

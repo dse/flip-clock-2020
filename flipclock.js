@@ -1,14 +1,14 @@
-var Ticker = (function() {
+var Ticker = (function () {
     function Ticker() {
     }
-    Ticker.prototype.start = function() {
+    Ticker.prototype.start = function () {
         var date = new Date();
         this.callback(date);
-        this.timeout = setTimeout(function() {
+        this.timeout = setTimeout(function () {
             this.start();
         }.bind(this), 1000 - date.getTime() % 1000);
     };
-    Ticker.prototype.stop = function() {
+    Ticker.prototype.stop = function () {
         if (this.timeout) {
             clearTimeout(this.timeout);
             this.timeout = null;
@@ -17,57 +17,159 @@ var Ticker = (function() {
     return Ticker;
 }());
 
-var FlipClock = (function() {
+var FlipClock = (function () {
 
-    var el = document.createElement("fakeelement");
+    var el = document.createElement('fakeelement');
     var transitionEvent;
     if (el.style.transition !== undefined) {
-        transitionEvent = "transitionend";
+        transitionEvent = 'transitionend';
     } else if (el.style.OTransition !== undefined) {
-        transitionEvent = "oTransitionEnd";
+        transitionEvent = 'oTransitionEnd';
     } else if (el.style.MozTransition !== undefined) {
-        transitionEvent = "transitionend";
+        transitionEvent = 'transitionend';
     } else if (el.style.WebkitTransition !== undefined) {
-        transitionEvent = "webkitTransitionEnd";
+        transitionEvent = 'webkitTransitionEnd';
     }
-    
-    function FlipClock(id) {
-        var e = document.getElementById(id);
-        if (!e) {
-            return;
+
+    function FlipClock(what) {
+        var e;
+        if (typeof what === 'string') {
+            e = document.getElementById(what);
+            if (!e) {
+                return;
+            }
         }
-        this.f1 = new Flipper({
-            digits: 2,
-            states: 24
-        });
-        this.f2 = new Flipper({
-            digits: 2,
-            states: 60
-        });
-        this.f3 = new Flipper({
-            digits: 2,
-            states: 60
-        });
-        e.appendChild(this.f1.flipper);
-        e.appendChild(this.f2.flipper);
-        e.appendChild(this.f3.flipper);
-        if (!e.className) {
-            e.className = "flipClock";
-        } else {
-            e.className += " flipClock";
+        if (what instanceof HTMLElement) {
+            e = what;
         }
+
+        this.elements = {};
+        this.segments = {};
+
+        this.elements.year   = e.querySelector('[data-flip-clock-year]');
+        this.elements.month  = e.querySelector('[data-flip-clock-month]');
+        this.elements.date   = e.querySelector('[data-flip-clock-date]');
+        this.elements.day    = e.querySelector('[data-flip-clock-day]');
+        this.elements.hour   = e.querySelector('[data-flip-clock-hour]');
+        this.elements.minute = e.querySelector('[data-flip-clock-minute]');
+        this.elements.second = e.querySelector('[data-flip-clock-second]');
+
+        if (this.elements.year) {
+            console.log('year');
+            this.segments.year = new Segment({
+                digitCount: 4,
+                startAt: 2000,
+                endAt: 2049,
+                element: this.elements.year,
+                flipClock: this
+            });
+        }
+        if (this.elements.month) {
+            this.segments.month = new Segment({
+                states: [
+                    'JAN',
+                    'FEB',
+                    'MAR',
+                    'APR',
+                    'MAY',
+                    'JUN',
+                    'JUL',
+                    'AUG',
+                    'SEP',
+                    'OCT',
+                    'NOV',
+                    'DEC'
+                ],
+                element: this.elements.month,
+                flipClock: this
+            });
+        }
+        if (this.elements.date) {
+            this.segments.date = new Segment({
+                startAt: 1,
+                endAt: 31,
+                element: this.elements.date,
+                flipClock: this
+            });
+        }
+        if (this.elements.day) {
+            this.segments.day = new Segment({
+                states: [
+                    'SUN',
+                    'MON',
+                    'TUE',
+                    'WED',
+                    'THU',
+                    'FRI',
+                    'SAT'
+                ],
+                element: this.elements.day,
+                flipClock: this
+            });
+        }
+        if (this.elements.hour) {
+            this.segments.hour = new Segment({
+                digitCount: 2,
+                stateCount: 24,
+                element: this.elements.hour,
+                flipClock: this
+            });
+        }
+        if (this.elements.minute) {
+            this.segments.minute = new Segment({
+                digitCount: 2,
+                stateCount: 60,
+                element: this.elements.minute,
+                flipClock: this
+            });
+        }
+        if (this.elements.second) {
+            this.segments.second = new Segment({
+                digitCount: 2,
+                stateCount: 60,
+                element: this.elements.second,
+                flipClock: this
+            });
+        }
+
+        ['year', 'month', 'date', 'day', 'hour', 'minute', 'second'].forEach(function (unit) {
+            var element = this.elements[unit];
+            var segment = this.segments[unit];
+            // parentNode tests are intended to test if in document's hierarchy
+            if (segment && !element.parentNode) {
+                e.appendChild(segment);
+            }
+        }.bind(this));
+
+        e.classList.add('flip-clock');
         this.ticker = new Ticker();
         this.ticker.callback = this.setTime.bind(this);
         this.ticker.start();
+        this.element = e;
     }
 
-    FlipClock.prototype.setTime = function(date) {
-        var h = date.getHours();
-        var m = date.getMinutes();
-        var s = date.getSeconds();
-        this.f1.setDesiredState(h);
-        this.f2.setDesiredState(m);
-        this.f3.setDesiredState(s);
+    FlipClock.prototype.setTime = function (date) {
+        if (this.segments.year) {
+            this.segments.year.setDesiredValue(date.getFullYear());
+        }
+        if (this.segments.month) {
+            this.segments.month.setDesiredValue(date.getMonth());
+        }
+        if (this.segments.date) {
+            this.segments.date.setDesiredValue(date.getDate());
+        }
+        if (this.segments.day) {
+            this.segments.day.setDesiredValue(date.getDay());
+        }
+        if (this.segments.hour) {
+            this.segments.hour.setDesiredValue(date.getHours());
+        }
+        if (this.segments.minute) {
+            this.segments.minute.setDesiredValue(date.getMinutes());
+        }
+        if (this.segments.second) {
+            this.segments.second.setDesiredValue(date.getSeconds());
+        }
     };
 
     function E(tagName, className) {
@@ -81,93 +183,159 @@ var FlipClock = (function() {
         return t;
     }
 
-    function Flipper(options) {
-        this.digits = options.digits;
-        this.states = options.states;
+    function Segment(options) {
+        this.digitCount = options.digitCount;
+        this.flipClock = options.flipClock;
 
-        this.state = -1;
+        if (options.states && options.states instanceof Array) {
+            this.states = options.states;
+            this.stateCount = options.states.length;
+        } else if (options.stateCount && typeof options.stateCount === 'number') {
+            this.stateCount = options.stateCount;
+            this.states = null;
+        } else if (typeof options.startAt === 'number' &&
+                   typeof options.endAt === 'number') {
+            this.stateCount = options.endAt - options.startAt + 1;
+            this.startAt = options.startAt;
+            this.endAt = options.endAt;
+        }
+
+        this.stateIndex = -1;
         this.desiredState = -1;
-        
-        var flipper = E("span", "flipper");
-        var inner = E("span", "inner");
-        var top = E("span", "top");
-        var bottom = E("span", "bottom");
 
-        var topText = T("");
-        var bottomText = T("");
+        var parent;
+        var segment;
+        if (options.dataAttribute) {
+            parent = this.flipClock ? (this.flipClock.element || document) : document;
+            segment = parent.querySelector('[' + options.dataAttribute + ']');
+        } else if (options.element) {
+            parent = this.flipClock ? (this.flipClock.element || document) : document;
+            segment = options.element;
+        }
 
-        flipper.appendChild(inner);
+        if (segment) {
+            segment.classList.add('segment');
+        } else {
+            segment = E('span', 'segment');
+        }
+
+        var inner       = E('span', 'segment-inner');
+        var top         = E('span', 'segment-top');
+        var bottom      = E('span', 'segment-bottom');
+        var topInner    = E('span', 'segment-top-inner');
+        var bottomInner = E('span', 'segment-bottom-inner');
+
+        var topText    = T('');
+        var bottomText = T('');
+
+        segment.appendChild(inner);
         inner.appendChild(top);
         inner.appendChild(bottom);
-        top.appendChild(topText);
-        bottom.appendChild(bottomText);
+        top.appendChild(topInner);
+        bottom.appendChild(bottomInner);
+        topInner.appendChild(topText);
+        bottomInner.appendChild(bottomText);
 
-        this.flipper = flipper;
+        this.segment = segment;
         this.inner = inner;
         this.top = top;
         this.bottom = bottom;
+        this.topInner = topInner;
+        this.bottomInner = bottomInner;
 
         this.topText = topText;
         this.bottomText = bottomText;
 
-        this.audio = document.createElement("audio");
-        this.audio.src = "tick8.wav";
+        this.audio = document.createElement('audio');
+        this.audio.src = 'tick8.wav';
     }
 
-    Flipper.prototype.setDesiredState = function(state) {
-        this.desiredState = state;
+    Segment.prototype.setDesiredValue = function (value) {
+        if ('startAt' in this) {
+            return this.setDesiredState(value - this.startAt);
+        }
+        return this.setDesiredState(value);
+    };
+
+    Segment.prototype.setDesiredState = function (stateIndex) {
+        this.desiredState = stateIndex;
         if (!this.moving) {
             this.moving = true;
             this.setNextState();
         }
     };
-    
-    Flipper.prototype.stateText = function(state) {
-        var newText = String(state);
-        while (this.digits && newText.length < this.digits) {
-            newText = "0" + newText;
+
+    Segment.prototype.valueText = function (value) {
+        if ('startAt' in this) {
+            return this.stateText(value - this.startAt);
+        }
+        return this.stateText(value);
+    };
+
+    Segment.prototype.stateText = function (stateIndex) {
+        if (this.states) {
+            return this.states[stateIndex];
+        }
+        var newText;
+        if ('startAt' in this) {
+            newText = String(stateIndex + this.startAt);
+        } else {
+            newText = String(stateIndex);
+        }
+        while (this.digitCount && newText.length < this.digitCount) {
+            newText = '0' + newText;
         }
         return newText;
     };
-    
-    Flipper.prototype.setNextState = function() {
-        if (this.state === this.desiredState) {
+
+    Segment.prototype.setNextState = function () {
+        if (this.stateIndex === this.desiredState) {
             this.moving = false;
             return;
         }
-        var nextState = (this.state + 1) % this.states;
-        var newText = this.stateText(nextState);
+        var nextStateIndex;
+        nextStateIndex = (this.stateIndex + 1) % this.stateCount;
+        var newText = this.stateText(nextStateIndex);
         var currentText = this.topText.data;
-        this.animate1(currentText, newText, nextState);
+        this.animate1(currentText, newText, nextStateIndex);
     };
 
-    Flipper.prototype.animate1 = function(currentText, newText, nextState) {
-        var flip11 = E("span", "flip11");
-        var flip22 = E("span", "flip22");
-        var flip11Text = T("");
-        var flip22Text = T("");
-        flip11.appendChild(flip11Text);
-        flip22.appendChild(flip22Text);
+    Segment.prototype.animate1 = function (currentText, newText, nextStateIndex) {
+        var flip11      = E('span', 'segment-flip11');
+        var flip22      = E('span', 'segment-flip22');
+        var flip11Inner = E('span', 'segment-flip11-inner');
+        var flip22Inner = E('span', 'segment-flip22-inner');
+        var flip11Text  = T('');
+        var flip22Text  = T('');
+        flip11.appendChild(flip11Inner);
+        flip22.appendChild(flip22Inner);
+        flip11Inner.appendChild(flip11Text);
+        flip22Inner.appendChild(flip22Text);
         this.inner.appendChild(flip11);
         this.inner.appendChild(flip22);
         flip11Text.data = currentText;
         flip22Text.data = newText;
-        flip11.style.display = "inline-block";
+        flip11.style.display = 'inline-block';
         this.topText.data = newText;
-        this.audio.play();
-        setTimeout(function() {
-            flip11.removeChild(flip11Text);
+        if (document.hasFocus()) {
+            this.audio.play();
+        }
+        setTimeout(function () {
+            flip11Inner.removeChild(flip11Text);
             this.inner.removeChild(flip11);
-            flip22.style.display = "inline-block";
-            setTimeout(function() {
-                flip22.removeChild(flip22Text);
+            flip22.style.display = 'inline-block';
+            setTimeout(function () {
+                flip22Inner.removeChild(flip22Text);
                 this.inner.removeChild(flip22);
                 this.bottomText.data = newText;
-                this.state = nextState;
+                this.stateIndex = nextStateIndex;
                 this.setNextState();
-            }.bind(this), 50);
-        }.bind(this), 50);
+            }.bind(this), Segment.transitionTime);
+        }.bind(this), Segment.transitionTime);
     };
+
+    Segment.transitionTime = 50;
 
     return FlipClock;
 }());
+

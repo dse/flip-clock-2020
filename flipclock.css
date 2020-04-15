@@ -1,122 +1,174 @@
-#flipClock {
-  font-size: 15vw;
+:root {
+  --background-color: #333333;
+  --segment-background-color: #333333;
+  --segment-foreground-color: #ffff66;
+  --font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  --font-weight: normal;
+  --font-style: normal; }
+
+#flip-clock {
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  font-weight: 500;
-  position: absolute;
+  font-family: var(--font-family);
+  font-weight: normal;
+  font-weight: var(--font-weight);
+  font-style: normal;
+  font-style: var(--font-style);
+  position: fixed;
   top: 50%;
-  left: 50%;
+  left: 0;
   width: 100%;
+  transform: translateY(-50%);
   text-align: center;
-  transform: translateX(-50%) translateY(-50%); }
+  line-height: 1; }
+
+#flip-clock .flip-clock-date-window {
+  font-size: 5vw;
+  margin-bottom: 1vw; }
+
+#flip-clock .flip-clock-time-window {
+  font-size: 15vw; }
 
 body {
-  background: #333333; }
-  body .flipClock .flipper + .flipper {
-    margin-left: 0.125em; }
-  body .flipClock .flipper {
-    background: black;
-    border-radius: 0.25em;
-    padding: 0.125em;
-    display: inline-block; }
-    body .flipClock .flipper .inner {
-      line-height: 1.25em;
-      display: inline-block;
-      position: relative; }
-      body .flipClock .flipper .inner:before {
-        content: "XX"; }
-      body .flipClock .flipper .inner .top {
-        border-radius: 0.125em;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-        text-align: center;
-        background: #1a1a1a;
-        color: #e6e6e6;
-        clip: rect(auto, auto, 0.625em, auto); }
-      body .flipClock .flipper .inner .bottom {
-        border-radius: 0.125em;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-        text-align: center;
-        background: #262626;
-        color: #f2f2f2;
-        clip: rect(0.625em, auto, auto, auto); }
-      body .flipClock .flipper .inner .flip11 {
-        border-radius: 0.125em;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        background: #1a1a1a;
-        color: #e6e6e6;
-        clip: rect(auto, auto, 0.625em, auto);
-        display: none;
-        -webkit-transform: scaleY(0.75);
-        transform: scaleY(0.75); }
-      body .flipClock .flipper .inner .flip22 {
-        border-radius: 0.125em;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        background: #262626;
-        color: #f2f2f2;
-        clip: rect(0.625em, auto, auto, auto);
-        display: none;
-        -webkit-transform: scaleY(0.75);
-        transform: scaleY(0.75); }
-      body .flipClock .flipper .inner .flip {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        -webkit-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-        -webkit-transition: all 100ms;
-        transition: all 100ms; }
-        body .flipClock .flipper .inner .flip .flip1 {
-          border-radius: 0.125em;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: inline-block;
-          text-align: center;
-          background: #1a1a1a;
-          color: #e6e6e6;
-          -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-          clip: rect(auto, auto, 0.625em, auto); }
-        body .flipClock .flipper .inner .flip .flip2 {
-          border-radius: 0.125em;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: inline-block;
-          text-align: center;
-          background: #262626;
-          color: #f2f2f2;
-          -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-          -webkit-transform: rotateX(180deg);
-          transform: rotateX(180deg);
-          clip: rect(0.625em, auto, auto, auto); }
-        body .flipClock .flipper .inner .flip.flipped {
-          -webkit-transform: rotateX(180deg);
-          transform: rotateX(180deg); }
+  background-color: #333333;
+  background-color: var(--background-color); }
+
+.flip-clock-window {
+  background-color: black;
+  border-radius: calc(1vw + 1vw);
+  display: inline-flex;
+  padding: 1vw; }
+
+.segment + .segment {
+  margin-left: 1vw; }
+
+.segment {
+  display: inline-block; }
+
+.segment-inner {
+  display: inline-block;
+  position: relative; }
+  .segment-inner:before {
+    content: "00";
+    padding-left: 1vw;
+    padding-right: 1vw; }
+
+.segment-hour .segment-inner::before {
+  content: '00'; }
+
+.segment-minute .segment-inner::before {
+  content: '00'; }
+
+.segment-second .segment-inner::before {
+  content: '00'; }
+
+.segment-year .segment-inner::before {
+  content: '0000'; }
+
+.segment-month .segment-inner::before {
+  content: 'MAR'; }
+
+.segment-date .segment-inner::before {
+  content: '00'; }
+
+.segment-day .segment-inner::before {
+  content: 'WED'; }
+
+.segment-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  text-align: center;
+  clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+  background-color: black;
+  border-radius: 1vw; }
+
+.segment-bottom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  text-align: center;
+  clip-path: polygon(0% 50%, 0% 100%, 100% 100%, 100% 50%);
+  background-color: black;
+  border-radius: 1vw; }
+
+.segment-flip11 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+  display: none;
+  -webkit-transform: scaleY(0.75);
+  transform: scaleY(0.75);
+  background-color: black;
+  border-radius: 1vw; }
+
+.segment-flip22 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  clip-path: polygon(0% 50%, 0% 100%, 100% 100%, 100% 50%);
+  display: none;
+  -webkit-transform: scaleY(0.75);
+  transform: scaleY(0.75);
+  background-color: black;
+  border-radius: 1vw; }
+
+.segment-top-inner {
+  display: inline-block;
+  width: 100%;
+  background-color: #333333;
+  background-color: var(--segment-background-color);
+  color: #ffff66;
+  color: var(--segment-foreground-color);
+  opacity: 80%;
+  border-radius: 1vw; }
+
+.segment-bottom-inner {
+  display: inline-block;
+  width: 100%;
+  background-color: #333333;
+  background-color: var(--segment-background-color);
+  color: #ffff66;
+  color: var(--segment-foreground-color);
+  opacity: 95%;
+  border-radius: 1vw; }
+
+.segment-flip11-inner {
+  display: inline-block;
+  width: 100%;
+  background-color: #333333;
+  background-color: var(--segment-background-color);
+  color: #ffff66;
+  color: var(--segment-foreground-color);
+  opacity: 80%;
+  border-radius: 1vw; }
+
+.segment-flip22-inner {
+  display: inline-block;
+  width: 100%;
+  background-color: #333333;
+  background-color: var(--segment-background-color);
+  color: #ffff66;
+  color: var(--segment-foreground-color);
+  opacity: 95%;
+  border-radius: 1vw; }
+
+.settings-button {
+  position: fixed;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  font-size: 2rem; }
+
+/*# sourceMappingURL=flipclock.css.map */

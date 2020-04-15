@@ -1,94 +1,175 @@
-$line-height: 1.25em;
-$border-radius: 0.125em;
-$padding: 0.125em;
-$gutter: 0.125em;
-$background: #333333;
-$flipper-background: #333333;
-$flipper-foreground: #ffffff;
-$flipper-darken-top: 10%;
-$flipper-darken-bottom: 5%;
-$flipper-transition-time: 100ms;
+$flip-clock-window-padding:  1vw;
+$flip-clock-gutter:          1vw;
 
-#flipClock {
-    font-size: 15vw;
-    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    font-weight: 500;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    text-align: center;
-    transform: translateX(-50%) translateY(-50%);
+$segment-border-radius:      1vw;
+$segment-opacity-top:        80%;
+$segment-opacity-bottom:     95%;
+$segment-horizontal-padding: 1vw;
+
+$background-color:         #333333;
+$segment-background-color: #333333;
+$segment-foreground-color: #ffff66;
+
+$font-family:              "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$font-weight:              normal;
+$font-style:               normal;
+
+:root {
+    --background-color:         #{$background-color};
+    --segment-background-color: #{$segment-background-color};
+    --segment-foreground-color: #{$segment-foreground-color};
+    --font-family:              #{$font-family};
+    --font-weight:              #{$font-weight};
+    --font-style:               #{$font-style};
 }
 
+#flip-clock {
+    font-family: $font-family;
+    font-family: var(--font-family);
+    font-weight: $font-weight;
+    font-weight: var(--font-weight);
+    font-style: $font-style;
+    font-style: var(--font-style);
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    text-align: center;
+    line-height: 1;
+}
+#flip-clock .flip-clock-date-window {
+    font-size: 5vw;
+    margin-bottom: 1vw;
+}
+#flip-clock .flip-clock-time-window {
+    font-size: 15vw;
+}
 body {
-    background: $background;
-    .flipClock {
-        .flipper + .flipper {
-            margin-left: $gutter;
-        }
-        .flipper {
-            background: black;
-            border-radius: $border-radius + $padding;
-            padding: $padding;
-            display: inline-block;
-            .inner {
-                line-height: $line-height;
-                display: inline-block;
-                position: relative;
-                &:before {
-                    content: "XX";
-                }
-                .top {
-                    border-radius: $border-radius;
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    display: inline-block;
-                    text-align: center;
-                    background: darken($flipper-background, $flipper-darken-top);
-                    color: darken($flipper-foreground, $flipper-darken-top);
-                    clip: rect(auto, auto, $line-height / 2, auto);
-                }
-                .bottom {
-                    border-radius: $border-radius;
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    display: inline-block;
-                    text-align: center;
-                    background: darken($flipper-background, $flipper-darken-bottom);
-                    color: darken($flipper-foreground, $flipper-darken-bottom);
-                    clip: rect($line-height / 2, auto, auto, auto);
-                }
-                .flip11 {
-                    border-radius: $border-radius;
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    text-align: center;
-                    background: darken($flipper-background, $flipper-darken-top);
-                    color: darken($flipper-foreground, $flipper-darken-top);
-                    clip: rect(auto, auto, $line-height / 2, auto);
-                    display: none;
-                    -webkit-transform: scaleY(0.75);
-                    transform: scaleY(0.75);
-                }
-                .flip22 {
-                    border-radius: $border-radius;
-                    position: absolute;
-                    top: 0; left: 0;
-                    width: 100%; height: 100%;
-                    text-align: center;
-                    background: darken($flipper-background, $flipper-darken-bottom);
-                    color: darken($flipper-foreground, $flipper-darken-bottom);
-                    clip: rect($line-height / 2, auto, auto, auto);
-                    display: none;
-                    -webkit-transform: scaleY(0.75);
-                    transform: scaleY(0.75);
-                }
-            }
-        }
+    background-color: $background-color;
+    background-color: var(--background-color);
+}
+.flip-clock {
+}
+.flip-clock-window {
+    background-color: black;
+    border-radius: calc(#{$segment-border-radius} + #{$flip-clock-window-padding});
+    display: inline-flex;
+    padding: $flip-clock-window-padding;
+}
+.segment + .segment {
+    margin-left: $flip-clock-gutter;
+}
+.segment {
+    display: inline-block;
+}
+.segment-inner {
+    display: inline-block;
+    position: relative;
+    &:before {
+        content: "00";
+        padding-left: $segment-horizontal-padding;
+        padding-right: $segment-horizontal-padding;
     }
 }
 
+.segment-hour   .segment-inner::before { content: '00'; }
+.segment-minute .segment-inner::before { content: '00'; }
+.segment-second .segment-inner::before { content: '00'; }
+.segment-year   .segment-inner::before { content: '0000'; }
+.segment-month  .segment-inner::before { content: 'MAR'; }
+.segment-date   .segment-inner::before { content: '00'; }
+.segment-day    .segment-inner::before { content: 'WED'; }
+
+.segment-top {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: inline-block;
+    text-align: center;
+    clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+    background-color: black;
+    border-radius: $segment-border-radius;
+}
+.segment-bottom {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: inline-block;
+    text-align: center;
+    clip-path: polygon(0% 50%, 0% 100%, 100% 100%, 100% 50%);
+    background-color: black;
+    border-radius: $segment-border-radius;
+}
+.segment-flip11 {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    text-align: center;
+    clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+    display: none;
+    -webkit-transform: scaleY(0.75);
+    transform: scaleY(0.75);
+    background-color: black;
+    border-radius: $segment-border-radius;
+}
+.segment-flip22 {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    text-align: center;
+    clip-path: polygon(0% 50%, 0% 100%, 100% 100%, 100% 50%);
+    display: none;
+    -webkit-transform: scaleY(0.75);
+    transform: scaleY(0.75);
+    background-color: black;
+    border-radius: $segment-border-radius;
+}
+
+.segment-top-inner {
+    display: inline-block;
+    width: 100%;
+    background-color: $segment-background-color;
+    background-color: var(--segment-background-color);
+    color: $segment-foreground-color;
+    color: var(--segment-foreground-color);
+    opacity: $segment-opacity-top;
+    border-radius: $segment-border-radius;
+}
+.segment-bottom-inner {
+    display: inline-block;
+    width: 100%;
+    background-color: $segment-background-color;
+    background-color: var(--segment-background-color);
+    color: $segment-foreground-color;
+    color: var(--segment-foreground-color);
+    opacity: $segment-opacity-bottom;
+    border-radius: $segment-border-radius;
+}
+.segment-flip11-inner {
+    display: inline-block;
+    width: 100%;
+    background-color: $segment-background-color;
+    background-color: var(--segment-background-color);
+    color: $segment-foreground-color;
+    color: var(--segment-foreground-color);
+    opacity: $segment-opacity-top;
+    border-radius: $segment-border-radius;
+}
+.segment-flip22-inner {
+    display: inline-block;
+    width: 100%;
+    background-color: $segment-background-color;
+    background-color: var(--segment-background-color);
+    color: $segment-foreground-color;
+    color: var(--segment-foreground-color);
+    opacity: $segment-opacity-bottom;
+    border-radius: $segment-border-radius;
+}
+
+.settings-button {
+    position: fixed;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 2rem;
+}

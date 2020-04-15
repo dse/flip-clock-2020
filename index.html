@@ -1,18 +1,243 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Flip Clock</title>
-		<link rel="stylesheet" href="flipclock.css">
-	</head>
-	<body>
+    <head>
+        <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <title>Flip Clock</title>
+        <link rel="stylesheet" href="node_modules/foundation-sites/dist/css/foundation.min.css">
+        <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
+	<link rel="stylesheet" href="flipclock.css">
+    </head>
+    <body>
 
-		<div id="flipClock">
-		</div>
+	<div data-flip-clock id="flip-clock">
+            <div>
+                <div class="flip-clock-window flip-clock-date-window">
+                    <div data-flip-clock-day class="segment segment-day">
+                    </div>
+                    <div data-flip-clock-month class="segment segment-month">
+                    </div>
+                    <div data-flip-clock-date class="segment segment-date">
+                    </div>
+                    <div data-flip-clock-year class="segment segment-year">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="flip-clock-window flip-clock-time-window">
+                    <div data-flip-clock-hour class="segment segment-hour">
+                    </div>
+                    <div data-flip-clock-minute class="segment segment-minute">
+                    </div>
+                    <div data-flip-clock-second class="segment segment-second">
+                    </div>
+                </div>
+            </div>
+	</div>
 
-		<script src="flipclock.js"></script>
-		<script>
-			var flipClock = new FlipClock("flipClock");
-		</script>
+        <button class="settings-button" data-open="settings-modal"><i class="fas fa-cog"></i></button>
 
-	</body>
+        <div class="reveal settings-modal" id="settings-modal" data-reveal>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <form data-flip-clock-settings>
+                <div class="grid-x grid-padding-x">
+                    <div class="small-12 medium-4 cell">
+                        <label>
+                            Foreground
+                            <input type="color" name="foreground-color" data-flipclock-segment-foreground-color>
+                        </label>
+                    </div>
+                    <div class="small-6 medium-4 cell">
+                        <label>
+                            Flip Segments
+                            <input type="color" name="flip-segment-color" data-flipclock-segment-background-color>
+                        </label>
+                    </div>
+                    <div class="small-6 medium-4 cell">
+                        <label>
+                            Background
+                            <input type="color" name="background-color" data-flipclock-background-color>
+                        </label>
+                    </div>
+                </div>
+                <div class="grid-x grid-padding-x">
+                    <div class="small-12 medium-6 cell">
+                        <label>
+                            Font Family
+                            <select name="font-family" data-flipclock-font-family>
+                                <option value="Helvetica Neue, Helvetica, Arial, sans-serif">Helvetica Neue, Helvetica, Arial</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="Arial Black, sans-serif">Arial Black</option>
+                                <option value="Comic Sans MS, fantasy">Comic Sans</option>
+                                <option value="Futura, sans-serif">Futura</option>
+                                <option value="Helvetica Neue, sans-serif">Helvetica Neue</option>
+                                <option value="Impact, sans-serif">Impact</option>
+                                <option value="Optima, sans-serif">Optima</option>
+                                <option value="Times New Roman, serif">Times New Roman</option>
+                                <option value="Trebuchet MS, sans-serif">Trebuchet</option>
+                                <option value="Verdana, sans-serif">Verdana</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="small-6 medium-3 cell">
+                        <label>
+                            Weight
+                            <select name="font-style" data-flipclock-font-weight>
+                                <option value="100">Thin</option>
+                                <option value="200">Extra Light</option>
+                                <option value="300">Light</option>
+                                <option selected value="normal">Normal</option>
+                                <option value="500">Medium</option>
+                                <option value="600">Semi Bold</option>
+                                <option value="bold">Bold</option>
+                                <option value="800">Black</option>
+                                <option value="900">Extra Black</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="small-6 medium-3 cell">
+                        <label>
+                            Style
+                            <select name="font-style" data-flipclock-font-style>
+                                <option value="normal">normal</option>
+                                <option value="italic">italic</option>
+                                <option value="oblique">oblique</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="node_modules/foundation-sites/dist/js/foundation.min.js"></script>
+        <script>
+          var $ = jQuery;
+          $(document).foundation();
+        </script>
+
+        <script src="flipclock.js"></script>
+	<script>
+	  var flipClock = new FlipClock("flip-clock");
+	</script>
+
+        <script>
+          function main () {
+              setPropertiesFromStorage();
+              setFormValues();
+              addEvents();
+          }
+          function addEvents() {
+              document.addEventListener('change', function (event) {
+                  if (event.target.hasAttribute('data-flipclock-segment-foreground-color')) {
+                      document.documentElement.style.setProperty('--segment-foreground-color', event.target.value);
+                      localStorage.setItem('flipclock--segment-foreground-color', event.target.value);
+                  }
+                  if (event.target.hasAttribute('data-flipclock-segment-background-color')) {
+                      document.documentElement.style.setProperty('--segment-background-color', event.target.value);
+                      localStorage.setItem('flipclock--segment-background-color', event.target.value);
+                  }
+                  if (event.target.hasAttribute('data-flipclock-background-color')) {
+                      document.documentElement.style.setProperty('--background-color', event.target.value);
+                      localStorage.setItem('flipclock--background-color', event.target.value);
+                  }
+                  if (event.target.hasAttribute('data-flipclock-font-family')) {
+                      var value = event.target.options[event.target.selectedIndex].value;
+                      document.documentElement.style.setProperty('--font-family', value);
+                      localStorage.setItem('flipclock--font-family', value);
+                  }
+                  if (event.target.hasAttribute('data-flipclock-font-weight')) {
+                      var value = event.target.options[event.target.selectedIndex].value;
+                      document.documentElement.style.setProperty('--font-weight', value);
+                      localStorage.setItem('flipclock--font-weight', value);
+                  }
+                  if (event.target.hasAttribute('data-flipclock-font-style')) {
+                      var value = event.target.options[event.target.selectedIndex].value;
+                      document.documentElement.style.setProperty('--font-style', value);
+                      localStorage.setItem('flipclock--font-style', value);
+                  }
+              });
+          }
+          function setPropertiesFromStorage() {
+              if (localStorage.getItem('flipclock--segment-foreground-color')) {
+                  document.documentElement.style.setProperty('--segment-foreground-color', localStorage.getItem('flipclock--segment-foreground-color'));
+              }
+              if (localStorage.getItem('flipclock--segment-background-color')) {
+                  document.documentElement.style.setProperty('--segment-background-color', localStorage.getItem('flipclock--segment-background-color'));
+              }
+              if (localStorage.getItem('flipclock--background-color')) {
+                  document.documentElement.style.setProperty('--background-color', localStorage.getItem('flipclock--background-color'));
+              }
+              if (localStorage.getItem('flipclock--font-family')) {
+                  document.documentElement.style.setProperty('--font-family', localStorage.getItem('flipclock--font-family'));
+              }
+              if (localStorage.getItem('flipclock--font-weight')) {
+                  document.documentElement.style.setProperty('--font-weight', localStorage.getItem('flipclock--font-weight'));
+              }
+              if (localStorage.getItem('flipclock--font-style')) {
+                  document.documentElement.style.setProperty('--font-style', localStorage.getItem('flipclock--font-style'));
+              }
+          }
+          function setFormValues() {
+              var cs  = getComputedStyle(document.documentElement);
+              Array.from(document.querySelectorAll('[data-flipclock-segment-foreground-color]')).forEach(function (input) {
+                  var value = cs.getPropertyValue('--segment-foreground-color').trim();
+                  input.value = value;
+              });
+              Array.from(document.querySelectorAll('[data-flipclock-segment-background-color]')).forEach(function (input) {
+                  var value = cs.getPropertyValue('--segment-background-color').trim();
+                  input.value = value;
+              });
+              Array.from(document.querySelectorAll('[data-flipclock-background-color]')).forEach(function (input) {
+                  var value = cs.getPropertyValue('--background-color').trim();
+                  input.value = value;
+              });
+              Array.from(document.querySelectorAll('[data-flipclock-font-family]')).forEach(function (input) {
+                  var value = cs.getPropertyValue('--font-family').trim();
+                  if (input.tagName.toLowerCase() === 'select') {
+                      setSelectValue(input, value);
+                  } else {
+                      input.value = value;
+                  }
+              });
+              Array.from(document.querySelectorAll('[data-flipclock-font-weight]')).forEach(function (input) {
+                  var value = cs.getPropertyValue('--font-weight').trim();
+                  if (input.tagName.toLowerCase() === 'select') {
+                      setSelectValue(input, value);
+                  } else {
+                      input.value = value;
+                  }
+              });
+              Array.from(document.querySelectorAll('[data-flipclock-font-style]')).forEach(function (input) {
+                  var value = cs.getPropertyValue('--font-style').trim();
+                  if (input.tagName.toLowerCase() === 'select') {
+                      setSelectValue(input, value);
+                  } else {
+                      input.value = value;
+                  }
+              });
+          }
+          function setSelectValue(input, value) {
+              var options;
+              var option;
+              options = Array.from(input.options).filter(function (option) {
+                  return option.value === value;
+              });
+              if (options.length) {
+                  input.selectedIndex = options[0].index;
+              } else {
+                  option = document.createElement('option');
+                  option.setAttribute('value', value);
+                  option.appendChild(document.createTextNode(value));/* label */
+                  input.add(option);
+                  input.selectedIndex = option.index;
+              }
+          }
+          main();
+        </script>
+
+    </body>
 </html>
