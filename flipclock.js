@@ -33,8 +33,193 @@ var Ticker = (function () {
     return Ticker;
 }());
 
-var FlipClock = (function () {
+var Segment = (function () {
+    function Segment(options) {
+        this.digitCount = options.digitCount;
+        this.flipClock = options.flipClock;
 
+        if (options.states && options.states instanceof Array) {
+            this.states = options.states;
+            this.stateCount = options.states.length;
+        } else if (options.stateCount && typeof options.stateCount === 'number') {
+            this.stateCount = options.stateCount;
+            this.states = null;
+        } else if (typeof options.startAt === 'number' &&
+                   typeof options.endAt === 'number') {
+            this.stateCount = options.endAt - options.startAt + 1;
+            this.startAt = options.startAt;
+            this.endAt = options.endAt;
+        }
+
+        this.stateIndex = -1;
+        this.desiredState = -1;
+
+        var parent;
+        var element;
+        if (options.dataAttribute) {
+            parent = this.flipClock ? (this.flipClock.element || document) : document;
+            element = parent.querySelector('[' + options.dataAttribute + ']');
+        } else if (options.element) {
+            parent = this.flipClock ? (this.flipClock.element || document) : document;
+            element = options.element;
+        }
+
+        if (element) {
+            element.classList.add('segment');
+        } else {
+            element = E('span', 'segment');
+        }
+
+        if (!("idCounter" in Segment)) {
+            Segment.idCounter = 0;
+            Segment.segmentsById = {};
+        }
+
+        Segment.idCounter += 1;
+        element.setAttribute('data-segment-id', Segment.idCounter);
+        Segment.segmentsById[Segment.idCounter] = this;
+
+        var inner       = E('span', 'segment-inner');
+        var top         = E('span', 'segment-piece segment-top');
+        var bottom      = E('span', 'segment-piece segment-bottom');
+        var topInner    = E('span', 'segment-piece-inner segment-top-inner');
+        var bottomInner = E('span', 'segment-piece-inner segment-bottom-inner');
+
+        var topText    = T('');
+        var bottomText = T('');
+
+        element.appendChild(inner);
+        inner.appendChild(top);
+        inner.appendChild(bottom);
+        top.appendChild(topInner);
+        bottom.appendChild(bottomInner);
+        topInner.appendChild(topText);
+        bottomInner.appendChild(bottomText);
+
+        this.element = element;
+        this.inner = inner;
+        this.top = top;
+        this.bottom = bottom;
+        this.topInner = topInner;
+        this.bottomInner = bottomInner;
+
+        this.topText = topText;
+        this.bottomText = bottomText;
+
+        this.audio = document.createElement('audio');
+        this.audio.src = 'tick8.wav';
+
+        this.callback = [];
+    }
+    Segment.prototype.setDesiredValue = function (value, delay, callback) {
+        if ('startAt' in this) {
+            return this.setDesiredState(value - this.startAt, delay, callback);
+        }
+        return this.setDesiredState(value, delay, callback);
+    };
+    Segment.prototype.setDesiredState = function (stateIndex, delay, callback) {
+        if (delay) {
+            setTimeout(function () {
+                this.setDesiredState(stateIndex, null, callback);
+            }.bind(this), delay);
+            return;
+        }
+        this.desiredState = stateIndex;
+        if (!this.moving) {
+            this.moving = true;
+            this.setNextState(callback);
+        }
+    };
+    Segment.prototype.valueText = function (value) {
+        if ('startAt' in this) {
+            return this.stateText(value - this.startAt);
+        }
+        return this.stateText(value);
+    };
+    Segment.prototype.stateText = function (stateIndex) {
+        if (this.states) {
+            return this.states[stateIndex];
+        }
+        var newText;
+        if ('startAt' in this) {
+            newText = String(stateIndex + this.startAt);
+        } else {
+            newText = String(stateIndex);
+        }
+        while (this.digitCount && newText.length < this.digitCount) {
+            newText = '0' + newText;
+        }
+        return newText;
+    };
+    Segment.prototype.setNextState = function (callback) {
+        if (this.stateIndex === this.desiredState) {
+            this.moving = false;
+            if (callback) {
+                callback();
+            }
+            return;
+        }
+        var nextStateIndex;
+        nextStateIndex = (this.stateIndex + 1) % this.stateCount;
+        var newText = this.stateText(nextStateIndex);
+        var currentText = this.topText.data;
+        this.animate1(currentText, newText, nextStateIndex, callback);
+    };
+    Segment.prototype.flipWrap = function () {
+        var thisState = this.stateIndex;
+        this.setNextState(function () {
+            this.setDesiredState(this.state);
+        }.bind(this));
+    };
+    Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
+        var flipTop         = E('span', 'segment-piece segment-fliptop');
+        var flipBottom      = E('span', 'segment-piece segment-flipbottom');
+        var flipTopInner    = E('span', 'segment-piece-inner segment-fliptop-inner');
+        var flipBottomInner = E('span', 'segment-piece-inner segment-flipbottom-inner');
+        var flipTopText     = T('');
+        var flipBottomText  = T('');
+        flipTop.appendChild(flipTopInner);
+        flipBottom.appendChild(flipBottomInner);
+        flipTopInner.appendChild(flipTopText);
+        flipBottomInner.appendChild(flipBottomText);
+        this.inner.appendChild(flipTop);
+        this.inner.appendChild(flipBottom);
+        flipTopText.data = currentText;
+        flipBottomText.data = newText;
+        flipTop.style.display = 'inline-block';
+        this.topText.data = newText;
+        this.audio.play();
+        setTimeout(function () {
+            flipTopInner.removeChild(flipTopText);
+            this.inner.removeChild(flipTop);
+            flipBottom.style.display = 'inline-block';
+            setTimeout(function () {
+                flipBottomInner.removeChild(flipBottomText);
+                this.inner.removeChild(flipBottom);
+                this.bottomText.data = newText;
+                this.stateIndex = nextStateIndex;
+                this.setNextState(callback);
+            }.bind(this), Segment.transitionTime);
+        }.bind(this), Segment.transitionTime);
+    };
+
+    Segment.transitionTime = 50;
+
+    function E(tagName, className) {
+        var e = document.createElement(tagName);
+        e.className = className;
+        return e;
+    }
+
+    function T(text) {
+        var t = document.createTextNode(text);
+        return t;
+    }
+
+    return Segment;
+}());
+
+var FlipClock = (function () {
     var el = document.createElement('fakeelement');
     var transitionEvent;
     if (el.style.transition !== undefined) {
@@ -222,173 +407,6 @@ var FlipClock = (function () {
         });
     };
 
-    function E(tagName, className) {
-        var e = document.createElement(tagName);
-        e.className = className;
-        return e;
-    }
-
-    function T(text) {
-        var t = document.createTextNode(text);
-        return t;
-    }
-
-    function Segment(options) {
-        this.digitCount = options.digitCount;
-        this.flipClock = options.flipClock;
-
-        if (options.states && options.states instanceof Array) {
-            this.states = options.states;
-            this.stateCount = options.states.length;
-        } else if (options.stateCount && typeof options.stateCount === 'number') {
-            this.stateCount = options.stateCount;
-            this.states = null;
-        } else if (typeof options.startAt === 'number' &&
-                   typeof options.endAt === 'number') {
-            this.stateCount = options.endAt - options.startAt + 1;
-            this.startAt = options.startAt;
-            this.endAt = options.endAt;
-        }
-
-        this.stateIndex = -1;
-        this.desiredState = -1;
-
-        var parent;
-        var element;
-        if (options.dataAttribute) {
-            parent = this.flipClock ? (this.flipClock.element || document) : document;
-            element = parent.querySelector('[' + options.dataAttribute + ']');
-        } else if (options.element) {
-            parent = this.flipClock ? (this.flipClock.element || document) : document;
-            element = options.element;
-        }
-
-        if (element) {
-            element.classList.add('segment');
-        } else {
-            element = E('span', 'segment');
-        }
-
-        var inner       = E('span', 'segment-inner');
-        var top         = E('span', 'segment-piece segment-top');
-        var bottom      = E('span', 'segment-piece segment-bottom');
-        var topInner    = E('span', 'segment-piece-inner segment-top-inner');
-        var bottomInner = E('span', 'segment-piece-inner segment-bottom-inner');
-
-        var topText    = T('');
-        var bottomText = T('');
-
-        element.appendChild(inner);
-        inner.appendChild(top);
-        inner.appendChild(bottom);
-        top.appendChild(topInner);
-        bottom.appendChild(bottomInner);
-        topInner.appendChild(topText);
-        bottomInner.appendChild(bottomText);
-
-        this.element = element;
-        this.inner = inner;
-        this.top = top;
-        this.bottom = bottom;
-        this.topInner = topInner;
-        this.bottomInner = bottomInner;
-
-        this.topText = topText;
-        this.bottomText = bottomText;
-
-        this.audio = document.createElement('audio');
-        this.audio.src = 'tick8.wav';
-    }
-
-    Segment.prototype.setDesiredValue = function (value, delay) {
-        if ('startAt' in this) {
-            return this.setDesiredState(value - this.startAt, delay);
-        }
-        return this.setDesiredState(value, delay);
-    };
-
-    Segment.prototype.setDesiredState = function (stateIndex, delay) {
-        if (delay) {
-            setTimeout(function () {
-                this.setDesiredState(stateIndex);
-            }.bind(this), delay);
-            return;
-        }
-        this.desiredState = stateIndex;
-        if (!this.moving) {
-            this.moving = true;
-            this.setNextState();
-        }
-    };
-
-    Segment.prototype.valueText = function (value) {
-        if ('startAt' in this) {
-            return this.stateText(value - this.startAt);
-        }
-        return this.stateText(value);
-    };
-
-    Segment.prototype.stateText = function (stateIndex) {
-        if (this.states) {
-            return this.states[stateIndex];
-        }
-        var newText;
-        if ('startAt' in this) {
-            newText = String(stateIndex + this.startAt);
-        } else {
-            newText = String(stateIndex);
-        }
-        while (this.digitCount && newText.length < this.digitCount) {
-            newText = '0' + newText;
-        }
-        return newText;
-    };
-
-    Segment.prototype.setNextState = function () {
-        if (this.stateIndex === this.desiredState) {
-            this.moving = false;
-            return;
-        }
-        var nextStateIndex;
-        nextStateIndex = (this.stateIndex + 1) % this.stateCount;
-        var newText = this.stateText(nextStateIndex);
-        var currentText = this.topText.data;
-        this.animate1(currentText, newText, nextStateIndex);
-    };
-
-    Segment.prototype.animate1 = function (currentText, newText, nextStateIndex) {
-        var flipTop         = E('span', 'segment-piece segment-fliptop');
-        var flipBottom      = E('span', 'segment-piece segment-flipbottom');
-        var flipTopInner    = E('span', 'segment-piece-inner segment-fliptop-inner');
-        var flipBottomInner = E('span', 'segment-piece-inner segment-flipbottom-inner');
-        var flipTopText     = T('');
-        var flipBottomText  = T('');
-        flipTop.appendChild(flipTopInner);
-        flipBottom.appendChild(flipBottomInner);
-        flipTopInner.appendChild(flipTopText);
-        flipBottomInner.appendChild(flipBottomText);
-        this.inner.appendChild(flipTop);
-        this.inner.appendChild(flipBottom);
-        flipTopText.data = currentText;
-        flipBottomText.data = newText;
-        flipTop.style.display = 'inline-block';
-        this.topText.data = newText;
-        this.audio.play();
-        setTimeout(function () {
-            flipTopInner.removeChild(flipTopText);
-            this.inner.removeChild(flipTop);
-            flipBottom.style.display = 'inline-block';
-            setTimeout(function () {
-                flipBottomInner.removeChild(flipBottomText);
-                this.inner.removeChild(flipBottom);
-                this.bottomText.data = newText;
-                this.stateIndex = nextStateIndex;
-                this.setNextState();
-            }.bind(this), Segment.transitionTime);
-        }.bind(this), Segment.transitionTime);
-    };
-
-    Segment.transitionTime = 50;
 
     return FlipClock;
 }());
