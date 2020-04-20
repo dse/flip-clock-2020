@@ -1,8 +1,8 @@
 var now = new Date();
 var testRollover;
 
-// testRollover = 2000000000000;
-// testRollover = 1609477200000;
+// testRollover = 2000000000000; // uncomment to test a time_t rollover.
+// testRollover = 1609477200000; // uncomment to test a 2020 to 2021 rollover, Eastern Time.
 var nowMS;
 var incrMS;
 
