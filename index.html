@@ -68,7 +68,8 @@
             </div>
         </div>
 
-        <button class="settings-button" data-open="settings-modal"><i class="fas fa-cog"></i></button>
+        <!-- &zwj; shuts up a tidy warning -->
+        <button class="settings-button" data-open="settings-modal"><i class="fas fa-cog">&zwj;</i></button>
 
         <div class="reveal settings-modal" id="settings-modal" data-reveal>
             <button class="close-button" data-close aria-label="Close modal" type="button">
@@ -140,6 +141,9 @@
                             </select>
                         </label>
                     </div>
+                </div>
+                <div class="text-right">
+                    <button data-flipclock-set-defaults class="button">Set Defaults</button>
                 </div>
             </form>
         </div>
