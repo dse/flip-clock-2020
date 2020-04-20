@@ -35,17 +35,31 @@ body {
     line-height: 1;
 }
 
+/* vertical layout and sizing */
 .flip-clock-line + .flip-clock-line {
     margin-top: 1vw;
 }
-.flip-clock-date-window {
+.flip-clock-date-line {
     font-size: 5vw;
 }
-.flip-clock-time-window {
+.flip-clock-time-line {
     font-size: 15vw;
 }
-.flip-clock-epoch-window {
+.flip-clock-epoch-line {
     font-size: 5vw;
+}
+
+/* horizontal layout */
+.flip-clock-line {
+    display: flex;
+    justify-content: center;
+    color: var(--segment-foreground-color);
+}
+.flip-clock-line .flip-clock-window:not(:first-child) {
+    margin-left: 0.5vw;
+}
+.flip-clock-line .flip-clock-window:not(:last-child) {
+    margin-right: 0.5vw;
 }
 
 .flip-clock-window {
@@ -58,6 +72,7 @@ body {
 
 .segment {
     display: inline-block;
+    color: transparent;
 }
 .segment + .segment {
     margin-left: var(--flip-clock-gutter);
