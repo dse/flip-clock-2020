@@ -168,6 +168,17 @@ var FlipClockPage = {
         style.removeProperty('--font-family');
         style.removeProperty('--font-weight');
         style.removeProperty('--font-style');
+        this.fakeItalic = false;
+        this.fontStyle = 'normal';
+        this.addOrRemoveFakeItalicClass();
+        this.addOrRemoveItalicClass();
+        this.setFormValues();
+        localStorage.removeItem('flipclock--segment-foreground-color');
+        localStorage.removeItem('flipclock--segment-background-color');
+        localStorage.removeItem('flipclock--background-color');
+        localStorage.removeItem('flipclock--font-family');
+        localStorage.removeItem('flipclock--font-weight');
+        localStorage.removeItem('flipclock--font-style');
     }
 };
 
