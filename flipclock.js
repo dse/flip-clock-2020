@@ -220,18 +220,6 @@ var Segment = (function () {
 }());
 
 var FlipClock = (function () {
-    var el = document.createElement('fakeelement');
-    var transitionEvent;
-    if (el.style.transition !== undefined) {
-        transitionEvent = 'transitionend';
-    } else if (el.style.OTransition !== undefined) {
-        transitionEvent = 'oTransitionEnd';
-    } else if (el.style.MozTransition !== undefined) {
-        transitionEvent = 'transitionend';
-    } else if (el.style.WebkitTransition !== undefined) {
-        transitionEvent = 'webkitTransitionEnd';
-    }
-
     function FlipClock(what) {
         var element;
         if (typeof what === 'string') {
@@ -397,7 +385,6 @@ var FlipClock = (function () {
         if (this.segments.second) {
             this.segments.second.setDesiredValue(date.getSeconds(), 0/3 * FlipClock.segmentDelay);
         }
-
         var ms = Math.floor(date.getTime() / 1000);
         var delay = 1/3 * FlipClock.segmentDelay;
         this.segments.epoch.forEach(function (segment) {
@@ -406,7 +393,6 @@ var FlipClock = (function () {
             delay += FlipClock.segmentDelay / 4;
         });
     };
-
 
     return FlipClock;
 }());
