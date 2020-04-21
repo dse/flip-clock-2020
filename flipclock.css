@@ -170,11 +170,27 @@ body {
     opacity: var(--segment-opacity-bottom);
 }
 
-.settings-button {
+.bottom-left-buttons {
+    position: fixed;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    font-size: 2rem;
+}
+.bottom-right-buttons {
     position: fixed;
     bottom: 0.5rem;
     right: 0.5rem;
     font-size: 2rem;
+}
+.bottom-left-buttons,
+.bottom-right-buttons {
+    color: white;
+    text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
+}
+.bottom-left-buttons button,
+.bottom-right-buttons button {
+    color: inherit;
+    text-shadow: inherit;
 }
 
 .flip-clock.with-fake-italic.with-font-style--italic  .segment-inner::before,

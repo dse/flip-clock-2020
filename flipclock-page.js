@@ -77,6 +77,13 @@ var FlipClockPage = {
             this.setDefaults();
             event.preventDefault();
         }.bind(this));
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('[data-flipclock-happy]')) {
+                return;
+            }
+            this.flipClock.flipWrap();
+            event.preventDefault();
+        }.bind(this));
     },
     setPropertiesFromStorage: function () {
         var style = document.documentElement.style;

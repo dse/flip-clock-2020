@@ -497,5 +497,32 @@ var FlipClock = (function () {
         });
     };
 
+    FlipClock.prototype.flipWrap = function () {
+        if (this.segments.year) {
+            this.segments.year.flipWrap();
+        }
+        if (this.segments.month) {
+            this.segments.month.flipWrap();
+        }
+        if (this.segments.date) {
+            this.segments.date.flipWrap();
+        }
+        if (this.segments.day) {
+            this.segments.day.flipWrap();
+        }
+        if (this.segments.hour) {
+            this.segments.hour.flipWrap();
+        }
+        if (this.segments.minute) {
+            this.segments.minute.flipWrap();
+        }
+        if (this.segments.second) {
+            this.segments.second.flipWrap();
+        }
+        this.segments.epoch.forEach(function (segment) {
+            segment.flipWrap();
+        });
+    };
+
     return FlipClock;
 }());
