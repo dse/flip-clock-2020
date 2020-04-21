@@ -142,8 +142,24 @@
                         </label>
                     </div>
                 </div>
-                <div class="text-right">
-                    <button data-flipclock-set-defaults class="button">Set Defaults</button>
+                <div class="grid-x grid-padding-x">
+                    <div class="small-12 cell">
+                        <label>
+                            <input type="checkbox" name="twenty-four-hour" value="true" data-flipclock-twenty-four-hour>
+                            24-Hour
+                        </label>
+                        <label>
+                            <input type="checkbox" name="enable-audio" value="true" data-flipclock-enable-audio>
+                            Audio
+                        </label>
+                    </div>
+                </div>
+                <div class="grid-x grid-padding-x">
+                    <div class="small-12 cell">
+                        <div class="text-right">
+                            <button data-flipclock-set-defaults class="button">Set Defaults</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -156,9 +172,6 @@
         </script>
 
         <script src="flipclock.js"></script>
-        <script>
-            var flipClock = new FlipClock("flip-clock");
-        </script>
         <script src="flipclock-page.js"></script>
 
     </body>

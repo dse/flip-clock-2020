@@ -2,6 +2,7 @@ var FlipClockPage = {
     fakeItalic: false,
     fontStyle: 'normal',
     init: function () {
+        this.flipClock = new FlipClock('flip-clock');
         this.setPropertiesFromStorage();
         this.setFormValues();
         this.addEvents();
@@ -56,6 +57,19 @@ var FlipClockPage = {
                 this.addOrRemoveItalicClass();
             }
         }.bind(this));
+        document.addEventListener('input', function (event) {
+            if (event.target.hasAttribute('data-flipclock-twenty-four-hour')) {
+                var checked = event.target.checked; // is twenty-four hour?
+                console.log('SET ITEM flipclock--twenty-four-hour => ' + JSON.stringify(checked));
+                localStorage.setItem('flipclock--twenty-four-hour', JSON.stringify(checked));
+                this.flipClock.set24Hour(checked);
+            }
+            if (event.target.hasAttribute('data-flipclock-enable-audio')) {
+                var checked = event.target.checked; // is twenty-four hour?
+                localStorage.setItem('flipclock--enable-audio', JSON.stringify(checked));
+                this.flipClock.setEnableAudio(checked);
+            }
+        }.bind(this));
         document.addEventListener('click', function (event) {
             if (!event.target.closest('[data-flipclock-set-defaults]')) {
                 return;
@@ -66,23 +80,41 @@ var FlipClockPage = {
     },
     setPropertiesFromStorage: function () {
         var style = document.documentElement.style;
-        if (localStorage.getItem('flipclock--segment-foreground-color')) {
-            style.setProperty('--segment-foreground-color', localStorage.getItem('flipclock--segment-foreground-color'));
+        var value;
+        if ((value = localStorage.getItem('flipclock--segment-foreground-color'))) {
+            style.setProperty('--segment-foreground-color', value);
         }
-        if (localStorage.getItem('flipclock--segment-background-color')) {
-            style.setProperty('--segment-background-color', localStorage.getItem('flipclock--segment-background-color'));
+        if ((value = localStorage.getItem('flipclock--segment-background-color'))) {
+            style.setProperty('--segment-background-color', value);
         }
-        if (localStorage.getItem('flipclock--background-color')) {
-            style.setProperty('--background-color', localStorage.getItem('flipclock--background-color'));
+        if ((value = localStorage.getItem('flipclock--background-color'))) {
+            style.setProperty('--background-color', value);
         }
-        if (localStorage.getItem('flipclock--font-family')) {
-            style.setProperty('--font-family', localStorage.getItem('flipclock--font-family'));
+        if ((value = localStorage.getItem('flipclock--font-family'))) {
+            style.setProperty('--font-family', value);
         }
-        if (localStorage.getItem('flipclock--font-weight')) {
-            style.setProperty('--font-weight', localStorage.getItem('flipclock--font-weight'));
+        if ((value = localStorage.getItem('flipclock--font-weight'))) {
+            style.setProperty('--font-weight', value);
         }
-        if (localStorage.getItem('flipclock--font-style')) {
-            style.setProperty('--font-style', localStorage.getItem('flipclock--font-style'));
+        if ((value = localStorage.getItem('flipclock--font-style'))) {
+            style.setProperty('--font-style', value);
+        }
+        if ((value = localStorage.getItem('flipclock--twenty-four-hour')) !== null) {
+            console.log('GET ITEM flipclock--twenty-four-hour => ' + JSON.stringify(value));
+            try {
+                value = !!JSON.parse(value);
+            } catch (e) {
+                value = false;
+            }
+            this.flipClock.set24Hour(value);
+        }
+        if ((value = localStorage.getItem('flipclock--enable-audio')) !== null) {
+            try {
+                value = !!JSON.parse(value);
+            } catch (e) {
+                value = false;
+            }
+            this.flipClock.setEnableAudio(value);
         }
     },
     setFormValues: function () {
@@ -128,10 +160,22 @@ var FlipClockPage = {
                 this.setInputValue(input, value);
             }
         }.bind(this));
+        Array.from(document.querySelectorAll('[data-flipclock-twenty-four-hour]')).forEach(function (input) {
+            var flag = this.flipClock.is24Hour;
+            input.checked = !!flag;
+        }.bind(this));
+        Array.from(document.querySelectorAll('[data-flipclock-enable-audio]')).forEach(function (input) {
+            var flag = this.flipClock.enableAudio;
+            input.checked = !!flag;
+        }.bind(this));
     },
     setInputValue: function (input, value) {
         if (input.tagName.toLowerCase() === 'select') {
             return this.setSelectValue(input, value);
+        }
+        if (input.tagName.toLowerCase() === 'input' && input.type === 'checkbox') {
+            input.checked = true;
+            return input;
         }
         input.value = value;
         return input;
@@ -179,6 +223,8 @@ var FlipClockPage = {
         this.fontStyle = 'normal';
         this.addOrRemoveFakeItalicClass();
         this.addOrRemoveItalicClass();
+        this.flipClock.set24Hour(false);
+        this.flipClock.setEnableAudio(false);
         this.setFormValues();
         localStorage.removeItem('flipclock--segment-foreground-color');
         localStorage.removeItem('flipclock--segment-background-color');
@@ -186,6 +232,7 @@ var FlipClockPage = {
         localStorage.removeItem('flipclock--font-family');
         localStorage.removeItem('flipclock--font-weight');
         localStorage.removeItem('flipclock--font-style');
+        localStorage.removeItem('flipclock--twenty-four-hour');
     }
 };
 

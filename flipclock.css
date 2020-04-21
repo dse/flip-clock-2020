@@ -17,6 +17,13 @@
     --font-style:  normal;
 }
 
+.flip-clock-epoch-window {
+    --flip-clock-window-padding:  0.5vw;
+    --flip-clock-gutter:          0.5vw;
+    --segment-border-radius:      0.5vw;
+    --segment-horizontal-padding: 0em;
+}
+
 body {
     background-color: var(--background-color);
 }
@@ -77,6 +84,17 @@ body {
 .segment + .segment {
     margin-left: var(--flip-clock-gutter);
 }
+.segment.segment-twelve-hour .ampm {
+    position: absolute;
+    bottom: 25%;
+    transform: translateY(50%);
+    left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
+    font-size: 25%;
+    text-align: left;
+}
+.segment.segment-twelve-hour .segment-piece {
+    text-align: right;
+}
 
 .segment-inner {
     display: inline-block;
@@ -85,17 +103,23 @@ body {
 
 .segment-inner::before {
     content: "00";
-    padding-left: var(--segment-horizontal-padding);
-    padding-right: var(--segment-horizontal-padding);
+    padding-left: calc(var(--segment-horizontal-padding) +
+                       var(--segment-border-radius));
+    padding-right: calc(var(--segment-horizontal-padding) +
+                        var(--segment-border-radius));
+}
+
+.segment.segment-twelve-hour .segment-inner::before {
+    content: "00.";             /* extra room for 'am'/'pm' indicator */
 }
 
 .segment-hour        .segment-inner::before { content: '00'; }
 .segment-minute      .segment-inner::before { content: '00'; }
 .segment-second      .segment-inner::before { content: '00'; }
 .segment-year        .segment-inner::before { content: '0000'; }
-.segment-month       .segment-inner::before { content: 'MAR'; }
+.segment-month       .segment-inner::before { content: 'XXXX'; }
 .segment-date        .segment-inner::before { content: '00'; }
-.segment-day         .segment-inner::before { content: 'WED'; }
+.segment-day         .segment-inner::before { content: 'XXXX'; }
 .segment-epoch-digit .segment-inner::before { content: '0'; }
 
 .segment-piece {
@@ -131,6 +155,10 @@ body {
     background-color: var(--segment-background-color);
     color: var(--segment-foreground-color);
     border-radius: var(--segment-border-radius);
+    padding-left: calc(var(--segment-horizontal-padding) +
+                       var(--segment-border-radius));
+    padding-right: calc(var(--segment-horizontal-padding) +
+                        var(--segment-border-radius));
 }
 
 .segment-top-inner,
@@ -158,19 +186,4 @@ body {
 .flip-clock.with-fake-italic.with-font-style--italic  .segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .segment-piece-inner {
     padding-right: var(--segment-fake-italic-horizontal-padding);
-}
-
-.flip-clock-epoch-window {
-    border-radius: calc(var(--segment-border-radius) / 2 +
-                        var(--flip-clock-window-padding) / 2);
-    padding: calc(var(--flip-clock-window-padding) / 2);
-}
-.flip-clock-epoch-window .segment + .segment {
-    margin-left: calc(var(--flip-clock-gutter) / 2);
-}
-.flip-clock-epoch-window .segment-piece {
-    border-radius: calc(var(--segment-border-radius) / 2);
-}
-.flip-clock-epoch-window .segment-piece-inner {
-    border-radius: calc(var(--segment-border-radius) / 2);
 }
