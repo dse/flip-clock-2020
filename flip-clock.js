@@ -34,6 +34,55 @@ var Ticker = (function () {
 }());
 
 var Segment = (function () {
+
+    var transitionEndEventName;
+    var transitionCancelEventName;
+    var e = document.createElement('div');
+    if (e.style.transition !== undefined) {
+        transitionEndEventName = 'transitionend';
+        transitionCancelEventName = 'transitioncancel';
+    } else if (e.style.OTransition !== undefined) {
+        transitionEndEventName = 'oTransitionEnd';
+        transitionCancelEventName = 'oTransitionCancel';
+    } else if (e.style.MozTransition !== undefined) {
+        transitionEndEventName = 'transitionend';
+        transitionCancelEventName = 'transitioncancel';
+    } else if (e.style.WebkitTransition !== undefined) {
+        transitionEndEventName = 'webkitTransitionEnd';
+        transitionCancelEventName = 'webkitTransitionCancel';
+    }
+
+    var raf = window.requestAnimationFrame;
+    raf = raf || window.mozRequestAnimationFrame;
+    raf = raf || window.webkitRequestAnimationFrame;
+    raf = raf || window.msRequestAnimationFrame;
+    raf = raf || window.oRequestAnimationFrame;
+    window.requestAnimationFrame = raf;
+
+    var caf = window.cancelAnimationFrame;
+    caf = caf || window.mozCancelAnimationFrame;
+    caf = caf || window.webkitCancelAnimationFrame;
+    caf = caf || window.msCancelAnimationFrame;
+    caf = caf || window.oCancelAnimationFrame;
+    caf = caf || window.mozCancelRequestAnimationFrame;
+    caf = caf || window.webkitCancelRequestAnimationFrame;
+    caf = caf || window.msCancelRequestAnimationFrame;
+    caf = caf || window.oCancelRequestAnimationFrame;
+    window.cancelAnimationFrame = caf;
+
+    if (!window.requestAnimationFrame || !window.cancelAnimationFrame) {
+        window.requestAnimationFrame = function (callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+        window.cancelAnimationFrame = function (id) {
+            clearTimeout(id);
+        };
+    }
+
     function Segment(options) {
         this.animationStyle = 1;
         this.digitCount = options.digitCount;
@@ -95,13 +144,15 @@ var Segment = (function () {
         var topText    = E('span');
         var bottomText = E('span');
 
-        element.appendChild(inner);
-        inner.appendChild(top);
-        inner.appendChild(bottom);
-        top.appendChild(topInner);
-        bottom.appendChild(bottomInner);
-        topInner.appendChild(topText);
-        bottomInner.appendChild(bottomText);
+        window.requestAnimationFrame(() => {
+            element.appendChild(inner);
+            inner.appendChild(top);
+            inner.appendChild(bottom);
+            top.appendChild(topInner);
+            bottom.appendChild(bottomInner);
+            topInner.appendChild(topText);
+            bottomInner.appendChild(bottomText);
+        });
 
         this.element = element;
         this.inner = inner;
@@ -186,8 +237,10 @@ var Segment = (function () {
         nextStateIndex = (this.stateIndex + 1) % this.stateCount;
         var newText = this.stateText(nextStateIndex);
         var currentText = this.topText.innerHTML;
-        if (this.animationStyle == 1) {
+        if (this.animationStyle === 1) {
             this.animate1(currentText, newText, nextStateIndex, callback);
+        } else if (this.animationStyle === 2) {
+            this.animate2(currentText, newText, nextStateIndex, callback);
         } else {
             this.animate0(currentText, newText, nextStateIndex, callback);
         }
@@ -203,17 +256,21 @@ var Segment = (function () {
         this.topText.innerHTML = text;
         this.bottomText.innerHTML = text;
     };
+
     Segment.prototype.animate0 = function (currentText, newText, nextStateIndex, callback) {
         if (this.enableAudio) {
             this.audio.play();
         }
-        this.topText.innerHTML = newText;
-        this.bottomText.innerHTML = newText;
-        setTimeout(function () {
-            this.stateIndex = nextStateIndex;
-            this.setNextState(callback);
-        }.bind(this), Segment.transitionTime * 2);
+        requestAnimationFrame(() => {
+            this.topText.innerHTML = newText;
+            this.bottomText.innerHTML = newText;
+            setTimeout(function () {
+                this.stateIndex = nextStateIndex;
+                this.setNextState(callback);
+            }.bind(this), Segment.transitionTime * 2);
+        });
     };
+
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
         var flipTop         = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-top');
         var flipBottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-bottom');
@@ -221,32 +278,74 @@ var Segment = (function () {
         var flipBottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-flip-bottom-inner');
         var flipTopText     = E('span');
         var flipBottomText  = E('span');
-        flipTop.appendChild(flipTopInner);
-        flipBottom.appendChild(flipBottomInner);
-        flipTopInner.appendChild(flipTopText);
-        flipBottomInner.appendChild(flipBottomText);
-        this.inner.appendChild(flipTop);
-        this.inner.appendChild(flipBottom);
-        flipTopText.innerHTML = currentText;
-        flipBottomText.innerHTML = newText;
-        flipTop.style.display = 'inline-block';
-        this.topText.innerHTML = newText;
-        if (this.enableAudio) {
-            this.audio.play();
-        }
-        setTimeout(function () {
-            flipTopInner.removeChild(flipTopText);
-            this.inner.removeChild(flipTop);
-            flipBottom.style.display = 'inline-block';
+        window.requestAnimationFrame(() => {
+            flipTop.appendChild(flipTopInner);
+            flipBottom.appendChild(flipBottomInner);
+            flipTopInner.appendChild(flipTopText);
+            flipBottomInner.appendChild(flipBottomText);
+            this.inner.appendChild(flipTop);
+            this.inner.appendChild(flipBottom);
+            flipTopText.innerHTML = currentText;
+            flipBottomText.innerHTML = newText;
+            flipTop.style.display = 'inline-block';
+            this.topText.innerHTML = newText;
+            if (this.enableAudio) {
+                this.audio.play();
+            }
             setTimeout(function () {
-                flipBottomInner.removeChild(flipBottomText);
-                this.inner.removeChild(flipBottom);
+                flipTopInner.removeChild(flipTopText);
+                this.inner.removeChild(flipTop);
+                flipBottom.style.display = 'inline-block';
+                setTimeout(function () {
+                    flipBottomInner.removeChild(flipBottomText);
+                    this.inner.removeChild(flipBottom);
+                    this.bottomText.innerHTML = newText;
+                    this.stateIndex = nextStateIndex;
+                    this.setNextState(callback);
+                }.bind(this), Segment.transitionTime);
+            }.bind(this), Segment.transitionTime);
+        });
+    };
+
+    Segment.prototype.animate2 = function (currentText, newText, nextStateIndex, callback) {
+        var animatedPiece = E('span', 'flip-clock-segment-animated');
+        var obverse       = E('span', '--obverse');
+        var reverse       = E('span', '--reverse');
+        var obverseInner  = E('span', '--inner');
+        var reverseInner  = E('span', '--inner');
+        window.requestAnimationFrame(() => {
+            animatedPiece.appendChild(obverse);
+            animatedPiece.appendChild(reverse);
+            obverse.appendChild(obverseInner);
+            reverse.appendChild(reverseInner);
+            obverseInner.innerHTML = currentText;
+            reverseInner.innerHTML = newText;
+            this.inner.appendChild(animatedPiece);
+            this.topText.innerHTML = newText;
+            if (nextStateIndex !== this.desiredState) {
+                animatedPiece.classList.add('--rushed');
+            }
+            animatedPiece.classList.add('--visible');
+            var complete = () => {
                 this.bottomText.innerHTML = newText;
+                animatedPiece.parentNode.removeChild(animatedPiece);
                 this.stateIndex = nextStateIndex;
                 this.setNextState(callback);
-            }.bind(this), Segment.transitionTime);
-        }.bind(this), Segment.transitionTime);
+            };
+            var handler;
+            handler = () => {
+                animatedPiece.removeEventListener(transitionEndEventName, handler);
+                animatedPiece.removeEventListener(transitionCancelEventName, handler);
+                complete();
+            };
+            animatedPiece.addEventListener(transitionEndEventName, handler);
+            animatedPiece.addEventListener(transitionCancelEventName, handler);
+            window.requestAnimationFrame(() => {
+                animatedPiece.classList.add('--down');
+            });
+        });
     };
+
     Segment.prototype.set24Hour = function (flag) {
         this.isTwelveHour = !flag;
         this.addOrRemove12HourClass();
@@ -306,7 +405,6 @@ var FlipClock = (function () {
         this.elements.epoch  = Array.from(element.querySelectorAll('[data-flip-clock-epoch]'));
 
         if (this.elements.year) {
-            console.log('year');
             this.segmentArray.push(
                 this.segments.year = new Segment({
                     digitCount: 4,
