@@ -7,7 +7,7 @@
         <title>Flip Clock</title>
         <link rel="stylesheet" href="node_modules/foundation-sites/dist/css/foundation.min.css">
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
-        <link rel="stylesheet" href="flipclock.css">
+        <link rel="stylesheet" href="flip-clock.css">
     </head>
     <body>
 
@@ -75,7 +75,7 @@
 
         <div class="bottom-left-buttons">
             <!-- &zwj; shuts up a tidy warning -->
-            <button class="happy-button" data-flipclock-happy><i class="fas fa-smile">&zwj;</i></button>
+            <button class="happy-button" data-flip-clock-happy><i class="fas fa-smile">&zwj;</i></button>
         </div>
 
         <div class="reveal settings-modal" id="settings-modal" data-reveal>
@@ -87,19 +87,19 @@
                     <div class="small-12 medium-4 cell">
                         <label>
                             Foreground
-                            <input type="color" name="foreground-color" data-flipclock-segment-foreground-color>
+                            <input type="color" name="foreground-color" data-flip-clock-segment-foreground-color>
                         </label>
                     </div>
                     <div class="small-6 medium-4 cell">
                         <label>
                             Flip Segments
-                            <input type="color" name="flip-segment-color" data-flipclock-segment-background-color>
+                            <input type="color" name="flip-segment-color" data-flip-clock-segment-background-color>
                         </label>
                     </div>
                     <div class="small-6 medium-4 cell">
                         <label>
                             Background
-                            <input type="color" name="background-color" data-flipclock-background-color>
+                            <input type="color" name="background-color" data-flip-clock-background-color>
                         </label>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     <div class="small-12 medium-6 cell">
                         <label>
                             Font Family
-                            <select name="font-family" data-flipclock-font-family>
+                            <select name="font-family" data-flip-clock-font-family>
                                 <option value="Helvetica Neue, Helvetica, Arial, sans-serif">Helvetica Neue, Helvetica, Arial</option>
                                 <option value="Arial, sans-serif">Arial</option>
                                 <option data-fake-italic value="Arial Black, sans-serif">Arial Black</option>
@@ -125,7 +125,7 @@
                     <div class="small-6 medium-3 cell">
                         <label>
                             Weight
-                            <select name="font-style" data-flipclock-font-weight>
+                            <select name="font-style" data-flip-clock-font-weight>
                                 <option value="100">Thin</option>
                                 <option value="200">Extra Light</option>
                                 <option value="300">Light</option>
@@ -141,7 +141,7 @@
                     <div class="small-6 medium-3 cell">
                         <label>
                             Style
-                            <select name="font-style" data-flipclock-font-style>
+                            <select name="font-style" data-flip-clock-font-style>
                                 <option value="normal">normal</option>
                                 <option value="italic">italic</option>
                                 <option value="oblique">oblique</option>
@@ -152,11 +152,11 @@
                 <div class="grid-x grid-padding-x">
                     <div class="small-12 cell">
                         <label>
-                            <input type="checkbox" name="twenty-four-hour" value="true" data-flipclock-twenty-four-hour>
+                            <input type="checkbox" name="twenty-four-hour" value="true" data-flip-clock-twenty-four-hour>
                             24-Hour
                         </label>
                         <label>
-                            <input type="checkbox" name="enable-audio" value="true" data-flipclock-enable-audio>
+                            <input type="checkbox" name="enable-audio" value="true" data-flip-clock-enable-audio>
                             Audio
                         </label>
                     </div>
@@ -164,7 +164,7 @@
                 <div class="grid-x grid-padding-x">
                     <div class="small-12 cell">
                         <div class="text-right">
-                            <button data-flipclock-set-defaults class="button">Set Defaults</button>
+                            <button data-flip-clock-set-defaults class="button">Set Defaults</button>
                         </div>
                     </div>
                 </div>
@@ -178,8 +178,8 @@
             $(document).foundation();
         </script>
 
-        <script src="flipclock.js"></script>
-        <script src="flipclock-page.js"></script>
+        <script src="flip-clock.js"></script>
+        <script src="flip-clock-page.js"></script>
 
     </body>
 </html>
