@@ -110,7 +110,8 @@ body {
 }
 
 .segment.segment-twelve-hour .segment-inner::before {
-    content: "00.";             /* extra room for 'am'/'pm' indicator */
+    content: "00";             /* extra room for 'am'/'pm' indicator */
+    letter-spacing: 0.1em;
 }
 
 .segment-hour        .segment-inner::before { content: '00'; }
