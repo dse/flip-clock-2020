@@ -71,9 +71,9 @@ var Segment = (function () {
         }
 
         if (element) {
-            element.classList.add('segment');
+            element.classList.add('flip-clock-segment');
         } else {
-            element = E('span', 'segment');
+            element = E('span', 'flip-clock-segment');
         }
 
         if (!("idCounter" in Segment)) {
@@ -85,11 +85,11 @@ var Segment = (function () {
         element.setAttribute('data-segment-id', Segment.idCounter);
         Segment.segmentsById[Segment.idCounter] = this;
 
-        var inner       = E('span', 'segment-inner');
-        var top         = E('span', 'segment-piece segment-top');
-        var bottom      = E('span', 'segment-piece segment-bottom');
-        var topInner    = E('span', 'segment-piece-inner segment-top-inner');
-        var bottomInner = E('span', 'segment-piece-inner segment-bottom-inner');
+        var inner       = E('span', 'flip-clock-segment-inner');
+        var top         = E('span', 'flip-clock-segment-piece flip-clock-segment-top');
+        var bottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-bottom');
+        var topInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-top-inner');
+        var bottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-bottom-inner');
 
         var topText    = E('span');
         var bottomText = E('span');
@@ -119,7 +119,7 @@ var Segment = (function () {
         this.addOrRemove12HourClass();
     }
     Segment.prototype.addOrRemove12HourClass = function () {
-        this.element.classList[this.isTwelveHour ? 'add' : 'remove']('segment-twelve-hour');
+        this.element.classList[this.isTwelveHour ? 'add' : 'remove']('flip-clock-segment-twelve-hour');
     };
     Segment.prototype.setDesiredValue = function (value, delay, callback) {
         if ('startAt' in this) {
@@ -199,10 +199,10 @@ var Segment = (function () {
         this.bottomText.innerHTML = text;
     };
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
-        var flipTop         = E('span', 'segment-piece segment-fliptop');
-        var flipBottom      = E('span', 'segment-piece segment-flipbottom');
-        var flipTopInner    = E('span', 'segment-piece-inner segment-fliptop-inner');
-        var flipBottomInner = E('span', 'segment-piece-inner segment-flipbottom-inner');
+        var flipTop         = E('span', 'flip-clock-segment-piece flip-clock-segment-fliptop');
+        var flipBottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-flipbottom');
+        var flipTopInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-fliptop-inner');
+        var flipBottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-flipbottom-inner');
         var flipTopText     = E('span');
         var flipBottomText  = E('span');
         flipTop.appendChild(flipTopInner);

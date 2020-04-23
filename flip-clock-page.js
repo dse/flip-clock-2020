@@ -9,7 +9,7 @@ var FlipClockPage = {
     },
     addEvents: function () {
         document.addEventListener('click', function (event) {
-            var element = event.target.closest('.segment');
+            var element = event.target.closest('.flip-clock-segment');
             if (!element) {
                 return;
             }

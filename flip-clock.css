@@ -77,14 +77,14 @@ body {
     padding: var(--flip-clock-window-padding);
 }
 
-.segment {
+.flip-clock-segment {
     display: inline-block;
     color: transparent;
 }
-.segment + .segment {
+.flip-clock-segment + .flip-clock-segment {
     margin-left: var(--flip-clock-gutter);
 }
-.segment.segment-twelve-hour .ampm {
+.flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
     position: absolute;
     bottom: 25%;
     transform: translateY(50%);
@@ -92,16 +92,16 @@ body {
     font-size: 25%;
     text-align: left;
 }
-.segment.segment-twelve-hour .segment-piece {
+.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece {
     text-align: right;
 }
 
-.segment-inner {
+.flip-clock-segment-inner {
     display: inline-block;
     position: relative;
 }
 
-.segment-inner::before {
+.flip-clock-segment-inner::before {
     content: "00";
     padding-left: calc(var(--segment-horizontal-padding) +
                        var(--segment-border-radius));
@@ -109,21 +109,21 @@ body {
                         var(--segment-border-radius));
 }
 
-.segment.segment-twelve-hour .segment-inner::before {
+.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
     content: "00";             /* extra room for 'am'/'pm' indicator */
     letter-spacing: 0.1em;
 }
 
-.segment-hour        .segment-inner::before { content: '00'; }
-.segment-minute      .segment-inner::before { content: '00'; }
-.segment-second      .segment-inner::before { content: '00'; }
-.segment-year        .segment-inner::before { content: '0000'; }
-.segment-month       .segment-inner::before { content: 'XXXX'; }
-.segment-date        .segment-inner::before { content: '00'; }
-.segment-day         .segment-inner::before { content: 'XXXX'; }
-.segment-epoch-digit .segment-inner::before { content: '0'; }
+.flip-clock-segment-hour        .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-minute      .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-second      .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-year        .flip-clock-segment-inner::before { content: '0000'; }
+.flip-clock-segment-month       .flip-clock-segment-inner::before { content: 'XXXX'; }
+.flip-clock-segment-date        .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-day         .flip-clock-segment-inner::before { content: 'XXXX'; }
+.flip-clock-segment-epoch-digit .flip-clock-segment-inner::before { content: '0'; }
 
-.segment-piece {
+.flip-clock-segment-piece {
     position: absolute;
     top: 0;
     left: 0;
@@ -134,23 +134,23 @@ body {
     border-radius: var(--segment-border-radius);
 }
 
-.segment-top,
-.segment-fliptop {
+.flip-clock-segment-top,
+.flip-clock-segment-fliptop {
     clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
 }
 
-.segment-bottom,
-.segment-flipbottom {
+.flip-clock-segment-bottom,
+.flip-clock-segment-flipbottom {
     clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
 }
 
-.segment-fliptop,
-.segment-flipbottom {
+.flip-clock-segment-fliptop,
+.flip-clock-segment-flipbottom {
     display: none;
     transform: scaleY(0.75);
 }
 
-.segment-piece-inner {
+.flip-clock-segment-piece-inner {
     display: inline-block;
     width: 100%;
     background-color: var(--segment-background-color);
@@ -162,12 +162,12 @@ body {
                         var(--segment-border-radius));
 }
 
-.segment-top-inner,
-.segment-fliptop-inner {
+.flip-clock-segment-top-inner,
+.flip-clock-segment-fliptop-inner {
     opacity: var(--segment-opacity-top);
 }
-.segment-bottom-inner,
-.segment-flipbottom-inner {
+.flip-clock-segment-bottom-inner,
+.flip-clock-segment-flipbottom-inner {
     opacity: var(--segment-opacity-bottom);
 }
 
@@ -194,13 +194,13 @@ body {
     text-shadow: inherit;
 }
 
-.flip-clock.with-fake-italic.with-font-style--italic  .segment-inner::before,
-.flip-clock.with-fake-italic.with-font-style--oblique .segment-inner::before {
+.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
+.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
     padding-right: calc(var(--segment-horizontal-padding) +
                         var(--segment-fake-italic-horizontal-padding));
 }
 
-.flip-clock.with-fake-italic.with-font-style--italic  .segment-piece-inner,
-.flip-clock.with-fake-italic.with-font-style--oblique .segment-piece-inner {
+.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
+.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
     padding-right: var(--segment-fake-italic-horizontal-padding);
 }
