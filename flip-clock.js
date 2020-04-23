@@ -35,6 +35,7 @@ var Ticker = (function () {
 
 var Segment = (function () {
     function Segment(options) {
+        this.animationStyle = 0;
         this.digitCount = options.digitCount;
         this.flipClock = options.flipClock;
         this.enableAudio = false;
@@ -239,6 +240,9 @@ var Segment = (function () {
     Segment.prototype.setEnableAudio = function (flag) {
         this.enableAudio = !!flag;
     };
+    Segment.prototype.setAnimationStyle = function (index) {
+        this.animationStyle = index;
+    };
 
     Segment.transitionTime = 50;
 
@@ -275,6 +279,7 @@ var FlipClock = (function () {
 
         this.elements = {};
         this.segments = {};
+        this.segmentArray = [];
 
         this.elements.year   = element.querySelector('[data-flip-clock-year]');
         this.elements.month  = element.querySelector('[data-flip-clock-month]');
@@ -287,81 +292,95 @@ var FlipClock = (function () {
 
         if (this.elements.year) {
             console.log('year');
-            this.segments.year = new Segment({
-                digitCount: 4,
-                startAt: 2000,
-                endAt: 2049,
-                element: this.elements.year,
-                flipClock: this
-            });
+            this.segmentArray.push(
+                this.segments.year = new Segment({
+                    digitCount: 4,
+                    startAt: 2000,
+                    endAt: 2049,
+                    element: this.elements.year,
+                    flipClock: this
+                })
+            );
         }
         if (this.elements.month) {
-            this.segments.month = new Segment({
-                states: [
-                    'JAN',
-                    'FEB',
-                    'MAR',
-                    'APR',
-                    'MAY',
-                    'JUN',
-                    'JUL',
-                    'AUG',
-                    'SEP',
-                    'OCT',
-                    'NOV',
-                    'DEC'
-                ],
-                element: this.elements.month,
-                flipClock: this
-            });
+            this.segmentArray.push(
+                this.segments.month = new Segment({
+                    states: [
+                        'JAN',
+                        'FEB',
+                        'MAR',
+                        'APR',
+                        'MAY',
+                        'JUN',
+                        'JUL',
+                        'AUG',
+                        'SEP',
+                        'OCT',
+                        'NOV',
+                        'DEC'
+                    ],
+                    element: this.elements.month,
+                    flipClock: this
+                })
+            );
         }
         if (this.elements.date) {
-            this.segments.date = new Segment({
-                startAt: 1,
-                endAt: 31,
-                element: this.elements.date,
-                flipClock: this
-            });
+            this.segmentArray.push(
+                this.segments.date = new Segment({
+                    startAt: 1,
+                    endAt: 31,
+                    element: this.elements.date,
+                    flipClock: this
+                })
+            );
         }
         if (this.elements.day) {
-            this.segments.day = new Segment({
-                states: [
-                    'SUN',
-                    'MON',
-                    'TUE',
-                    'WED',
-                    'THU',
-                    'FRI',
-                    'SAT'
-                ],
-                element: this.elements.day,
-                flipClock: this
-            });
+            this.segmentArray.push(
+                this.segments.day = new Segment({
+                    states: [
+                        'SUN',
+                        'MON',
+                        'TUE',
+                        'WED',
+                        'THU',
+                        'FRI',
+                        'SAT'
+                    ],
+                    element: this.elements.day,
+                    flipClock: this
+                })
+            );
         }
         if (this.elements.hour) {
-            this.segments.hour = new Segment({
-                isTwelveHour: !this.is24Hour,
-                digitCount: 2,
-                stateCount: 24,
-                element: this.elements.hour,
-                flipClock: this
-            });
+            this.segmentArray.push(
+                this.segments.hour = new Segment({
+                    isTwelveHour: !this.is24Hour,
+                    digitCount: 2,
+                    stateCount: 24,
+                    element: this.elements.hour,
+                    flipClock: this
+                })
+            );
         }
         if (this.elements.minute) {
-            this.segments.minute = new Segment({
-                digitCount: 2,
-                stateCount: 60,
-                element: this.elements.minute,
-                flipClock: this
-            });
+            this.segmentArray.push(
+                this.segments.minute = new Segment({
+                    digitCount: 2,
+                    stateCount: 60,
+                    element: this.elements.minute,
+                    flipClock: this
+                })
+            );
         }
         if (this.elements.second) {
-            this.segments.second = new Segment({
-                digitCount: 2,
-                stateCount: 60,
-                element: this.elements.second,
-                flipClock: this
-            });
+            this.segmentArray.push(
+                this.segments.second = new Segment({
+                    digitCount: 2,
+                    stateCount: 60,
+                    element: this.elements.second,
+                    flipClock: this
+                })
+            );
         }
 
         var i;
@@ -369,12 +388,14 @@ var FlipClock = (function () {
         if (epochWindow) {
             this.segments.epoch = [];
             this.elements.epoch.forEach(function (element) {
-                this.segments.epoch.push(new Segment({
+                var segment = new Segment({
                     digitCount: 1,
                     stateCount: 10,
                     element: element,
                     flipClock: this
-                }));
+                });
+                this.segments.epoch.push(segment);
+                this.segmentArray.push(segment);
             }.bind(this));
         }
 
@@ -406,57 +427,15 @@ var FlipClock = (function () {
     FlipClock.segmentDelay = 50;
 
     FlipClock.prototype.refresh = function () {
-        if (this.segments.year) {
-            this.segments.year.refresh();
-        }
-        if (this.segments.month) {
-            this.segments.month.refresh();
-        }
-        if (this.segments.date) {
-            this.segments.date.refresh();
-        }
-        if (this.segments.day) {
-            this.segments.day.refresh();
-        }
-        if (this.segments.hour) {
-            this.segments.hour.refresh();
-        }
-        if (this.segments.minute) {
-            this.segments.minute.refresh();
-        }
-        if (this.segments.second) {
-            this.segments.second.refresh();
-        }
-        this.segments.epoch.forEach(function (segment) {
+        this.segmentArray.forEach(function (segment) {
             segment.refresh();
-        });
+        }.bind(this));
     };
 
     FlipClock.prototype.setEnableAudio = function (flag) {
-        if (this.segments.year) {
-            this.segments.year.setEnableAudio(flag);
-        }
-        if (this.segments.month) {
-            this.segments.month.setEnableAudio(flag);
-        }
-        if (this.segments.date) {
-            this.segments.date.setEnableAudio(flag);
-        }
-        if (this.segments.day) {
-            this.segments.day.setEnableAudio(flag);
-        }
-        if (this.segments.hour) {
-            this.segments.hour.setEnableAudio(flag);
-        }
-        if (this.segments.minute) {
-            this.segments.minute.setEnableAudio(flag);
-        }
-        if (this.segments.second) {
-            this.segments.second.setEnableAudio(flag);
-        }
-        this.segments.epoch.forEach(function (segment) {
+        this.segmentArray.forEach(function (segment) {
             segment.setEnableAudio(flag);
-        });
+        }.bind(this));
     };
 
     FlipClock.prototype.set24Hour = function (flag) {
@@ -498,28 +477,7 @@ var FlipClock = (function () {
     };
 
     FlipClock.prototype.flipWrap = function () {
-        if (this.segments.year) {
-            this.segments.year.flipWrap();
-        }
-        if (this.segments.month) {
-            this.segments.month.flipWrap();
-        }
-        if (this.segments.date) {
-            this.segments.date.flipWrap();
-        }
-        if (this.segments.day) {
-            this.segments.day.flipWrap();
-        }
-        if (this.segments.hour) {
-            this.segments.hour.flipWrap();
-        }
-        if (this.segments.minute) {
-            this.segments.minute.flipWrap();
-        }
-        if (this.segments.second) {
-            this.segments.second.flipWrap();
-        }
-        this.segments.epoch.forEach(function (segment) {
+        this.segmentArray.forEach(function (segment) {
             segment.flipWrap();
         });
     };
