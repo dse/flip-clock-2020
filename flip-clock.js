@@ -35,7 +35,7 @@ var Ticker = (function () {
 
 var Segment = (function () {
     function Segment(options) {
-        this.animationStyle = 0;
+        this.animationStyle = 1;
         this.digitCount = options.digitCount;
         this.flipClock = options.flipClock;
         this.enableAudio = false;
@@ -186,7 +186,11 @@ var Segment = (function () {
         nextStateIndex = (this.stateIndex + 1) % this.stateCount;
         var newText = this.stateText(nextStateIndex);
         var currentText = this.topText.innerHTML;
-        this.animate1(currentText, newText, nextStateIndex, callback);
+        if (this.animationStyle == 1) {
+            this.animate1(currentText, newText, nextStateIndex, callback);
+        } else {
+            this.animate0(currentText, newText, nextStateIndex, callback);
+        }
     };
     Segment.prototype.flipWrap = function () {
         var thisState = this.stateIndex;
@@ -198,6 +202,17 @@ var Segment = (function () {
         var text = this.stateText(this.stateIndex);
         this.topText.innerHTML = text;
         this.bottomText.innerHTML = text;
+    };
+    Segment.prototype.animate0 = function (currentText, newText, nextStateIndex, callback) {
+        if (this.enableAudio) {
+            this.audio.play();
+        }
+        this.topText.innerHTML = newText;
+        this.bottomText.innerHTML = newText;
+        setTimeout(function () {
+            this.stateIndex = nextStateIndex;
+            this.setNextState(callback);
+        }.bind(this), Segment.transitionTime * 2);
     };
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
         var flipTop         = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-top');
@@ -435,6 +450,12 @@ var FlipClock = (function () {
     FlipClock.prototype.setEnableAudio = function (flag) {
         this.segmentArray.forEach(function (segment) {
             segment.setEnableAudio(flag);
+        }.bind(this));
+    };
+
+    FlipClock.prototype.setAnimationStyle = function (flag) {
+        this.segmentArray.forEach(function (segment) {
+            segment.setAnimationStyle(flag);
         }.bind(this));
     };
 
