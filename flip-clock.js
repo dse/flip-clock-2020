@@ -86,10 +86,10 @@ var Segment = (function () {
         Segment.segmentsById[Segment.idCounter] = this;
 
         var inner       = E('span', 'flip-clock-segment-inner');
-        var top         = E('span', 'flip-clock-segment-piece flip-clock-segment-top');
-        var bottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-bottom');
-        var topInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-top-inner');
-        var bottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-bottom-inner');
+        var top         = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-top');
+        var bottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-bottom');
+        var topInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-top-inner');
+        var bottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-bottom-inner');
 
         var topText    = E('span');
         var bottomText = E('span');
@@ -199,10 +199,10 @@ var Segment = (function () {
         this.bottomText.innerHTML = text;
     };
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
-        var flipTop         = E('span', 'flip-clock-segment-piece flip-clock-segment-fliptop');
-        var flipBottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-flipbottom');
-        var flipTopInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-fliptop-inner');
-        var flipBottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-flipbottom-inner');
+        var flipTop         = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-top');
+        var flipBottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-bottom');
+        var flipTopInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-flip-top-inner');
+        var flipBottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-flip-bottom-inner');
         var flipTopText     = E('span');
         var flipBottomText  = E('span');
         flipTop.appendChild(flipTopInner);

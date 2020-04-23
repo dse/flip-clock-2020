@@ -134,18 +134,18 @@ body {
     border-radius: var(--segment-border-radius);
 }
 
-.flip-clock-segment-top,
-.flip-clock-segment-fliptop {
+.flip-clock-segment-piece-top,
+.flip-clock-segment-piece-flip-top {
     clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
 }
 
-.flip-clock-segment-bottom,
-.flip-clock-segment-flipbottom {
+.flip-clock-segment-piece-bottom,
+.flip-clock-segment-piece-flip-bottom {
     clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
 }
 
-.flip-clock-segment-fliptop,
-.flip-clock-segment-flipbottom {
+.flip-clock-segment-piece-flip-top,
+.flip-clock-segment-piece-flip-bottom {
     display: none;
     transform: scaleY(0.75);
 }
@@ -162,12 +162,12 @@ body {
                         var(--segment-border-radius));
 }
 
-.flip-clock-segment-top-inner,
-.flip-clock-segment-fliptop-inner {
+.flip-clock-segment-piece-top-inner,
+.flip-clock-segment-piece-flip-top-inner {
     opacity: var(--segment-opacity-top);
 }
-.flip-clock-segment-bottom-inner,
-.flip-clock-segment-flipbottom-inner {
+.flip-clock-segment-piece-bottom-inner,
+.flip-clock-segment-piece-flip-bottom-inner {
     opacity: var(--segment-opacity-bottom);
 }
 
