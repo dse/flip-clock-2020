@@ -3,7 +3,7 @@ var FlipClockPage = {
     fontStyle: 'normal',
     init: function () {
         this.flipClock = new FlipClock('flip-clock');
-        this.flipClock.setAnimationStyle(2);
+        this.flipClock.setAnimationStyle(1);
         this.setPropertiesFromStorage();
         this.setFormValues();
         this.addEvents();
