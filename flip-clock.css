@@ -171,6 +171,17 @@ body {
     opacity: var(--segment-opacity-bottom);
 }
 
+.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
+.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
+    padding-right: calc(var(--segment-horizontal-padding) +
+                        var(--segment-fake-italic-horizontal-padding));
+}
+
+.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
+.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
+    padding-right: var(--segment-fake-italic-horizontal-padding);
+}
+
 .bottom-left-buttons {
     position: fixed;
     bottom: 0.5rem;
@@ -192,15 +203,4 @@ body {
 .bottom-right-buttons button {
     color: inherit;
     text-shadow: inherit;
-}
-
-.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
-.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
-    padding-right: calc(var(--segment-horizontal-padding) +
-                        var(--segment-fake-italic-horizontal-padding));
-}
-
-.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
-.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
-    padding-right: var(--segment-fake-italic-horizontal-padding);
 }
