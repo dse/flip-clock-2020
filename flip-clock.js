@@ -20,9 +20,9 @@ var Ticker = (function () {
             date.setTime(date.getTime() + incrMS);
         }
         this.callback(date);
-        this.timeout = setTimeout(function () {
+        this.timeout = setTimeout(() => {
             this.start();
-        }.bind(this), 1000 - date.getTime() % 1000);
+        }, 1000 - date.getTime() % 1000);
     };
     Ticker.prototype.stop = function () {
         if (this.timeout) {
@@ -181,9 +181,9 @@ var Segment = (function () {
     };
     Segment.prototype.setDesiredState = function (stateIndex, delay, callback) {
         if (delay) {
-            setTimeout(function () {
+            setTimeout(() => {
                 this.setDesiredState(stateIndex, null, callback);
-            }.bind(this), delay);
+            }, delay);
             return;
         }
         this.desiredState = stateIndex;
@@ -247,9 +247,9 @@ var Segment = (function () {
     };
     Segment.prototype.flipWrap = function () {
         var thisState = this.stateIndex;
-        this.setNextState(function () {
+        this.setNextState(() => {
             this.setDesiredState(this.state);
-        }.bind(this));
+        });
     };
     Segment.prototype.refresh = function () {
         var text = this.stateText(this.stateIndex);
@@ -261,13 +261,13 @@ var Segment = (function () {
         if (this.enableAudio) {
             this.audio.play();
         }
-        requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
             this.topText.innerHTML = newText;
             this.bottomText.innerHTML = newText;
-            setTimeout(function () {
+            setTimeout(() => {
                 this.stateIndex = nextStateIndex;
                 this.setNextState(callback);
-            }.bind(this), Segment.transitionTime * 2);
+            }, Segment.transitionTime * 2);
         });
     };
 
@@ -292,56 +292,64 @@ var Segment = (function () {
             if (this.enableAudio) {
                 this.audio.play();
             }
-            setTimeout(function () {
+            setTimeout(() => {
                 flipTopInner.removeChild(flipTopText);
                 this.inner.removeChild(flipTop);
                 flipBottom.style.display = 'inline-block';
-                setTimeout(function () {
+                setTimeout(() => {
                     flipBottomInner.removeChild(flipBottomText);
                     this.inner.removeChild(flipBottom);
                     this.bottomText.innerHTML = newText;
                     this.stateIndex = nextStateIndex;
                     this.setNextState(callback);
-                }.bind(this), Segment.transitionTime);
-            }.bind(this), Segment.transitionTime);
+                }, Segment.transitionTime);
+            }, Segment.transitionTime);
         });
     };
 
+    var a = 0;
+    var b = 0;
+
     Segment.prototype.animate2 = function (currentText, newText, nextStateIndex, callback) {
-        var animatedPiece = E('span', 'flip-clock-segment-animated');
-        var obverse       = E('span', '--obverse');
-        var reverse       = E('span', '--reverse');
-        var obverseInner  = E('span', '--inner');
-        var reverseInner  = E('span', '--inner');
-        window.requestAnimationFrame(() => {
-            animatedPiece.appendChild(obverse);
-            animatedPiece.appendChild(reverse);
-            obverse.appendChild(obverseInner);
-            reverse.appendChild(reverseInner);
-            obverseInner.innerHTML = currentText;
-            reverseInner.innerHTML = newText;
-            this.inner.appendChild(animatedPiece);
-            this.topText.innerHTML = newText;
-            if (nextStateIndex !== this.desiredState) {
-                animatedPiece.classList.add('--rushed');
-            }
-            animatedPiece.classList.add('--visible');
-            var complete = () => {
-                this.bottomText.innerHTML = newText;
-                animatedPiece.parentNode.removeChild(animatedPiece);
-                this.stateIndex = nextStateIndex;
-                this.setNextState(callback);
-            };
-            var handler;
-            handler = () => {
-                animatedPiece.removeEventListener(transitionEndEventName, handler);
-                animatedPiece.removeEventListener(transitionCancelEventName, handler);
-                complete();
-            };
-            animatedPiece.addEventListener(transitionEndEventName, handler);
-            animatedPiece.addEventListener(transitionCancelEventName, handler);
+        if (!this.hasAnimatedPiece) {
+            this.hasAnimatedPiece = true;
+            this.animatedPiece = E('span', 'flip-clock-segment-animated');
+            this.obverse       = E('span', '--obverse');
+            this.reverse       = E('span', '--reverse');
+            this.obverseInner  = E('span', '--inner');
+            this.reverseInner  = E('span', '--inner');
+            this.animatedPiece.appendChild(this.obverse);
+            this.animatedPiece.appendChild(this.reverse);
+            this.obverse.appendChild(this.obverseInner);
+            this.reverse.appendChild(this.reverseInner);
+            this.inner.appendChild(this.animatedPiece);
+        }
+        var handler = () => {
+            this.animatedPiece.removeEventListener(transitionEndEventName, handler);
             window.requestAnimationFrame(() => {
-                animatedPiece.classList.add('--down');
+                this.bottomText.innerHTML = newText;
+                this.animatedPiece.classList.remove('--rushed');
+                this.animatedPiece.classList.remove('--visible');
+                this.animatedPiece.classList.remove('--down');
+                this.obverseInner.innerHTML = '';
+                this.reverseInner.innerHTML = '';
+                this.stateIndex = nextStateIndex;
+                window.requestAnimationFrame(() => {
+                    this.setNextState(callback);
+                });
+            });
+        };
+        this.animatedPiece.addEventListener(transitionEndEventName, handler);
+        requestAnimationFrame(() => {
+            if (nextStateIndex !== this.desiredState) {
+                this.animatedPiece.classList.add('--rushed');
+            }
+            this.obverseInner.innerHTML = currentText;
+            this.reverseInner.innerHTML = newText;
+            this.animatedPiece.classList.add('--visible');
+            this.topText.innerHTML = newText;
+            window.requestAnimationFrame(() => {
+                this.animatedPiece.classList.add('--down');
             });
         });
     };
@@ -500,7 +508,7 @@ var FlipClock = (function () {
         var epochWindow = element.querySelector('[data-flip-clock-epoch-window]');
         if (epochWindow) {
             this.segments.epoch = [];
-            this.elements.epoch.forEach(function (element) {
+            this.elements.epoch.forEach((element) => {
                 var segment = new Segment({
                     digitCount: 1,
                     stateCount: 10,
@@ -509,19 +517,19 @@ var FlipClock = (function () {
                 });
                 this.segments.epoch.push(segment);
                 this.segmentArray.push(segment);
-            }.bind(this));
+            });
         }
 
         this.segments.epoch.reverse();
 
-        ['year', 'month', 'date', 'day', 'hour', 'minute', 'second'].forEach(function (unit) {
+        ['year', 'month', 'date', 'day', 'hour', 'minute', 'second'].forEach((unit) => {
             var element = this.elements[unit];
             var segment = this.segments[unit];
             // parentNode tests are intended to test if in document's hierarchy
             if (segment && !element.parentNode) {
                 element.appendChild(segment);
             }
-        }.bind(this));
+        });
 
         this.segments.epoch.forEach(function (segment) {
             var element = segment.element;
@@ -540,21 +548,21 @@ var FlipClock = (function () {
     FlipClock.segmentDelay = 50;
 
     FlipClock.prototype.refresh = function () {
-        this.segmentArray.forEach(function (segment) {
+        this.segmentArray.forEach((segment) => {
             segment.refresh();
-        }.bind(this));
+        });
     };
 
     FlipClock.prototype.setEnableAudio = function (flag) {
-        this.segmentArray.forEach(function (segment) {
+        this.segmentArray.forEach((segment) => {
             segment.setEnableAudio(flag);
-        }.bind(this));
+        });
     };
 
     FlipClock.prototype.setAnimationStyle = function (flag) {
-        this.segmentArray.forEach(function (segment) {
+        this.segmentArray.forEach((segment) => {
             segment.setAnimationStyle(flag);
-        }.bind(this));
+        });
     };
 
     FlipClock.prototype.set24Hour = function (flag) {
@@ -588,7 +596,7 @@ var FlipClock = (function () {
         }
         var ms = Math.floor(date.getTime() / 1000);
         var delay = 1/3 * FlipClock.segmentDelay;
-        this.segments.epoch.forEach(function (segment) {
+        this.segments.epoch.forEach((segment) => {
             segment.setDesiredValue(ms % 10, delay);
             ms = Math.floor(ms / 10);
             delay += FlipClock.segmentDelay / 4;
@@ -596,7 +604,7 @@ var FlipClock = (function () {
     };
 
     FlipClock.prototype.flipWrap = function () {
-        this.segmentArray.forEach(function (segment) {
+        this.segmentArray.forEach((segment) => {
             segment.flipWrap();
         });
     };
