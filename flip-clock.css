@@ -73,18 +73,6 @@ body {
 .flip-clock-epoch-line {
     font-size: 5vw;
 }
-@supports not (content: 'green') {
-    /* default helv neue bold cond */
-    .flip-clock-date-line {
-        font-size: 8vw;
-    }
-    .flip-clock-time-line {
-        font-size: 20vw;
-    }
-    .flip-clock-epoch-line {
-        font-size: 8vw;
-    }
-}
 
 /* horizontal layout */
 .flip-clock-line {
@@ -156,61 +144,34 @@ body {
     display: inline-block;
     position: relative;
 }
-@supports not (content: 'green') {
-    .flip-clock-segment-inner {
-        width: 2ch;
-        height: 1em;
-    }
-}
 
-@supports (content: 'green') {
-    .flip-clock-segment-inner::before {
-        content: "00";
-        opacity: 0;
-        -webkit-opacity: 0;
-        padding-left: calc(1em / 12 + 1vw);
-        padding-right: calc(1em / 12 + 1vw);
-    }
+.flip-clock-segment-inner::before {
+    content: "00";
+    opacity: 0;
+    -webkit-opacity: 0;
+    padding-left: calc(1em / 12 + 1vw);
+    padding-right: calc(1em / 12 + 1vw);
 }
-@supports (--foo: green) and (content: 'green') {
+@supports (--foo: green) {
     .flip-clock-segment-inner::before {
         padding-left: var(--segment-horizontal-padding);
         padding-right: var(--segment-horizontal-padding);
     }
 }
 
-@supports (content: 'green') {
-    .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
-        content: "00";             /* extra room for 'am'/'pm' indicator */
-        letter-spacing: 0.1em;
-    }
-}
-@supports not (content: 'green') {
-    .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
-        width: 2.2ch;
-    }
+.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
+    content: "00";             /* extra room for 'am'/'pm' indicator */
+    letter-spacing: 0.1em;
 }
 
-@supports not (content: 'green') {
-    .flip-clock-segment-hour        .flip-clock-segment-inner { width: 2ch; }
-    .flip-clock-segment-minute      .flip-clock-segment-inner { width: 2ch; }
-    .flip-clock-segment-second      .flip-clock-segment-inner { width: 2ch; }
-    .flip-clock-segment-year        .flip-clock-segment-inner { width: 4ch; }
-    .flip-clock-segment-month       .flip-clock-segment-inner { width: 5ch; }
-    .flip-clock-segment-date        .flip-clock-segment-inner { width: 2ch; }
-    .flip-clock-segment-day         .flip-clock-segment-inner { width: 5ch; }
-    .flip-clock-segment-epoch-digit .flip-clock-segment-inner { width: 1ch; }
-}
-@supports (content: 'green') {
-    .flip-clock-segment-hour        .flip-clock-segment-inner::before { content: '00'; }
-    .flip-clock-segment-minute      .flip-clock-segment-inner::before { content: '00'; }
-    .flip-clock-segment-second      .flip-clock-segment-inner::before { content: '00'; }
-    .flip-clock-segment-year        .flip-clock-segment-inner::before { content: '0000'; }
-    .flip-clock-segment-month       .flip-clock-segment-inner::before { content: 'XXXX'; }
-    .flip-clock-segment-date        .flip-clock-segment-inner::before { content: '00'; }
-    .flip-clock-segment-day         .flip-clock-segment-inner::before { content: 'XXXX'; }
-    .flip-clock-segment-epoch-digit .flip-clock-segment-inner::before { content: '0'; }
-}
+.flip-clock-segment-hour        .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-minute      .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-second      .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-year        .flip-clock-segment-inner::before { content: '0000'; }
+.flip-clock-segment-month       .flip-clock-segment-inner::before { content: 'XXXX'; }
+.flip-clock-segment-date        .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-day         .flip-clock-segment-inner::before { content: 'XXXX'; }
+.flip-clock-segment-epoch-digit .flip-clock-segment-inner::before { content: '0'; }
 
 .flip-clock-segment-piece {
     position: absolute;
@@ -392,16 +353,14 @@ body {
     -webkit-transform: rotateX(360deg);
 }
 
-@supports (content: 'green') {
+.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
+.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
+    padding-right: 0.25em;
+}
+@supports (--foo: green) {
     .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
     .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
-        padding-right: 0.25em;
-    }
-    @supports (--foo: green) {
-        .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
-        .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
-            padding-right: var(--segment-fake-italic-horizontal-padding);
-        }
+        padding-right: var(--segment-fake-italic-horizontal-padding);
     }
 }
 
