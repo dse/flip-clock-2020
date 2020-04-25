@@ -1,28 +1,29 @@
-:root {
-    --flip-clock-window-padding: 1vw;
-    --flip-clock-gutter:         1vw;
-    --segment-border-radius:     1vw;
-    --flip-clock-border-radius:  2vw; /* --segment-border-radius + --flip-clock-window-padding */
-    --segment-opacity-top:       0.80;
-    --segment-opacity-bottom:    0.95;
-    --segment-horizontal-padding:             calc(1em / 12 + 1vw);
-    --segment-fake-italic-horizontal-padding: 0.25em;
-    --background-color:         #333333;
-    --segment-background-color: #333333;
-    --segment-foreground-color: #ffff66;
-    --font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    --font-weight: normal;
-    --font-style:  normal;
-    --transition-duration: 300ms;
-    --rushed-transition-duration: 50ms;
-}
-
-.flip-clock-epoch-window {
-    --flip-clock-window-padding:  0.5vw;
-    --flip-clock-gutter:          0.5vw;
-    --segment-border-radius:      0.5vw;
-    --segment-horizontal-padding: 0.5vw;
-    --flip-clock-border-radius:   1vw; /* --segment-border-radius + --flip-clock-window-padding */
+@supports (--foo: green) {
+    :root {
+        --flip-clock-window-padding: 1vw;
+        --flip-clock-gutter:         1vw;
+        --segment-border-radius:     1vw;
+        --flip-clock-border-radius:  2vw; /* --segment-border-radius + --flip-clock-window-padding */
+        --segment-opacity-top:       0.80;
+        --segment-opacity-bottom:    0.95;
+        --segment-horizontal-padding:             calc(1em / 12 + 1vw);
+        --segment-fake-italic-horizontal-padding: 0.25em;
+        --background-color:         #333333;
+        --segment-background-color: #333333;
+        --segment-foreground-color: #ffff66;
+        --font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+        --font-weight: normal;
+        --font-style:  normal;
+        --transition-duration: 300ms;
+        --rushed-transition-duration: 50ms;
+    }
+    .flip-clock-epoch-window {
+        --flip-clock-window-padding:  0.5vw;
+        --flip-clock-gutter:          0.5vw;
+        --segment-border-radius:      0.5vw;
+        --segment-horizontal-padding: 0.5vw;
+        --flip-clock-border-radius:   1vw; /* --segment-border-radius + --flip-clock-window-padding */
+    }
 }
 
 body {
