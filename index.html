@@ -10,10 +10,7 @@
 
         <title>Flip Clock</title>
 
-        <link rel="stylesheet" href="node_modules/foundation-sites/dist/css/foundation.min.css">
-        <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
-
-        <script src="node_modules/css-vars-ponyfill/css-vars-ponyfill.js"></script>
+        <script src="node_modules/css-vars-ponyfill/dist/css-vars-ponyfill.js"></script>
         <script>
             if (typeof cssVars !== 'undefined') {
                 cssVars({
@@ -21,6 +18,9 @@
                 });
             }
         </script>
+
+        <link rel="stylesheet" href="node_modules/foundation-sites/dist/css/foundation.min.css">
+        <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
 
         <script>
             var cachebuster = new Date().getTime();
