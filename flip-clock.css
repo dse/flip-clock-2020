@@ -392,7 +392,7 @@ body {
 .bottom-left-buttons,
 .bottom-right-buttons {
     color: white;
-    opacity: 0.25;
+    opacity: 0.1;
 }
 .bottom-left-buttons button,
 .bottom-right-buttons button {
