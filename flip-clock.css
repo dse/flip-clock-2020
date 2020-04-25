@@ -132,8 +132,8 @@ body {
     }
 }
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece,
-.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-animated > .--obverse,
-.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-animated > .--reverse {
+.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-animated > .x-obverse,
+.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-animated > .x-reverse {
     text-align: right;
 }
 
@@ -141,35 +141,61 @@ body {
     display: inline-block;
     position: relative;
 }
-
-.flip-clock-segment-inner::before {
-    content: "00";
-    opacity: 0;
-    -webkit-opacity: 0;
-
-    padding-left: calc(1em / 12 + 1vw);
-    padding-right: calc(1em / 12 + 1vw);
+@supports not (content: 'green') {
+    .flip-clock-segment-inner {
+        width: 2ch;
+        height: 1em;
+    }
 }
-@supports (--foo: green) {
+
+@supports (content: 'green') {
+    .flip-clock-segment-inner::before {
+        content: "00";
+        opacity: 0;
+        -webkit-opacity: 0;
+        padding-left: calc(1em / 12 + 1vw);
+        padding-right: calc(1em / 12 + 1vw);
+    }
+}
+@supports (--foo: green) and (content: 'green') {
     .flip-clock-segment-inner::before {
         padding-left: var(--segment-horizontal-padding);
         padding-right: var(--segment-horizontal-padding);
     }
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
-    content: "00";             /* extra room for 'am'/'pm' indicator */
-    letter-spacing: 0.1em;
+@supports (content: 'green') {
+    .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
+        content: "00";             /* extra room for 'am'/'pm' indicator */
+        letter-spacing: 0.1em;
+    }
+}
+@supports not (content: 'green') {
+    .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
+        width: 2.2ch;
+    }
 }
 
-.flip-clock-segment-hour        .flip-clock-segment-inner::before { content: '00'; }
-.flip-clock-segment-minute      .flip-clock-segment-inner::before { content: '00'; }
-.flip-clock-segment-second      .flip-clock-segment-inner::before { content: '00'; }
-.flip-clock-segment-year        .flip-clock-segment-inner::before { content: '0000'; }
-.flip-clock-segment-month       .flip-clock-segment-inner::before { content: 'XXXX'; }
-.flip-clock-segment-date        .flip-clock-segment-inner::before { content: '00'; }
-.flip-clock-segment-day         .flip-clock-segment-inner::before { content: 'XXXX'; }
-.flip-clock-segment-epoch-digit .flip-clock-segment-inner::before { content: '0'; }
+@supports not (content: 'green') {
+    .flip-clock-segment-hour        .flip-clock-segment-inner { width: 2ch; }
+    .flip-clock-segment-minute      .flip-clock-segment-inner { width: 2ch; }
+    .flip-clock-segment-second      .flip-clock-segment-inner { width: 2ch; }
+    .flip-clock-segment-year        .flip-clock-segment-inner { width: 4ch; }
+    .flip-clock-segment-month       .flip-clock-segment-inner { width: 5ch; }
+    .flip-clock-segment-date        .flip-clock-segment-inner { width: 2ch; }
+    .flip-clock-segment-day         .flip-clock-segment-inner { width: 5ch; }
+    .flip-clock-segment-epoch-digit .flip-clock-segment-inner { width: 1ch; }
+}
+@supports (content: 'green') {
+    .flip-clock-segment-hour        .flip-clock-segment-inner::before { content: '00'; }
+    .flip-clock-segment-minute      .flip-clock-segment-inner::before { content: '00'; }
+    .flip-clock-segment-second      .flip-clock-segment-inner::before { content: '00'; }
+    .flip-clock-segment-year        .flip-clock-segment-inner::before { content: '0000'; }
+    .flip-clock-segment-month       .flip-clock-segment-inner::before { content: 'XXXX'; }
+    .flip-clock-segment-date        .flip-clock-segment-inner::before { content: '00'; }
+    .flip-clock-segment-day         .flip-clock-segment-inner::before { content: 'XXXX'; }
+    .flip-clock-segment-epoch-digit .flip-clock-segment-inner::before { content: '0'; }
+}
 
 .flip-clock-segment-piece {
     position: absolute;
@@ -187,8 +213,8 @@ body {
         border-radius: var(--segment-border-radius);
     }
 }
-.flip-clock-segment-animated > .--obverse,
-.flip-clock-segment-animated > .--reverse {
+.flip-clock-segment-animated > .x-obverse,
+.flip-clock-segment-animated > .x-reverse {
     position: absolute;
     top: 0;
     left: 0;
@@ -200,8 +226,8 @@ body {
     border-radius: 1vw;
 }
 @supports (--foo: green) {
-    .flip-clock-segment-animated > .--obverse,
-    .flip-clock-segment-animated > .--reverse {
+    .flip-clock-segment-animated > .x-obverse,
+    .flip-clock-segment-animated > .x-reverse {
         border-radius: var(--segment-border-radius);
     }
 }
@@ -226,8 +252,8 @@ body {
 }
 
 .flip-clock-segment-piece-inner,
-.flip-clock-segment-animated > .--obverse > .--inner,
-.flip-clock-segment-animated > .--reverse > .--inner {
+.flip-clock-segment-animated > .x-obverse > .x-inner,
+.flip-clock-segment-animated > .x-reverse > .x-inner {
     display: inline-block;
     width: 100%;
     background-color: #333333;
@@ -238,8 +264,8 @@ body {
 }
 @supports (--foo: green) {
     .flip-clock-segment-piece-inner,
-    .flip-clock-segment-animated > .--obverse > .--inner,
-    .flip-clock-segment-animated > .--reverse > .--inner {
+    .flip-clock-segment-animated > .x-obverse > .x-inner,
+    .flip-clock-segment-animated > .x-reverse > .x-inner {
         background-color: var(--segment-background-color);
         color: var(--segment-foreground-color);
         border-radius: var(--segment-border-radius);
@@ -250,28 +276,28 @@ body {
 
 .flip-clock-segment-piece-top-inner,
 .flip-clock-segment-piece-flip-top-inner,
-.flip-clock-segment-animated > .--obverse > .--inner {
+.flip-clock-segment-animated > .x-obverse > .x-inner {
     opacity: 0.80;
     -webkit-opacity: 0.80;
 }
 @supports (--foo: green) {
     .flip-clock-segment-piece-top-inner,
     .flip-clock-segment-piece-flip-top-inner,
-    .flip-clock-segment-animated > .--obverse > .--inner {
+    .flip-clock-segment-animated > .x-obverse > .x-inner {
         opacity: var(--segment-opacity-top);
         -webkit-opacity: var(--segment-opacity-top);
     }
 }
 .flip-clock-segment-piece-bottom-inner,
 .flip-clock-segment-piece-flip-bottom-inner,
-.flip-clock-segment-animated > .--reverse > .--inner {
+.flip-clock-segment-animated > .x-reverse > .x-inner {
     opacity: 0.95;
     -webkit-opacity: 0.95;
 }
 @supports (--foo: green) {
     .flip-clock-segment-piece-bottom-inner,
     .flip-clock-segment-piece-flip-bottom-inner,
-    .flip-clock-segment-animated > .--reverse > .--inner {
+    .flip-clock-segment-animated > .x-reverse > .x-inner {
         opacity: var(--segment-opacity-bottom);
         -webkit-opacity: var(--segment-opacity-bottom);
     }
@@ -288,12 +314,12 @@ body {
     -webkit-opacity: 0;
     z-index: 1;
 }
-.flip-clock-segment-animated.--visible {
+.flip-clock-segment-animated.x-visible {
     opacity: 1;
     -webkit-opacity: 1;
 }
-.flip-clock-segment-animated > .--obverse,
-.flip-clock-segment-animated > .--reverse {
+.flip-clock-segment-animated > .x-obverse,
+.flip-clock-segment-animated > .x-reverse {
     backface-visibility:         hidden;
     -webkit-backface-visibility: hidden;
     position: absolute;
@@ -303,62 +329,64 @@ body {
     height: 100%;
     display: inline-block;
 }
-.flip-clock-segment-animated > .--obverse {
+.flip-clock-segment-animated > .x-obverse {
     transform:         rotateX(0deg);
     -webkit-transform: rotateX(0deg);
     clip-path:         polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
     -webkit-clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
 }
-.flip-clock-segment-animated > .--reverse {
+.flip-clock-segment-animated > .x-reverse {
     transform:         rotateX(180deg);
     -webkit-transform: rotateX(180deg);
     clip-path:         polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
     -webkit-clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
 }
 
-.flip-clock-segment-animated.--down:not(.--rushed) > .--obverse,
-.flip-clock-segment-animated.--down:not(.--rushed) > .--reverse {
+.flip-clock-segment-animated.x-down:not(.x-rushed) > .x-obverse,
+.flip-clock-segment-animated.x-down:not(.x-rushed) > .x-reverse {
     transition:         transform 150ms ease-in;
     -webkit-transition: transform 150ms ease-in;
 }
 @supports (--foo: green) {
-    .flip-clock-segment-animated.--down:not(.--rushed) > .--obverse,
-    .flip-clock-segment-animated.--down:not(.--rushed) > .--reverse {
+    .flip-clock-segment-animated.x-down:not(.x-rushed) > .x-obverse,
+    .flip-clock-segment-animated.x-down:not(.x-rushed) > .x-reverse {
         transition:         transform var(--transition-duration) ease-in;
         -webkit-transition: transform var(--transition-duration) ease-in;
     }
 }
 
-.flip-clock-segment-animated.--down.--rushed > .--obverse,
-.flip-clock-segment-animated.--down.--rushed > .--reverse {
+.flip-clock-segment-animated.x-down.x-rushed > .x-obverse,
+.flip-clock-segment-animated.x-down.x-rushed > .x-reverse {
     transition:         transform 50ms ease-in;
     -webkit-transition: transform 50ms ease-in;
 }
 @supports (--foo: green) {
-    .flip-clock-segment-animated.--down.--rushed > .--obverse,
-    .flip-clock-segment-animated.--down.--rushed > .--reverse {
+    .flip-clock-segment-animated.x-down.x-rushed > .x-obverse,
+    .flip-clock-segment-animated.x-down.x-rushed > .x-reverse {
         transition:         transform var(--rushed-transition-duration) ease-in;
         -webkit-transition: transform var(--rushed-transition-duration) ease-in;
     }
 }
 
-.flip-clock-segment-animated.--down > .--obverse {
+.flip-clock-segment-animated.x-down > .x-obverse {
     transform:         rotateX(180deg);
     -webkit-transform: rotateX(180deg);
 }
-.flip-clock-segment-animated.--down > .--reverse {
+.flip-clock-segment-animated.x-down > .x-reverse {
     transform:         rotateX(360deg);
     -webkit-transform: rotateX(360deg);
 }
 
-.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
-.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
-    padding-right: 0.25em;
-}
-@supports (--foo: green) {
+@supports (content: 'green') {
     .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
     .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
-        padding-right: var(--segment-fake-italic-horizontal-padding);
+        padding-right: 0.25em;
+    }
+    @supports (--foo: green) {
+        .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
+        .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
+            padding-right: var(--segment-fake-italic-horizontal-padding);
+        }
     }
 }
 
