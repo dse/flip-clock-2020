@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
+    "css-vars-ponyfill": "^2.2.1",
     "foundation-sites": "^6.6.3",
     "jquery": "^3.5.0",
     "what-input": "^5.2.7"
