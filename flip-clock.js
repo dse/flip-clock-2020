@@ -326,7 +326,7 @@ var Segment = (function () {
         }
         var handler = function () {
             this.animatedPiece.removeEventListener(transitionEndEventName, handler);
-            window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(function () {
                 this.bottomText.innerHTML = newText;
                 this.animatedPiece.classList.remove('--rushed');
                 this.animatedPiece.classList.remove('--visible');
@@ -334,10 +334,10 @@ var Segment = (function () {
                 this.obverseInner.innerHTML = '';
                 this.reverseInner.innerHTML = '';
                 this.stateIndex = nextStateIndex;
-                window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(function () {
                     this.setNextState(callback);
-                });
-            });
+                }.bind(this));
+            }.bind(this));
         }.bind(this);
         this.animatedPiece.addEventListener(transitionEndEventName, handler);
         requestAnimationFrame(function () {
