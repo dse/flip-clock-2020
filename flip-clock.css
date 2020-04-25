@@ -41,7 +41,7 @@ body {
     top: 50%;
     left: 0;
     width: 100%;
-    transform: translateY(-50%);
+    transform:         translateY(-50%);
     -webkit-transform: translateY(-50%);
     text-align: center;
     line-height: 1;
@@ -97,7 +97,7 @@ body {
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
     position: absolute;
     bottom: 25%;
-    transform: translateY(50%);
+    transform:         translateY(50%);
     -webkit-transform: translateY(50%);
     font-size: 25%;
     text-align: left;
@@ -168,18 +168,20 @@ body {
 
 .flip-clock-segment-piece-top,
 .flip-clock-segment-piece-flip-top {
-    clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+    clip-path:         polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+    -webkit-clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
 }
 
 .flip-clock-segment-piece-bottom,
 .flip-clock-segment-piece-flip-bottom {
-    clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
+    clip-path:         polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
+    -webkit-clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
 }
 
 .flip-clock-segment-piece-flip-top,
 .flip-clock-segment-piece-flip-bottom {
     display: none;
-    transform: scaleY(0.75);
+    transform:         scaleY(0.75);
     -webkit-transform: scaleY(0.75);
 }
 
@@ -240,12 +242,14 @@ body {
 .flip-clock-segment-animated > .--obverse {
     transform:         rotateX(0deg);
     -webkit-transform: rotateX(0deg);
-    clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+    clip-path:         polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+    -webkit-clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
 }
 .flip-clock-segment-animated > .--reverse {
     transform:         rotateX(180deg);
     -webkit-transform: rotateX(180deg);
-    clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
+    clip-path:         polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
+    -webkit-clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
 }
 .flip-clock-segment-animated.--down:not(.--rushed) > .--obverse,
 .flip-clock-segment-animated.--down:not(.--rushed) > .--reverse {
