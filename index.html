@@ -14,8 +14,12 @@
         <script>
             if (typeof cssVars !== 'undefined') {
                 cssVars({
-                    // Options...
+                    onComplete: function(cssText, styleNodes, cssVariables, benchmark) {
+                        console.log(cssText);
+                    }
                 });
+            } else {
+                console.error('cssVars not defined');
             }
         </script>
 
