@@ -301,10 +301,12 @@ body {
 .bottom-left-buttons,
 .bottom-right-buttons {
     color: white;
-    text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
+    text-shadow:         .125em .125em .125em rgba(0, 0, 0, 0.5);
+    -webkit-text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
 }
 .bottom-left-buttons button,
 .bottom-right-buttons button {
     color: inherit;
-    text-shadow: inherit;
+    text-shadow:         inherit;
+    -webkit-text-shadow: inherit;
 }
