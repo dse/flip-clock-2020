@@ -9,7 +9,7 @@ var FlipClockPage = {
         this.addEvents();
     },
     addEvents: function () {
-        document.addEventListener('click', function (event) {
+        var flipWrapHandler = (event) => {
             var element = event.target.closest('.flip-clock-segment');
             if (!element) {
                 return;
@@ -23,8 +23,8 @@ var FlipClockPage = {
                 return;
             }
             segment.flipWrap();
-        }.bind(this));
-        document.addEventListener('change', function (event) {
+        };
+        var formChangeHandler = (event) => {
             var style = document.documentElement.style;
             if (event.target.hasAttribute('data-flip-clock-segment-foreground-color')) {
                 style.setProperty('--segment-foreground-color', event.target.value);
@@ -57,8 +57,8 @@ var FlipClockPage = {
                 this.fontStyle = value;
                 this.addOrRemoveItalicClass();
             }
-        }.bind(this));
-        document.addEventListener('input', function (event) {
+        };
+        var formCheckboxHandler = (event) => {
             if (event.target.hasAttribute('data-flip-clock-twenty-four-hour')) {
                 var checked = event.target.checked; // is twenty-four hour?
                 console.log('SET ITEM flip-clock--twenty-four-hour => ' + JSON.stringify(checked));
@@ -70,21 +70,26 @@ var FlipClockPage = {
                 localStorage.setItem('flip-clock--enable-audio', JSON.stringify(checked));
                 this.flipClock.setEnableAudio(checked);
             }
-        }.bind(this));
-        document.addEventListener('click', function (event) {
+        };
+        var setDefaultsHandler = (event) => {
             if (!event.target.closest('[data-flip-clock-set-defaults]')) {
                 return;
             }
             this.setDefaults();
             event.preventDefault();
-        }.bind(this));
-        document.addEventListener('click', function (event) {
+        };
+        var happyHandler = (event) => {
             if (!event.target.closest('[data-flip-clock-happy]')) {
                 return;
             }
             this.flipClock.flipWrap();
             event.preventDefault();
-        }.bind(this));
+        };
+        document.addEventListener('click', flipWrapHandler);
+        document.addEventListener('change', formChangeHandler);
+        document.addEventListener('input', formCheckboxHandler);
+        document.addEventListener('click', setDefaultsHandler);
+        document.addEventListener('click', happyHandler);
     },
     setPropertiesFromStorage: function () {
         var style = document.documentElement.style;
