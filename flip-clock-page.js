@@ -46,6 +46,14 @@ var FlipClockPage = {
                 var value = event.target.options[event.target.selectedIndex].value;
                 this.fakeItalic = event.target.options[event.target.selectedIndex].hasAttribute('data-fake-italic');
                 this.addOrRemoveFakeItalicClass();
+                var multiply = Number(event.target.options[event.target.selectedIndex].getAttribute('data-font-size-multiply'));
+                Array.from(document.querySelectorAll('.flip-clock-line > .x-inner')).forEach(function (inner) {
+                    if (multiply) {
+                        inner.style.fontSize = (multiply * 100) + '%';
+                    } else {
+                        inner.style.fontSize = '';
+                    }
+                }.bind(this));
                 try { style.setProperty('--font-family', value); } catch (e) { }
                 try { localStorage.setItem('flip-clock--font-family', value); } catch (e) { }
                 event.preventDefault();
@@ -175,6 +183,15 @@ var FlipClockPage = {
                     option = this.setSelectValue(input, value);
                     this.fakeItalic = option.hasAttribute('data-fake-italic');
                     this.addOrRemoveFakeItalicClass();
+
+                    var multiply = Number(option.getAttribute('data-font-size-multiply'));
+                    Array.from(document.querySelectorAll('.flip-clock-line > .x-inner')).forEach(function (inner) {
+                        if (multiply) {
+                            inner.style.fontSize = (multiply * 100) + '%';
+                        } else {
+                            inner.style.fontSize = '';
+                        }
+                    }.bind(this));
                 } else {
                     this.setInputValue(input, value);
                 }

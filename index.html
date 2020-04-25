@@ -39,56 +39,62 @@
 
         <div data-flip-clock class="flip-clock" id="flip-clock">
             <div class="flip-clock-line flip-clock-date-line">
-                <div class="flip-clock-window flip-clock-date-window">
-                    <div data-flip-clock-day class="flip-clock-segment flip-clock-segment-day">
+                <div class="x-inner">
+                    <div class="flip-clock-window flip-clock-date-window">
+                        <div data-flip-clock-day class="flip-clock-segment flip-clock-segment-day">
+                        </div>
                     </div>
-                </div>
-                <div class="flip-clock-window flip-clock-date-window">
-                    <div data-flip-clock-month class="flip-clock-segment flip-clock-segment-month">
-                    </div>
-                    <div data-flip-clock-date class="flip-clock-segment flip-clock-segment-date">
-                    </div>
-                    <div data-flip-clock-year class="flip-clock-segment flip-clock-segment-year">
+                    <div class="flip-clock-window flip-clock-date-window">
+                        <div data-flip-clock-month class="flip-clock-segment flip-clock-segment-month">
+                        </div>
+                        <div data-flip-clock-date class="flip-clock-segment flip-clock-segment-date">
+                        </div>
+                        <div data-flip-clock-year class="flip-clock-segment flip-clock-segment-year">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="flip-clock-line flip-clock-time-line">
-                <div class="flip-clock-window flip-clock-time-window">
-                    <div data-flip-clock-hour class="flip-clock-segment flip-clock-segment-hour">
+                <div class="x-inner">
+                    <div class="flip-clock-window flip-clock-time-window">
+                        <div data-flip-clock-hour class="flip-clock-segment flip-clock-segment-hour">
+                        </div>
                     </div>
-                </div>
-                :
-                <div class="flip-clock-window flip-clock-time-window">
-                    <div data-flip-clock-minute class="flip-clock-segment flip-clock-segment-minute">
+                    :
+                    <div class="flip-clock-window flip-clock-time-window">
+                        <div data-flip-clock-minute class="flip-clock-segment flip-clock-segment-minute">
+                        </div>
                     </div>
-                </div>
-                :
-                <div class="flip-clock-window flip-clock-time-window">
-                    <div data-flip-clock-second class="flip-clock-segment flip-clock-segment-second">
+                    :
+                    <div class="flip-clock-window flip-clock-time-window">
+                        <div data-flip-clock-second class="flip-clock-segment flip-clock-segment-second">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="flip-clock-line flip-clock-epoch-line">
-                <div class="flip-clock-window flip-clock-epoch-window" data-flip-clock-epoch-window>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
-                    </div>
-                    <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                <div class="x-inner">
+                    <div class="flip-clock-window flip-clock-epoch-window" data-flip-clock-epoch-window>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
+                        <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,18 +141,18 @@
                             Font Family
                             <select name="font-family" data-flip-clock-font-family>
                                 <option value="Helvetica Neue, Helvetica, Arial, sans-serif">Helvetica Neue, ...</option>
-                                <option value="HelveticaNeue-CondensedBold, Helvetica, Arial, sans-serif">Helvetica Neue Condensed Bold, ...</option>
+                                <option data-font-size-multiply="1.15" value="HelveticaNeue-CondensedBold, Helvetica, Arial, sans-serif">Helvetica Neue Condensed Bold, ...</option>
                                 <option value="Arial, sans-serif">Arial</option>
-                                <option data-fake-italic value="Arial Black, sans-serif">Arial Black</option>
-                                <option data-fake-italic value="Comic Sans MS, fantasy">Comic Sans</option>
-                                <option value="Futura, sans-serif">Futura</option>
+                                <option data-font-size-multiply="0.85" data-fake-italic value="Arial Black, sans-serif">Arial Black</option>
+                                <option data-font-size-multiply="0.9" data-fake-italic value="Comic Sans MS, fantasy">Comic Sans</option>
+                                <option data-font-size-multiply="0.9" value="Futura, sans-serif">Futura</option>
                                 <option value="Helvetica Neue, sans-serif">Helvetica Neue</option>
-                                <option value="HelveticaNeue-CondensedBold, sans-serif">Helvetica Neue Condensed Bold</option>
-                                <option data-fake-italic value="Impact, sans-serif">Impact</option>
+                                <option data-font-size-multiply="1.15" value="HelveticaNeue-CondensedBold, sans-serif">Helvetica Neue Condensed Bold</option>
+                                <option data-font-size-multiply="1.05" data-fake-italic value="Impact, sans-serif">Impact</option>
                                 <option value="Optima, sans-serif">Optima</option>
                                 <option value="Times New Roman, serif">Times New Roman</option>
                                 <option value="Trebuchet MS, sans-serif">Trebuchet</option>
-                                <option value="Verdana, sans-serif">Verdana</option>
+                                <option data-font-size-multiply="0.85" value="Verdana, sans-serif">Verdana</option>
                             </select>
                         </label>
                     </div>
@@ -209,6 +215,9 @@
                     </div>
                 </div>
             </form>
+            <p style="font-size: smaller; opacity: 0.5;">
+                <script>document.write(navigator.userAgent);</script>
+            </p>
         </div>
 
         <script src="node_modules/jquery/dist/jquery.min.js"></script>
