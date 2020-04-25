@@ -73,6 +73,18 @@ body {
 .flip-clock-epoch-line {
     font-size: 5vw;
 }
+@supports not (content: 'green') {
+    /* default helv neue bold cond */
+    .flip-clock-date-line {
+        font-size: 8vw;
+    }
+    .flip-clock-time-line {
+        font-size: 20vw;
+    }
+    .flip-clock-epoch-line {
+        font-size: 8vw;
+    }
+}
 
 /* horizontal layout */
 .flip-clock-line {
