@@ -9,7 +9,7 @@ var FlipClockPage = {
         this.addEvents();
     },
     addEvents: function () {
-        var flipWrapHandler = (event) => {
+        var flipWrapHandler = function (event) {
             var element = event.target.closest('.flip-clock-segment');
             if (!element) {
                 return;
@@ -24,8 +24,8 @@ var FlipClockPage = {
             }
             segment.flipWrap();
             event.preventDefault();
-        };
-        var formChangeHandler = (event) => {
+        }.bind(this);
+        var formChangeHandler = function (event) {
             var style = document.documentElement.style;
             if (event.target.hasAttribute('data-flip-clock-segment-foreground-color')) {
                 try { style.setProperty('--segment-foreground-color', event.target.value); } catch (e) { }
@@ -64,8 +64,8 @@ var FlipClockPage = {
                 this.addOrRemoveItalicClass();
                 event.preventDefault();
             }
-        };
-        var formCheckboxHandler = (event) => {
+        }.bind(this);
+        var formCheckboxHandler = function (event) {
             if (event.target.hasAttribute('data-flip-clock-twenty-four-hour')) {
                 var checked = event.target.checked; // is twenty-four hour?
                 try { localStorage.setItem('flip-clock--twenty-four-hour', JSON.stringify(checked)); } catch (e) { }
@@ -78,21 +78,21 @@ var FlipClockPage = {
                 this.flipClock.setEnableAudio(checked);
                 event.preventDefault();
             }
-        };
-        var setDefaultsHandler = (event) => {
+        }.bind(this);
+        var setDefaultsHandler = function (event) {
             if (!event.target.closest('[data-flip-clock-set-defaults]')) {
                 return;
             }
             this.setDefaults();
             event.preventDefault();
-        };
-        var happyHandler = (event) => {
+        }.bind(this);
+        var happyHandler = function (event) {
             if (!event.target.closest('[data-flip-clock-happy]')) {
                 return;
             }
             this.flipClock.flipWrap();
             event.preventDefault();
-        };
+        }.bind(this);
         document.addEventListener('click', flipWrapHandler);
         document.addEventListener('change', formChangeHandler);
         document.addEventListener('input', formCheckboxHandler);

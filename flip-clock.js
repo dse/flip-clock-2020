@@ -20,9 +20,9 @@ var Ticker = (function () {
             date.setTime(date.getTime() + incrMS);
         }
         this.callback(date);
-        this.timeout = setTimeout(() => {
+        this.timeout = setTimeout(function () {
             this.start();
-        }, 1000 - date.getTime() % 1000);
+        }.bind(this), 1000 - date.getTime() % 1000);
     };
     Ticker.prototype.stop = function () {
         if (this.timeout) {
@@ -144,7 +144,7 @@ var Segment = (function () {
         var topText    = E('span');
         var bottomText = E('span');
 
-        window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(function () {
             element.appendChild(inner);
             inner.appendChild(top);
             inner.appendChild(bottom);
@@ -152,7 +152,7 @@ var Segment = (function () {
             bottom.appendChild(bottomInner);
             topInner.appendChild(topText);
             bottomInner.appendChild(bottomText);
-        });
+        }.bind(this));
 
         this.element = element;
         this.inner = inner;
@@ -181,9 +181,9 @@ var Segment = (function () {
     };
     Segment.prototype.setDesiredState = function (stateIndex, delay, callback) {
         if (delay) {
-            setTimeout(() => {
+            setTimeout(function () {
                 this.setDesiredState(stateIndex, null, callback);
-            }, delay);
+            }.bind(this), delay);
             return;
         }
         this.desiredState = stateIndex;
@@ -247,9 +247,9 @@ var Segment = (function () {
     };
     Segment.prototype.flipWrap = function () {
         var thisState = this.stateIndex;
-        this.setNextState(() => {
+        this.setNextState(function () {
             this.setDesiredState(this.state);
-        });
+        }.bind(this));
     };
     Segment.prototype.refresh = function () {
         var text = this.stateText(this.stateIndex);
@@ -261,14 +261,14 @@ var Segment = (function () {
         if (this.enableAudio) {
             this.audio.play();
         }
-        window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(function () {
             this.topText.innerHTML = newText;
             this.bottomText.innerHTML = newText;
-            setTimeout(() => {
+            setTimeout(function () {
                 this.stateIndex = nextStateIndex;
                 this.setNextState(callback);
-            }, Segment.transitionTime * 2);
-        });
+            }.bind(this), Segment.transitionTime * 2);
+        }.bind(this));
     };
 
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
@@ -278,7 +278,7 @@ var Segment = (function () {
         var flipBottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-flip-bottom-inner');
         var flipTopText     = E('span');
         var flipBottomText  = E('span');
-        window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(function () {
             flipTop.appendChild(flipTopInner);
             flipBottom.appendChild(flipBottomInner);
             flipTopInner.appendChild(flipTopText);
@@ -292,19 +292,19 @@ var Segment = (function () {
             if (this.enableAudio) {
                 this.audio.play();
             }
-            setTimeout(() => {
+            setTimeout(function () {
                 flipTopInner.removeChild(flipTopText);
                 this.inner.removeChild(flipTop);
                 flipBottom.style.display = 'inline-block';
-                setTimeout(() => {
+                setTimeout(function () {
                     flipBottomInner.removeChild(flipBottomText);
                     this.inner.removeChild(flipBottom);
                     this.bottomText.innerHTML = newText;
                     this.stateIndex = nextStateIndex;
                     this.setNextState(callback);
-                }, Segment.transitionTime);
-            }, Segment.transitionTime);
-        });
+                }.bind(this), Segment.transitionTime);
+            }.bind(this), Segment.transitionTime);
+        }.bind(this));
     };
 
     var a = 0;
@@ -324,7 +324,7 @@ var Segment = (function () {
             this.reverse.appendChild(this.reverseInner);
             this.inner.appendChild(this.animatedPiece);
         }
-        var handler = () => {
+        var handler = function () {
             this.animatedPiece.removeEventListener(transitionEndEventName, handler);
             window.requestAnimationFrame(() => {
                 this.bottomText.innerHTML = newText;
@@ -338,9 +338,9 @@ var Segment = (function () {
                     this.setNextState(callback);
                 });
             });
-        };
+        }.bind(this);
         this.animatedPiece.addEventListener(transitionEndEventName, handler);
-        requestAnimationFrame(() => {
+        requestAnimationFrame(function () {
             if (nextStateIndex !== this.desiredState) {
                 this.animatedPiece.classList.add('--rushed');
             }
@@ -348,10 +348,10 @@ var Segment = (function () {
             this.reverseInner.innerHTML = newText;
             this.animatedPiece.classList.add('--visible');
             this.topText.innerHTML = newText;
-            window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(function () {
                 this.animatedPiece.classList.add('--down');
-            });
-        });
+            }.bind(this));
+        }.bind(this));
     };
 
     Segment.prototype.set24Hour = function (flag) {
@@ -508,7 +508,7 @@ var FlipClock = (function () {
         var epochWindow = element.querySelector('[data-flip-clock-epoch-window]');
         if (epochWindow) {
             this.segments.epoch = [];
-            this.elements.epoch.forEach((element) => {
+            this.elements.epoch.forEach(function (element) {
                 var segment = new Segment({
                     digitCount: 1,
                     stateCount: 10,
@@ -517,19 +517,19 @@ var FlipClock = (function () {
                 });
                 this.segments.epoch.push(segment);
                 this.segmentArray.push(segment);
-            });
+            }.bind(this));
         }
 
         this.segments.epoch.reverse();
 
-        ['year', 'month', 'date', 'day', 'hour', 'minute', 'second'].forEach((unit) => {
+        ['year', 'month', 'date', 'day', 'hour', 'minute', 'second'].forEach(function (unit) {
             var element = this.elements[unit];
             var segment = this.segments[unit];
             // parentNode tests are intended to test if in document's hierarchy
             if (segment && !element.parentNode) {
                 element.appendChild(segment);
             }
-        });
+        }.bind(this));
 
         this.segments.epoch.forEach(function (segment) {
             var element = segment.element;
@@ -548,21 +548,21 @@ var FlipClock = (function () {
     FlipClock.segmentDelay = 50;
 
     FlipClock.prototype.refresh = function () {
-        this.segmentArray.forEach((segment) => {
+        this.segmentArray.forEach(function (segment) {
             segment.refresh();
-        });
+        }.bind(this));
     };
 
     FlipClock.prototype.setEnableAudio = function (flag) {
-        this.segmentArray.forEach((segment) => {
+        this.segmentArray.forEach(function (segment) {
             segment.setEnableAudio(flag);
-        });
+        }.bind(this));
     };
 
     FlipClock.prototype.setAnimationStyle = function (flag) {
-        this.segmentArray.forEach((segment) => {
+        this.segmentArray.forEach(function (segment) {
             segment.setAnimationStyle(flag);
-        });
+        }.bind(this));
     };
 
     FlipClock.prototype.set24Hour = function (flag) {
@@ -596,17 +596,17 @@ var FlipClock = (function () {
         }
         var ms = Math.floor(date.getTime() / 1000);
         var delay = 1/3 * FlipClock.segmentDelay;
-        this.segments.epoch.forEach((segment) => {
+        this.segments.epoch.forEach(function (segment) {
             segment.setDesiredValue(ms % 10, delay);
             ms = Math.floor(ms / 10);
             delay += FlipClock.segmentDelay / 4;
-        });
+        }.bind(this));
     };
 
     FlipClock.prototype.flipWrap = function () {
-        this.segmentArray.forEach((segment) => {
+        this.segmentArray.forEach(function (segment) {
             segment.flipWrap();
-        });
+        }.bind(this));
     };
 
     return FlipClock;
