@@ -2,10 +2,11 @@
     --flip-clock-window-padding: 1vw;
     --flip-clock-gutter:         1vw;
     --segment-border-radius:     1vw;
-    --segment-opacity-top:    0.80;
-    --segment-opacity-bottom: 0.95;
-    --segment-horizontal-padding:             calc(1em / 12);
-    --segment-fake-italic-horizontal-padding: calc(1em / 6);
+    --flip-clock-border-radius:  2vw; /* --segment-border-radius + --flip-clock-window-padding */
+    --segment-opacity-top:       0.80;
+    --segment-opacity-bottom:    0.95;
+    --segment-horizontal-padding:             calc(1em / 12 + 1vw);
+    --segment-fake-italic-horizontal-padding: 0.25em;
     --background-color:         #333333;
     --segment-background-color: #333333;
     --segment-foreground-color: #ffff66;
@@ -20,7 +21,8 @@
     --flip-clock-window-padding:  0.5vw;
     --flip-clock-gutter:          0.5vw;
     --segment-border-radius:      0.5vw;
-    --segment-horizontal-padding: 0em;
+    --segment-horizontal-padding: 0.5vw;
+    --flip-clock-border-radius:   1vw; /* --segment-border-radius + --flip-clock-window-padding */
 }
 
 body {
@@ -81,7 +83,7 @@ body {
     display: inline-flex;
 
     border-radius: 2vw;
-    border-radius: calc(var(--segment-border-radius) + var(--flip-clock-window-padding));
+    border-radius: var(--flip-clock-border-radius);
     padding: 1vw;
     padding: var(--flip-clock-window-padding);
 }
@@ -103,7 +105,7 @@ body {
     text-align: left;
 
     left: calc(1em / 12 + 1vw);
-    left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
+    left: var(--segment-horizontal-padding);
 }
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece,
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-animated > .--obverse,
@@ -121,9 +123,9 @@ body {
     opacity: 0;
 
     padding-left: calc(1em / 12 + 1vw);
-    padding-left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
+    padding-left: var(--segment-horizontal-padding);
     padding-right: calc(1em / 12 + 1vw);
-    padding-right: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
+    padding-right: var(--segment-horizontal-padding);
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
@@ -197,9 +199,9 @@ body {
     border-radius: 1vw;
     border-radius: var(--segment-border-radius);
     padding-left: calc(1em / 12 + 1vw);
-    padding-left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
+    padding-left: var(--segment-horizontal-padding);
     padding-right: calc(1em / 12 + 1vw);
-    padding-right: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
+    padding-right: var(--segment-horizontal-padding);
 }
 
 .flip-clock-segment-piece-top-inner,
@@ -277,7 +279,7 @@ body {
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
     padding-right: 0.25em;
-    padding-right: calc(var(--segment-horizontal-padding) + var(--segment-fake-italic-horizontal-padding));
+    padding-right: var(--segment-fake-italic-horizontal-padding);
 }
 
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
@@ -301,12 +303,10 @@ body {
 .bottom-left-buttons,
 .bottom-right-buttons {
     color: white;
-    text-shadow:         .125em .125em .125em rgba(0, 0, 0, 0.5);
-    -webkit-text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
 }
 .bottom-left-buttons button,
 .bottom-right-buttons button {
     color: inherit;
-    text-shadow:         inherit;
-    -webkit-text-shadow: inherit;
+    text-shadow:         .125em .125em .125em rgba(0, 0, 0, 0.5);
+    -webkit-text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
 }
