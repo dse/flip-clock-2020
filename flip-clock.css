@@ -33,11 +33,8 @@ body {
 
 .flip-clock {
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    font-family: var(--font-family);
     font-weight: normal;
-    font-weight: var(--font-weight);
     font-style: normal;
-    font-style: var(--font-style);
 
     font-synthesis: none;
     position: fixed;
@@ -48,6 +45,13 @@ body {
     -webkit-transform: translateY(-50%);
     text-align: center;
     line-height: 1;
+}
+@supports (--foo: green) {
+    .flip-clock {
+        font-family: var(--font-family);
+        font-weight: var(--font-weight);
+        font-style: var(--font-style);
+    }
 }
 
 /* vertical layout and sizing */
@@ -70,7 +74,11 @@ body {
     justify-content: center;
 
     color: #ffff66;
-    color: var(--segment-foreground-color);
+}
+@supports (--foo: green) {
+    .flip-clock-line {
+        color: var(--segment-foreground-color);
+    }
 }
 .flip-clock-line .flip-clock-window:not(:first-child) {
     margin-left: 0.5vw;
@@ -84,9 +92,13 @@ body {
     display: inline-flex;
 
     border-radius: 2vw;
-    border-radius: var(--flip-clock-border-radius);
     padding: 1vw;
-    padding: var(--flip-clock-window-padding);
+}
+@supports (--foo: green) {
+    .flip-clock-window {
+        border-radius: var(--flip-clock-border-radius);
+        padding: var(--flip-clock-window-padding);
+    }
 }
 
 .flip-clock-segment {
@@ -95,7 +107,11 @@ body {
 }
 .flip-clock-segment + .flip-clock-segment {
     margin-left: 1vw;
-    margin-left: var(--flip-clock-gutter);
+}
+@supports (--foo: green) {
+    .flip-clock-segment + .flip-clock-segment {
+        margin-left: var(--flip-clock-gutter);
+    }
 }
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
     position: absolute;
@@ -106,7 +122,11 @@ body {
     text-align: left;
 
     left: calc(1em / 12 + 1vw);
-    left: var(--segment-horizontal-padding);
+}
+@supports (--foo: green) {
+    .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
+        left: var(--segment-horizontal-padding);
+    }
 }
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece,
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-animated > .--obverse,
@@ -124,9 +144,13 @@ body {
     opacity: 0;
 
     padding-left: calc(1em / 12 + 1vw);
-    padding-left: var(--segment-horizontal-padding);
     padding-right: calc(1em / 12 + 1vw);
-    padding-right: var(--segment-horizontal-padding);
+}
+@supports (--foo: green) {
+    .flip-clock-segment-inner::before {
+        padding-left: var(--segment-horizontal-padding);
+        padding-right: var(--segment-horizontal-padding);
+    }
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
@@ -153,7 +177,11 @@ body {
     background-color: black;
 
     border-radius: 1vw;
-    border-radius: var(--segment-border-radius);
+}
+@supports (--foo: green) {
+    .flip-clock-segment-piece {
+        border-radius: var(--segment-border-radius);
+    }
 }
 .flip-clock-segment-animated > .--obverse,
 .flip-clock-segment-animated > .--reverse {
@@ -166,7 +194,12 @@ body {
     background-color: black;
 
     border-radius: 1vw;
-    border-radius: var(--segment-border-radius);
+}
+@supports (--foo: green) {
+    .flip-clock-segment-animated > .--obverse,
+    .flip-clock-segment-animated > .--reverse {
+        border-radius: var(--segment-border-radius);
+    }
 }
 
 .flip-clock-segment-piece-top,
@@ -194,28 +227,46 @@ body {
     display: inline-block;
     width: 100%;
     background-color: #333333;
-    background-color: var(--segment-background-color);
     color: #ffff66;
-    color: var(--segment-foreground-color);
     border-radius: 1vw;
-    border-radius: var(--segment-border-radius);
     padding-left: calc(1em / 12 + 1vw);
-    padding-left: var(--segment-horizontal-padding);
     padding-right: calc(1em / 12 + 1vw);
-    padding-right: var(--segment-horizontal-padding);
+}
+@supports (--foo: green) {
+    .flip-clock-segment-piece-inner,
+    .flip-clock-segment-animated > .--obverse > .--inner,
+    .flip-clock-segment-animated > .--reverse > .--inner {
+        background-color: var(--segment-background-color);
+        color: var(--segment-foreground-color);
+        border-radius: var(--segment-border-radius);
+        padding-left: var(--segment-horizontal-padding);
+        padding-right: var(--segment-horizontal-padding);
+    }
 }
 
 .flip-clock-segment-piece-top-inner,
 .flip-clock-segment-piece-flip-top-inner,
 .flip-clock-segment-animated > .--obverse > .--inner {
     opacity: 0.80;
-    opacity: var(--segment-opacity-top);
+}
+@supports (--foo: green) {
+    .flip-clock-segment-piece-top-inner,
+    .flip-clock-segment-piece-flip-top-inner,
+    .flip-clock-segment-animated > .--obverse > .--inner {
+        opacity: var(--segment-opacity-top);
+    }
 }
 .flip-clock-segment-piece-bottom-inner,
 .flip-clock-segment-piece-flip-bottom-inner,
 .flip-clock-segment-animated > .--reverse > .--inner {
     opacity: 0.95;
-    opacity: var(--segment-opacity-bottom);
+}
+@supports (--foo: green) {
+    .flip-clock-segment-piece-bottom-inner,
+    .flip-clock-segment-piece-flip-bottom-inner,
+    .flip-clock-segment-animated > .--reverse > .--inner {
+        opacity: var(--segment-opacity-bottom);
+    }
 }
 
 .flip-clock-segment-animated {
@@ -254,20 +305,33 @@ body {
     clip-path:         polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
     -webkit-clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
 }
+
 .flip-clock-segment-animated.--down:not(.--rushed) > .--obverse,
 .flip-clock-segment-animated.--down:not(.--rushed) > .--reverse {
     transition:         transform 150ms ease-in;
-    transition:         transform var(--transition-duration) ease-in;
     -webkit-transition: transform 150ms ease-in;
-    -webkit-transition: transform var(--transition-duration) ease-in;
 }
+@supports (--foo: green) {
+    .flip-clock-segment-animated.--down:not(.--rushed) > .--obverse,
+    .flip-clock-segment-animated.--down:not(.--rushed) > .--reverse {
+        transition:         transform var(--transition-duration) ease-in;
+        -webkit-transition: transform var(--transition-duration) ease-in;
+    }
+}
+
 .flip-clock-segment-animated.--down.--rushed > .--obverse,
 .flip-clock-segment-animated.--down.--rushed > .--reverse {
     transition:         transform 50ms ease-in;
-    transition:         transform var(--rushed-transition-duration) ease-in;
     -webkit-transition: transform 50ms ease-in;
-    -webkit-transition: transform var(--rushed-transition-duration) ease-in;
 }
+@supports (--foo: green) {
+    .flip-clock-segment-animated.--down.--rushed > .--obverse,
+    .flip-clock-segment-animated.--down.--rushed > .--reverse {
+        transition:         transform var(--rushed-transition-duration) ease-in;
+        -webkit-transition: transform var(--rushed-transition-duration) ease-in;
+    }
+}
+
 .flip-clock-segment-animated.--down > .--obverse {
     transform:         rotateX(180deg);
     -webkit-transform: rotateX(180deg);
@@ -280,13 +344,23 @@ body {
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
     padding-right: 0.25em;
-    padding-right: var(--segment-fake-italic-horizontal-padding);
+}
+@supports (--foo: green) {
+    .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
+    .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
+        padding-right: var(--segment-fake-italic-horizontal-padding);
+    }
 }
 
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
     padding-right: calc(1em / 6);
-    padding-right: var(--segment-fake-italic-horizontal-padding);
+}
+@supports (--foo: green) {
+    .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
+    .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
+        padding-right: var(--segment-fake-italic-horizontal-padding);
+    }
 }
 
 .bottom-left-buttons {
