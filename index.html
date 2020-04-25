@@ -4,9 +4,24 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
         <title>Flip Clock</title>
+
         <link rel="stylesheet" href="node_modules/foundation-sites/dist/css/foundation.min.css">
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
+
+        <script src="node_modules/css-vars-ponyfill/css-vars-ponyfill.js"></script>
+        <script>
+            if (typeof cssVars !== 'undefined') {
+                cssVars({
+                    // Options...
+                });
+            }
+        </script>
+
         <script>
             var cachebuster = new Date().getTime();
             document.write('<' + 'link rel="stylesheet" href="flip-clock.css?cachebuster=' + cachebuster + '">');
