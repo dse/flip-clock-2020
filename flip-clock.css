@@ -2,8 +2,8 @@
     --flip-clock-window-padding: 1vw;
     --flip-clock-gutter:         1vw;
     --segment-border-radius:     1vw;
-    --segment-opacity-top:    80%;
-    --segment-opacity-bottom: 95%;
+    --segment-opacity-top:    0.80;
+    --segment-opacity-bottom: 0.95;
     --segment-horizontal-padding:             calc(1em / 12);
     --segment-fake-italic-horizontal-padding: calc(1em / 6);
     --background-color:         #333333;
@@ -24,13 +24,18 @@
 }
 
 body {
+    background-color: #333333;
     background-color: var(--background-color);
 }
 
 .flip-clock {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     font-family: var(--font-family);
+    font-weight: normal;
     font-weight: var(--font-weight);
+    font-style: normal;
     font-style: var(--font-style);
+
     font-synthesis: none;
     position: fixed;
     top: 50%;
@@ -60,6 +65,8 @@ body {
 .flip-clock-line {
     display: flex;
     justify-content: center;
+
+    color: #ffff66;
     color: var(--segment-foreground-color);
 }
 .flip-clock-line .flip-clock-window:not(:first-child) {
@@ -71,9 +78,11 @@ body {
 
 .flip-clock-window {
     background-color: black;
-    border-radius: calc(var(--segment-border-radius) +
-                        var(--flip-clock-window-padding));
     display: inline-flex;
+
+    border-radius: 2vw;
+    border-radius: calc(var(--segment-border-radius) + var(--flip-clock-window-padding));
+    padding: 1vw;
     padding: var(--flip-clock-window-padding);
 }
 
@@ -82,6 +91,7 @@ body {
     color: transparent;
 }
 .flip-clock-segment + .flip-clock-segment {
+    margin-left: 1vw;
     margin-left: var(--flip-clock-gutter);
 }
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
@@ -89,9 +99,11 @@ body {
     bottom: 25%;
     transform: translateY(50%);
     -webkit-transform: translateY(50%);
-    left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
     font-size: 25%;
     text-align: left;
+
+    left: calc(1em / 12 + 1vw);
+    left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
 }
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece,
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-animated > .--obverse,
@@ -106,9 +118,12 @@ body {
 
 .flip-clock-segment-inner::before {
     content: "00";
-    padding-left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
-    padding-right: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
     opacity: 0;
+
+    padding-left: calc(1em / 12 + 1vw);
+    padding-left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
+    padding-right: calc(1em / 12 + 1vw);
+    padding-right: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
@@ -133,6 +148,8 @@ body {
     height: 100%;
     text-align: center;
     background-color: black;
+
+    border-radius: 1vw;
     border-radius: var(--segment-border-radius);
 }
 .flip-clock-segment-animated > .--obverse,
@@ -144,6 +161,8 @@ body {
     height: 100%;
     text-align: center;
     background-color: black;
+
+    border-radius: 1vw;
     border-radius: var(--segment-border-radius);
 }
 
@@ -169,21 +188,28 @@ body {
 .flip-clock-segment-animated > .--reverse > .--inner {
     display: inline-block;
     width: 100%;
+    background-color: #333333;
     background-color: var(--segment-background-color);
+    color: #ffff66;
     color: var(--segment-foreground-color);
+    border-radius: 1vw;
     border-radius: var(--segment-border-radius);
+    padding-left: calc(1em / 12 + 1vw);
     padding-left: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
+    padding-right: calc(1em / 12 + 1vw);
     padding-right: calc(var(--segment-horizontal-padding) + var(--segment-border-radius));
 }
 
 .flip-clock-segment-piece-top-inner,
 .flip-clock-segment-piece-flip-top-inner,
 .flip-clock-segment-animated > .--obverse > .--inner {
+    opacity: 0.80;
     opacity: var(--segment-opacity-top);
 }
 .flip-clock-segment-piece-bottom-inner,
 .flip-clock-segment-piece-flip-bottom-inner,
 .flip-clock-segment-animated > .--reverse > .--inner {
+    opacity: 0.95;
     opacity: var(--segment-opacity-bottom);
 }
 
@@ -223,12 +249,16 @@ body {
 }
 .flip-clock-segment-animated.--down:not(.--rushed) > .--obverse,
 .flip-clock-segment-animated.--down:not(.--rushed) > .--reverse {
+    transition:         transform 150ms ease-in;
     transition:         transform var(--transition-duration) ease-in;
+    -webkit-transition: transform 150ms ease-in;
     -webkit-transition: transform var(--transition-duration) ease-in;
 }
 .flip-clock-segment-animated.--down.--rushed > .--obverse,
 .flip-clock-segment-animated.--down.--rushed > .--reverse {
+    transition:         transform 50ms ease-in;
     transition:         transform var(--rushed-transition-duration) ease-in;
+    -webkit-transition: transform 50ms ease-in;
     -webkit-transition: transform var(--rushed-transition-duration) ease-in;
 }
 .flip-clock-segment-animated.--down > .--obverse {
@@ -242,12 +272,13 @@ body {
 
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
-    padding-right: calc(var(--segment-horizontal-padding) +
-                        var(--segment-fake-italic-horizontal-padding));
+    padding-right: 0.25em;
+    padding-right: calc(var(--segment-horizontal-padding) + var(--segment-fake-italic-horizontal-padding));
 }
 
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
+    padding-right: calc(1em / 6);
     padding-right: var(--segment-fake-italic-horizontal-padding);
 }
 
