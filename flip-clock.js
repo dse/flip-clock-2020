@@ -314,10 +314,10 @@ var Segment = (function () {
         if (!this.hasAnimatedPiece) {
             this.hasAnimatedPiece = true;
             this.animatedPiece = E('span', 'flip-clock-segment-animated');
-            this.obverse       = E('span', '--obverse');
-            this.reverse       = E('span', '--reverse');
-            this.obverseInner  = E('span', '--inner');
-            this.reverseInner  = E('span', '--inner');
+            this.obverse       = E('span', 'x-obverse');
+            this.reverse       = E('span', 'x-reverse');
+            this.obverseInner  = E('span', 'x-inner');
+            this.reverseInner  = E('span', 'x-inner');
             this.animatedPiece.appendChild(this.obverse);
             this.animatedPiece.appendChild(this.reverse);
             this.obverse.appendChild(this.obverseInner);
@@ -328,9 +328,9 @@ var Segment = (function () {
             this.animatedPiece.removeEventListener(transitionEndEventName, handler);
             window.requestAnimationFrame(function () {
                 this.bottomText.innerHTML = newText;
-                this.animatedPiece.classList.remove('--rushed');
-                this.animatedPiece.classList.remove('--visible');
-                this.animatedPiece.classList.remove('--down');
+                this.animatedPiece.classList.remove('x-rushed');
+                this.animatedPiece.classList.remove('x-visible');
+                this.animatedPiece.classList.remove('x-down');
                 this.obverseInner.innerHTML = '';
                 this.reverseInner.innerHTML = '';
                 this.stateIndex = nextStateIndex;
@@ -342,14 +342,14 @@ var Segment = (function () {
         this.animatedPiece.addEventListener(transitionEndEventName, handler);
         requestAnimationFrame(function () {
             if (nextStateIndex !== this.desiredState) {
-                this.animatedPiece.classList.add('--rushed');
+                this.animatedPiece.classList.add('x-rushed');
             }
             this.obverseInner.innerHTML = currentText;
             this.reverseInner.innerHTML = newText;
-            this.animatedPiece.classList.add('--visible');
+            this.animatedPiece.classList.add('x-visible');
             this.topText.innerHTML = newText;
             window.requestAnimationFrame(function () {
-                this.animatedPiece.classList.add('--down');
+                this.animatedPiece.classList.add('x-down');
             }.bind(this));
         }.bind(this));
     };
