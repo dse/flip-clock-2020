@@ -64,12 +64,12 @@ var FlipClockPage = {
                 this.addOrRemoveItalicClass();
                 event.preventDefault();
             }
-            if (event.target.hasAttribute('data-flip-clock-font-stretch')) {
-                var value = event.target.options[event.target.selectedIndex].value;
-                try { style.setProperty('--font-stretch', value); } catch (e) { }
-                try { localStorage.setItem('flip-clock--font-stretch', value); } catch (e) { }
-                event.preventDefault();
-            }
+            // if (event.target.hasAttribute('data-flip-clock-font-stretch')) {
+            //     var value = event.target.options[event.target.selectedIndex].value;
+            //     try { style.setProperty('--font-stretch', value); } catch (e) { }
+            //     try { localStorage.setItem('flip-clock--font-stretch', value); } catch (e) { }
+            //     event.preventDefault();
+            // }
         }.bind(this);
         var formCheckboxHandler = function (event) {
             if (event.target.hasAttribute('data-flip-clock-twenty-four-hour')) {
@@ -127,9 +127,9 @@ var FlipClockPage = {
         if ((value = localStorage.getItem('flip-clock--font-style'))) {
             try { style.setProperty('--font-style', value); } catch (e) { }
         }
-        if ((value = localStorage.getItem('flip-clock--font-stretch'))) {
-            try { style.setProperty('--font-stretch', value); } catch (e) { }
-        }
+        // if ((value = localStorage.getItem('flip-clock--font-stretch'))) {
+        //     try { style.setProperty('--font-stretch', value); } catch (e) { }
+        // }
         if ((value = localStorage.getItem('flip-clock--twenty-four-hour')) !== null) {
             try {
                 value = !!JSON.parse(value);
@@ -202,16 +202,16 @@ var FlipClockPage = {
                 }
             } catch (e) { }
         }.bind(this));
-        Array.from(document.querySelectorAll('[data-flip-clock-font-stretch]')).forEach(function (input) {
-            try {
-                var value = cs.getPropertyValue('--font-stretch').trim();
-                if (input.tagName.toLowerCase() === 'select') {
-                    this.setSelectValue(input, value);
-                } else {
-                    this.setInputValue(input, value);
-                }
-            } catch (e) { }
-        }.bind(this));
+        // Array.from(document.querySelectorAll('[data-flip-clock-font-stretch]')).forEach(function (input) {
+        //     try {
+        //         var value = cs.getPropertyValue('--font-stretch').trim();
+        //         if (input.tagName.toLowerCase() === 'select') {
+        //             this.setSelectValue(input, value);
+        //         } else {
+        //             this.setInputValue(input, value);
+        //         }
+        //     } catch (e) { }
+        // }.bind(this));
         Array.from(document.querySelectorAll('[data-flip-clock-twenty-four-hour]')).forEach(function (input) {
             var flag = this.flipClock.is24Hour;
             input.checked = !!flag;
@@ -272,7 +272,7 @@ var FlipClockPage = {
             style.removeProperty('--font-family');
             style.removeProperty('--font-weight');
             style.removeProperty('--font-style');
-            style.removeProperty('--font-stretch');
+            // style.removeProperty('--font-stretch');
         } catch (e) { }
         this.fakeItalic = false;
         this.fontStyle = 'normal';
@@ -288,7 +288,7 @@ var FlipClockPage = {
             localStorage.removeItem('flip-clock--font-family');
             localStorage.removeItem('flip-clock--font-weight');
             localStorage.removeItem('flip-clock--font-style');
-            localStorage.removeItem('flip-clock--font-stretch');
+            // localStorage.removeItem('flip-clock--font-stretch');
             localStorage.removeItem('flip-clock--twenty-four-hour');
         } catch (e) { }
     }
