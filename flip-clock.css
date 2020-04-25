@@ -28,7 +28,11 @@
 
 body {
     background-color: #333333;
-    background-color: var(--background-color);
+}
+@supports (--foo: green) {
+    body {
+        background-color: var(--background-color);
+    }
 }
 
 .flip-clock {
@@ -142,6 +146,7 @@ body {
 .flip-clock-segment-inner::before {
     content: "00";
     opacity: 0;
+    -webkit-opacity: 0;
 
     padding-left: calc(1em / 12 + 1vw);
     padding-right: calc(1em / 12 + 1vw);
@@ -248,24 +253,28 @@ body {
 .flip-clock-segment-piece-flip-top-inner,
 .flip-clock-segment-animated > .--obverse > .--inner {
     opacity: 0.80;
+    -webkit-opacity: 0.80;
 }
 @supports (--foo: green) {
     .flip-clock-segment-piece-top-inner,
     .flip-clock-segment-piece-flip-top-inner,
     .flip-clock-segment-animated > .--obverse > .--inner {
         opacity: var(--segment-opacity-top);
+        -webkit-opacity: var(--segment-opacity-top);
     }
 }
 .flip-clock-segment-piece-bottom-inner,
 .flip-clock-segment-piece-flip-bottom-inner,
 .flip-clock-segment-animated > .--reverse > .--inner {
     opacity: 0.95;
+    -webkit-opacity: 0.95;
 }
 @supports (--foo: green) {
     .flip-clock-segment-piece-bottom-inner,
     .flip-clock-segment-piece-flip-bottom-inner,
     .flip-clock-segment-animated > .--reverse > .--inner {
         opacity: var(--segment-opacity-bottom);
+        -webkit-opacity: var(--segment-opacity-bottom);
     }
 }
 
@@ -277,10 +286,12 @@ body {
     height: 100%;
     display: inline-block;
     opacity: 0;
+    -webkit-opacity: 0;
     z-index: 1;
 }
 .flip-clock-segment-animated.--visible {
     opacity: 1;
+    -webkit-opacity: 1;
 }
 .flip-clock-segment-animated > .--obverse,
 .flip-clock-segment-animated > .--reverse {
