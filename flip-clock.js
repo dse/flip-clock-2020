@@ -136,7 +136,9 @@ var Segment = (function () {
         var topText    = E('span');
         var bottomText = E('span');
 
-        window.requestAnimationFrame(function () {
+        // **not** performing these actions in a requestAnimationFrame
+        // handler is crucual to computeAndSetZoom___ working.
+        //window.requestAnimationFrame(function () {
             element.appendChild(inner);
             inner.appendChild(top);
             inner.appendChild(bottom);
@@ -144,7 +146,7 @@ var Segment = (function () {
             bottom.appendChild(bottomInner);
             topInner.appendChild(topText);
             bottomInner.appendChild(bottomText);
-        }.bind(this));
+        //}.bind(this));
 
         this.element = element;
         this.inner = inner;
@@ -250,8 +252,12 @@ var Segment = (function () {
     };
 
     Segment.prototype.animate0 = function (currentText, newText, nextStateIndex, callback) {
+        var promise;
         if (this.enableAudio) {
-            this.audio.play();
+            promise = this.audio.play();
+            if (promise !== undefined) {
+                promise.then(function () {}, function () {});
+            }
         }
         window.requestAnimationFrame(function () {
             this.topText.innerHTML = newText;

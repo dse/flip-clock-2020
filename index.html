@@ -38,7 +38,7 @@
     <body>
 
         <div data-flip-clock class="flip-clock" id="flip-clock">
-            <div class="flip-clock-line flip-clock-date-line">
+            <div class="flip-clock-line flip-clock-date-line" data-flip-clock-line>
                 <div class="x-inner">
                     <div class="flip-clock-window flip-clock-date-window">
                         <div data-flip-clock-day class="flip-clock-segment flip-clock-segment-day">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flip-clock-line flip-clock-time-line">
+            <div class="flip-clock-line flip-clock-time-line" data-flip-clock-line>
                 <div class="x-inner">
                     <div class="flip-clock-window flip-clock-time-window">
                         <div data-flip-clock-hour class="flip-clock-segment flip-clock-segment-hour">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flip-clock-line flip-clock-epoch-line">
+            <div class="flip-clock-line flip-clock-epoch-line" data-flip-clock-line>
                 <div class="x-inner">
                     <div class="flip-clock-window flip-clock-epoch-window" data-flip-clock-epoch-window>
                         <div data-flip-clock-epoch class="flip-clock-segment flip-clock-segment-epoch-digit">
@@ -141,18 +141,18 @@
                             Font Family
                             <select name="font-family" data-flip-clock-font-family>
                                 <option value="Helvetica Neue, Helvetica, Arial, sans-serif">Helvetica Neue, ...</option>
-                                <option data-font-size-multiply="1.15" value="HelveticaNeue-CondensedBold, Helvetica, Arial, sans-serif">Helvetica Neue Condensed Bold, ...</option>
+                                <option value="HelveticaNeue-CondensedBold, Helvetica, Arial, sans-serif">Helvetica Neue Condensed Bold, ...</option>
                                 <option value="Arial, sans-serif">Arial</option>
-                                <option data-font-size-multiply="0.85" data-fake-italic value="Arial Black, sans-serif">Arial Black</option>
-                                <option data-font-size-multiply="0.9" data-fake-italic value="Comic Sans MS, fantasy">Comic Sans</option>
-                                <option data-font-size-multiply="0.9" value="Futura, sans-serif">Futura</option>
+                                <option data-fake-italic value="Arial Black, sans-serif">Arial Black</option>
+                                <option data-fake-italic value="Comic Sans MS, fantasy">Comic Sans</option>
+                                <option value="Futura, sans-serif">Futura</option>
                                 <option value="Helvetica Neue, sans-serif">Helvetica Neue</option>
-                                <option data-font-size-multiply="1.15" value="HelveticaNeue-CondensedBold, sans-serif">Helvetica Neue Condensed Bold</option>
-                                <option data-font-size-multiply="1.05" data-fake-italic value="Impact, sans-serif">Impact</option>
+                                <option value="HelveticaNeue-CondensedBold, sans-serif">Helvetica Neue Condensed Bold</option>
+                                <option data-fake-italic value="Impact, sans-serif">Impact</option>
                                 <option value="Optima, sans-serif">Optima</option>
                                 <option value="Times New Roman, serif">Times New Roman</option>
                                 <option value="Trebuchet MS, sans-serif">Trebuchet</option>
-                                <option data-font-size-multiply="0.85" value="Verdana, sans-serif">Verdana</option>
+                                <option value="Verdana, sans-serif">Verdana</option>
                             </select>
                         </label>
                     </div>

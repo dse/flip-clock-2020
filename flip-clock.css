@@ -84,8 +84,11 @@ body {
 }
 
 /* horizontal layout */
+.flip-clock-line {
+    margin: 0 auto;
+}
 .flip-clock-line > .x-inner {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
 }
 .flip-clock-line > .x-inner > .flip-clock-window:not(:first-child) {
