@@ -1,8 +1,12 @@
 var FlipClockPage = {
     fakeItalic: false,
     fontStyle: 'normal',
+    testRollover: undefined,
     init: function () {
-        this.flipClock = new FlipClock('flip-clock');
+        this.flipClock = new FlipClock({
+            elementId: 'flip-clock',
+            testRollover: this.testRollover
+        });
         this.flipClock.setAnimationStyle(1);
         this.setPropertiesFromStorage();
         this.setFormValues();
@@ -311,4 +315,24 @@ var FlipClockPage = {
     }
 };
 
-FlipClockPage.init();
+(function () {
+    var matches;
+    var date;
+    var match;
+    if ((matches = /(?:^|\?|&)testRolloverYear=([^&=]+)/.exec(location.search))) {
+        number = Number(decodeURIComponent(matches[1]));
+        if (number) {
+            date = new Date(number, 0, 1, 0, 0, 0, 0);
+        }
+    }
+    if ((matches = /(?:^|\?|&)testRolloverEpoch=([^&=]+)/.exec(location.search))) {
+        number = Number(decodeURIComponent(matches[1]));
+        if (number) {
+            date = new Date(number * 1000);
+        }
+    }
+    if (date) {
+        FlipClockPage.testRollover = date;
+    }
+    FlipClockPage.init();
+}());

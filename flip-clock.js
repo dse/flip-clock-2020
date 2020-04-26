@@ -1,23 +1,15 @@
-var now = new Date();
-var testRollover;
-
-// testRollover = 2000000000000; // uncomment to test a time_t rollover.
-// testRollover = 1609477200000; // uncomment to test a 2020 to 2021 rollover, Eastern Time.
-var nowMS;
-var incrMS;
-
-if (testRollover) {
-    nowMS = now.getTime();
-    incrMS = testRollover - 20000 - nowMS;
-}
-
 var Ticker = (function () {
-    function Ticker() {
+    function Ticker(options) {
+        this.testRollover = options && options.testRollover;
     }
     Ticker.prototype.start = function () {
         var date = new Date();
-        if (testRollover) {
-            date.setTime(date.getTime() + incrMS);
+        if (this.testRollover) {
+            this.msOffset = this.testRollover.getTime() - 20000 - date.getTime();
+            delete this.testRollover;
+        }
+        if (this.msOffset) {
+            date.setTime(date.getTime() + this.msOffset);
         }
         this.callback(date);
         this.timeout = setTimeout(function () {
@@ -385,39 +377,45 @@ var Segment = (function () {
 }());
 
 var FlipClock = (function () {
-    function FlipClock(what) {
+    function FlipClock(options) {
         this.is24Hour = false;
+        var testRollover;
 
-        var element;
-        if (typeof what === 'string') {
-            element = document.getElementById(what);
-            if (!element) {
-                return;
+        if (options) {
+            if (!this.element && options.elementId) {
+                this.element = document.getElementById(options.elementId);
             }
+            if (!this.element && options.element) {
+                this.element = options.element;
+            }
+            testRollover = options.testRollover;
         }
-        if (what instanceof HTMLElement) {
-            element = what;
+        if (!this.element) {
+            return;
         }
 
         this.elements = {};
         this.segments = {};
         this.segmentArray = [];
 
-        this.elements.year   = element.querySelector('[data-flip-clock-year]');
-        this.elements.month  = element.querySelector('[data-flip-clock-month]');
-        this.elements.date   = element.querySelector('[data-flip-clock-date]');
-        this.elements.day    = element.querySelector('[data-flip-clock-day]');
-        this.elements.hour   = element.querySelector('[data-flip-clock-hour]');
-        this.elements.minute = element.querySelector('[data-flip-clock-minute]');
-        this.elements.second = element.querySelector('[data-flip-clock-second]');
-        this.elements.epoch  = Array.from(element.querySelectorAll('[data-flip-clock-epoch]'));
+        this.elements.year   = this.element.querySelector('[data-flip-clock-year]');
+        this.elements.month  = this.element.querySelector('[data-flip-clock-month]');
+        this.elements.date   = this.element.querySelector('[data-flip-clock-date]');
+        this.elements.day    = this.element.querySelector('[data-flip-clock-day]');
+        this.elements.hour   = this.element.querySelector('[data-flip-clock-hour]');
+        this.elements.minute = this.element.querySelector('[data-flip-clock-minute]');
+        this.elements.second = this.element.querySelector('[data-flip-clock-second]');
+        this.elements.epoch  = Array.from(this.element.querySelectorAll('[data-flip-clock-epoch]'));
+
+        var date = testRollover || new Date();
+        console.log(date);
 
         if (this.elements.year) {
             this.segmentArray.push(
                 this.segments.year = new Segment({
                     digitCount: 4,
-                    startAt: 2000,
-                    endAt: 2049,
+                    startAt: date.getFullYear() - 20,
+                    endAt: date.getFullYear() + 29,
                     element: this.elements.year,
                     flipClock: this
                 })
@@ -505,7 +503,7 @@ var FlipClock = (function () {
         }
 
         var i;
-        var epochWindow = element.querySelector('[data-flip-clock-epoch-window]');
+        var epochWindow = this.element.querySelector('[data-flip-clock-epoch-window]');
         if (epochWindow) {
             this.segments.epoch = [];
             this.elements.epoch.forEach(function (element) {
@@ -538,11 +536,12 @@ var FlipClock = (function () {
             }
         });
 
-        element.classList.add('flip-clock');
-        this.ticker = new Ticker();
+        this.element.classList.add('flip-clock');
+        this.ticker = new Ticker({
+            testRollover: testRollover
+        });
         this.ticker.callback = this.setTime.bind(this);
         this.ticker.start();
-        this.element = element;
     }
 
     FlipClock.segmentDelay = 50;
