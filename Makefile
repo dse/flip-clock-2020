@@ -9,6 +9,6 @@ publish:
 test:
 	rsync -r -l -v -c -C --exclude=node_modules ./ dse@webonastick.com:/www/webonastick.com/htdocs/c/
 
-%.css: %.scss Makefile
-	sassc < $< > $@.tmp.css
+%.css: scss/%.scss Makefile
+	sassc $< > $@.tmp.css
 	mv $@.tmp.css $@
