@@ -149,15 +149,11 @@ body {
     letter-spacing: 0.15em;
 }
 
-.flip-clock-segment-piece,
-.flip-clock-segment-animated > .x-obverse,
-.flip-clock-segment-animated > .x-reverse {
+.flip-clock-segment-piece {
     border-radius: $segment-border-radius;
 }
 @supports (--foo: green) {
-    .flip-clock-segment-piece,
-    .flip-clock-segment-animated > .x-obverse,
-    .flip-clock-segment-animated > .x-reverse {
+    .flip-clock-segment-piece {
         border-radius: var(--segment-border-radius);
     }
 }
