@@ -41,7 +41,8 @@ $flip-clock-window-border-width:         0.25vw;
     }
     .flip-clock-epoch-window {
         --flip-clock-window-padding:      0.5vw;
-        --flip-clock-segment-gutter:              0.5vw;
+        --flip-clock-segment-gutter:      0.5vw;
+        --flip-clock-window-gutter:       0.5vw;
         --segment-border-radius:          0.5vw;
         --segment-horizontal-padding:     0.5vw;
         --flip-clock-border-radius:       1vw; /* --segment-border-radius + --flip-clock-window-padding */
