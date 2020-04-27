@@ -127,7 +127,6 @@ var Segment = (function () {
         element.setAttribute('data-segment-id', Segment.idCounter);
         Segment.segmentsById[Segment.idCounter] = this;
 
-        var inner       = E('span', 'flip-clock-segment-inner');
         var top         = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-top');
         var bottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-bottom');
         var topInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-top-inner');
@@ -136,20 +135,14 @@ var Segment = (function () {
         var topText    = E('span');
         var bottomText = E('span');
 
-        // **not** performing these actions in a requestAnimationFrame
-        // handler is crucual to computeAndSetZoom___ working.
-        //window.requestAnimationFrame(function () {
-            element.appendChild(inner);
-            inner.appendChild(top);
-            inner.appendChild(bottom);
-            top.appendChild(topInner);
-            bottom.appendChild(bottomInner);
-            topInner.appendChild(topText);
-            bottomInner.appendChild(bottomText);
-        //}.bind(this));
+        element.appendChild(top);
+        element.appendChild(bottom);
+        top.appendChild(topInner);
+        bottom.appendChild(bottomInner);
+        topInner.appendChild(topText);
+        bottomInner.appendChild(bottomText);
 
         this.element = element;
-        this.inner = inner;
         this.top = top;
         this.bottom = bottom;
         this.topInner = topInner;
@@ -166,6 +159,7 @@ var Segment = (function () {
     }
     Segment.prototype.addOrRemove12HourClass = function () {
         this.element.classList[this.isTwelveHour ? 'add' : 'remove']('flip-clock-segment-twelve-hour');
+        this.flipClock.element.classList[this.isTwelveHour ? 'add' : 'remove']('flip-clock-twelve-hour');
     };
     Segment.prototype.setDesiredValue = function (value, delay, callback) {
         if ('startAt' in this) {
@@ -233,8 +227,6 @@ var Segment = (function () {
         var currentText = this.topText.innerHTML;
         if (this.animationStyle === 1) {
             this.animate1(currentText, newText, nextStateIndex, callback);
-        } else if (this.animationStyle === 2) {
-            this.animate2(currentText, newText, nextStateIndex, callback);
         } else {
             this.animate0(currentText, newText, nextStateIndex, callback);
         }
@@ -281,8 +273,8 @@ var Segment = (function () {
             flipBottom.appendChild(flipBottomInner);
             flipTopInner.appendChild(flipTopText);
             flipBottomInner.appendChild(flipBottomText);
-            this.inner.appendChild(flipTop);
-            this.inner.appendChild(flipBottom);
+            this.element.appendChild(flipTop);
+            this.element.appendChild(flipBottom);
             flipTopText.innerHTML = currentText;
             flipBottomText.innerHTML = newText;
             flipTop.style.display = 'inline-block';
@@ -292,11 +284,11 @@ var Segment = (function () {
             }
             setTimeout(function () {
                 flipTopInner.removeChild(flipTopText);
-                this.inner.removeChild(flipTop);
+                this.element.removeChild(flipTop);
                 flipBottom.style.display = 'inline-block';
                 setTimeout(function () {
                     flipBottomInner.removeChild(flipBottomText);
-                    this.inner.removeChild(flipBottom);
+                    this.element.removeChild(flipBottom);
                     this.bottomText.innerHTML = newText;
                     this.stateIndex = nextStateIndex;
                     this.setNextState(callback);
@@ -307,50 +299,6 @@ var Segment = (function () {
 
     var a = 0;
     var b = 0;
-
-    Segment.prototype.animate2 = function (currentText, newText, nextStateIndex, callback) {
-        if (!this.hasAnimatedPiece) {
-            this.hasAnimatedPiece = true;
-            this.animatedPiece = E('span', 'flip-clock-segment-animated');
-            this.obverse       = E('span', 'x-obverse');
-            this.reverse       = E('span', 'x-reverse');
-            this.obverseInner  = E('span', 'x-inner');
-            this.reverseInner  = E('span', 'x-inner');
-            this.animatedPiece.appendChild(this.obverse);
-            this.animatedPiece.appendChild(this.reverse);
-            this.obverse.appendChild(this.obverseInner);
-            this.reverse.appendChild(this.reverseInner);
-            this.inner.appendChild(this.animatedPiece);
-        }
-        var handler = function () {
-            this.animatedPiece.removeEventListener(transitionEndEventName, handler);
-            window.requestAnimationFrame(function () {
-                this.bottomText.innerHTML = newText;
-                this.animatedPiece.classList.remove('x-rushed');
-                this.animatedPiece.classList.remove('x-visible');
-                this.animatedPiece.classList.remove('x-down');
-                this.obverseInner.innerHTML = '';
-                this.reverseInner.innerHTML = '';
-                this.stateIndex = nextStateIndex;
-                window.requestAnimationFrame(function () {
-                    this.setNextState(callback);
-                }.bind(this));
-            }.bind(this));
-        }.bind(this);
-        this.animatedPiece.addEventListener(transitionEndEventName, handler);
-        requestAnimationFrame(function () {
-            if (nextStateIndex !== this.desiredState) {
-                this.animatedPiece.classList.add('x-rushed');
-            }
-            this.obverseInner.innerHTML = currentText;
-            this.reverseInner.innerHTML = newText;
-            this.animatedPiece.classList.add('x-visible');
-            this.topText.innerHTML = newText;
-            window.requestAnimationFrame(function () {
-                this.animatedPiece.classList.add('x-down');
-            }.bind(this));
-        }.bind(this));
-    };
 
     Segment.prototype.set24Hour = function (flag) {
         this.isTwelveHour = !flag;
