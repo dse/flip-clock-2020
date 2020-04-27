@@ -28,13 +28,13 @@
 .flip-clock-line {
     margin: 0 auto;
 }
-.flip-clock-line > .x-inner {
+.flip-clock-line-inner {
     display: inline-flex;
     justify-content: center;
 }
-.flip-clock-line > .x-inner > .flip-clock-window:not(:first-child) {
+.flip-clock-line-inner > .flip-clock-window:not(:first-child) {
     margin-left: 0.5rem;
 }
-.flip-clock-line > .x-inner > .flip-clock-window:not(:last-child) {
+.flip-clock-line-inner > .flip-clock-window:not(:last-child) {
     margin-right: 0.5rem;
 }

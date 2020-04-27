@@ -86,19 +86,19 @@ var FlipClockPage = {
     },
 
     clearZoomValue: function () {
-        Array.from(document.querySelectorAll('.flip-clock-line > .x-inner')).forEach(function (inner) {
+        Array.from(document.querySelectorAll('.flip-clock-line-inner')).forEach(function (inner) {
             inner.style.fontSize = '';
         });
     },
     setZoomValue: function (value) {
-        Array.from(document.querySelectorAll('.flip-clock-line > .x-inner')).forEach(function (inner) {
+        Array.from(document.querySelectorAll('.flip-clock-line-inner')).forEach(function (inner) {
             inner.style.fontSize = (value * 100) + '%';
         });
     },
     computeAndSetZoomValue: function () {
         this.clearZoomValue();
         var maxWidth;
-        Array.from(document.querySelectorAll('.flip-clock-line > .x-inner')).forEach(function (line) {
+        Array.from(document.querySelectorAll('.flip-clock-line-inner')).forEach(function (line) {
             if (maxWidth === undefined || maxWidth < line.clientWidth) {
                 maxWidth = line.clientWidth;
             }

@@ -81,11 +81,11 @@ body {
     }
 }
 
-.flip-clock-line > .x-inner > .flip-clock-window + .flip-clock-window {
+.flip-clock-line-inner > .flip-clock-window + .flip-clock-window {
     margin-left: $flip-clock-window-gutter;
 }
 @supports (--foo: green) {
-    .flip-clock-line > .x-inner > .flip-clock-window + .flip-clock-window {
+    .flip-clock-line-inner > .flip-clock-window + .flip-clock-window {
         margin-left: var(--flip-clock-window-gutter);
     }
 }
