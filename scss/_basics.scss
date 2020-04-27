@@ -1,0 +1,87 @@
+.flip-clock-window {
+    background-color: black;
+    display: inline-flex;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+.flip-clock-segment {
+    display: inline-block;
+    color: transparent;
+}
+.flip-clock-segment + .flip-clock-segment {
+    margin-left: 1rem;
+}
+.flip-clock-segment.flip-clock-segment-twelve-hour {
+    .ampm {
+        position: absolute;
+        bottom: 25%;
+        transform:         translateY(50%);
+        -webkit-transform: translateY(50%);
+        font-size: 25%;
+        text-align: left;
+        left: 1rem;
+    }
+    .flip-clock-segment-piece,
+    .flip-clock-segment-animated > .x-obverse,
+    .flip-clock-segment-animated > .x-reverse {
+        text-align: right;
+    }
+}
+
+.flip-clock-segment-inner {
+    display: inline-block;
+    position: relative;
+}
+.flip-clock-segment-inner::before {
+    content: "00";
+    opacity: 0;
+    -webkit-opacity: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.flip-clock-segment-hour        .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-minute      .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-second      .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-year        .flip-clock-segment-inner::before { content: '0000'; }
+.flip-clock-segment-month       .flip-clock-segment-inner::before { content: 'XXXX'; }
+.flip-clock-segment-date        .flip-clock-segment-inner::before { content: '00'; }
+.flip-clock-segment-day         .flip-clock-segment-inner::before { content: 'XXXX'; }
+.flip-clock-segment-epoch-digit .flip-clock-segment-inner::before { content: '0'; }
+.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
+    content: '000';
+}
+
+.flip-clock-segment-piece {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: black;
+    border-radius: 1rem;
+}
+.flip-clock-segment-piece-top,
+.flip-clock-segment-piece-flip-top {
+    clip-path:         polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+    -webkit-clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+}
+.flip-clock-segment-piece-bottom,
+.flip-clock-segment-piece-flip-bottom {
+    clip-path:         polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
+    -webkit-clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
+}
+.flip-clock-segment-piece-flip-top,
+.flip-clock-segment-piece-flip-bottom {
+    display: none;
+    transform:         scaleY(0.75);
+    -webkit-transform: scaleY(0.75);
+}
+.flip-clock-segment-piece-inner {
+    display: inline-block;
+    width: 100%;
+    background-color: #111111;
+    color: white;
+    border-radius: 1rem;
+}

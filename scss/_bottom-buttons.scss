@@ -1,0 +1,29 @@
+.bottom-buttons {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    &::after {
+        content: '';
+        clear: both;
+    }
+}
+
+.bottom-left-buttons {
+    float: left;
+}
+.bottom-right-buttons {
+    float: right;
+}
+.bottom-left-buttons,
+.bottom-right-buttons {
+    color: white;
+    opacity: 0.1;
+}
+.bottom-left-buttons button,
+.bottom-right-buttons button {
+    color: inherit;
+    text-shadow:         .125em .125em .125em rgba(0, 0, 0, 0.5);
+    -webkit-text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
+}

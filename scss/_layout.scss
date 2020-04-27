@@ -1,0 +1,40 @@
+/* center of screen layout */
+.flip-clock {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform:         translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    text-align: center;
+    line-height: 1;
+}
+
+/* vertical layout and sizing */
+.flip-clock-line + .flip-clock-line {
+    margin-top: 1rem;
+}
+.flip-clock-date-line {
+    font-size: 6vw;
+}
+.flip-clock-time-line {
+    font-size: 18vw;
+}
+.flip-clock-epoch-line {
+    font-size: 6vw;
+}
+
+/* horizontal layout */
+.flip-clock-line {
+    margin: 0 auto;
+}
+.flip-clock-line > .x-inner {
+    display: inline-flex;
+    justify-content: center;
+}
+.flip-clock-line > .x-inner > .flip-clock-window:not(:first-child) {
+    margin-left: 0.5rem;
+}
+.flip-clock-line > .x-inner > .flip-clock-window:not(:last-child) {
+    margin-right: 0.5rem;
+}
