@@ -31,6 +31,7 @@
 .flip-clock-line-inner {
     display: inline-flex;
     justify-content: center;
+    align-items: flex-start;
 }
 .flip-clock-line .flip-clock-window + .flip-clock-window {
     margin-left: 1rem;

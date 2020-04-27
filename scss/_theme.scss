@@ -3,8 +3,8 @@ $flip-clock-segment-gutter:              1vw;
 $flip-clock-window-gutter:               1vw;
 $segment-border-radius:                  1vw;
 $flip-clock-border-radius:               $segment-border-radius + $flip-clock-window-padding;
-$segment-horizontal-padding:             0.05em;
-$segment-ampm-position:                  0.2em;
+$segment-horizontal-padding:             1vw;
+$segment-ampm-position:                  1vw;
 $segment-fake-italic-horizontal-padding: 0.25em;
 $background-color:                       #181818;
 $segment-background-color:               #111111;
@@ -63,9 +63,7 @@ body {
     font-family: $font-family;
     font-weight: $font-weight;
     font-style: $font-style;
-}
-@supports (--foo: green) {
-    .flip-clock {
+    @supports (--foo: green) {
         font-family: var(--font-family);
         font-weight: var(--font-weight);
         font-style: var(--font-style);
@@ -74,18 +72,14 @@ body {
 
 .flip-clock-line {
     color: $segment-foreground-color;
-}
-@supports (--foo: green) {
-    .flip-clock-line {
+    @supports (--foo: green) {
         color: var(--segment-foreground-color);
     }
 }
 
 .flip-clock-line .flip-clock-window + .flip-clock-window {
     margin-left: $flip-clock-window-gutter;
-}
-@supports (--foo: green) {
-    .flip-clock-line .flip-clock-window + .flip-clock-window {
+    @supports (--foo: green) {
         margin-left: var(--flip-clock-window-gutter);
     }
 }
@@ -93,9 +87,7 @@ body {
 .flip-clock-window {
     border-radius: $flip-clock-border-radius;
     padding: $flip-clock-window-padding;
-}
-@supports (--foo: green) {
-    .flip-clock-window {
+    @supports (--foo: green) {
         border-radius: var(--flip-clock-border-radius);
         padding: var(--flip-clock-window-padding);
     }
@@ -105,55 +97,48 @@ body {
 .flip-clock-window {
     border-style: solid;
     border-width: #{$flip-clock-window-border-width} 0 #{$flip-clock-window-border-width} 0;
-    border-color:
-        rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
     background-clip: padding-box;
-}
-@supports (--foo: green) {
-    .flip-clock-window {
+    border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
+    @supports (--foo: green) {
         border-width: var(--flip-clock-window-border-width) 0 var(--flip-clock-window-border-width) 0;
     }
 }
 
+/* .flip-clock-segment {
+   padding-left: $segment-horizontal-padding;
+   padding-right: $segment-horizontal-padding;
+   @supports (--foo: green) {
+   padding-left: var(--segment-horizontal-padding);
+   padding-right: var(--segment-horizontal-padding);
+   }
+   }
+ */
 .flip-clock-segment + .flip-clock-segment {
     margin-left: $flip-clock-segment-gutter;
-}
-@supports (--foo: green) {
-    .flip-clock-segment + .flip-clock-segment {
+    @supports (--foo: green) {
         margin-left: var(--flip-clock-segment-gutter);
     }
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
     left: $segment-ampm-position;
-}
-@supports (--foo: green) {
-    .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
+    @supports (--foo: green) {
         left: var(--segment-ampm-position);
     }
 }
 
-.flip-clock-segment-inner::before {
-    padding-left: $segment-horizontal-padding;
-    padding-right: $segment-horizontal-padding;
-}
-@supports (--foo: green) {
-    .flip-clock-segment-inner::before {
-        padding-left: var(--segment-horizontal-padding);
-        padding-right: var(--segment-horizontal-padding);
-    }
-}
-
-.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-inner::before {
-    content: "00";             /* extra room for 'am'/'pm' indicator */
-    letter-spacing: 0.15em;
-}
-
+/* .flip-clock-segment::before {
+   padding-left: $segment-horizontal-padding;
+   padding-right: $segment-horizontal-padding;
+   @supports (--foo: green) {
+   padding-left: var(--segment-horizontal-padding);
+   padding-right: var(--segment-horizontal-padding);
+   }
+   }
+ */
 .flip-clock-segment-piece {
     border-radius: $segment-border-radius;
-}
-@supports (--foo: green) {
-    .flip-clock-segment-piece {
+    @supports (--foo: green) {
         border-radius: var(--segment-border-radius);
     }
 }
@@ -188,15 +173,13 @@ body {
     );
 }
 
-.flip-clock-segment-piece-inner {
+.flip-clock-segment-piece {
     background-color: $segment-background-color;
     color: $segment-foreground-color;
     border-radius: $segment-border-radius;
     padding-left: $segment-horizontal-padding;
     padding-right: $segment-horizontal-padding;
-}
-@supports (--foo: green) {
-    .flip-clock-segment-piece-inner {
+    @supports (--foo: green) {
         background-color: var(--segment-background-color);
         color: var(--segment-foreground-color);
         border-radius: var(--segment-border-radius);
@@ -205,13 +188,10 @@ body {
     }
 }
 
-.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
-.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
+.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment::before,
+.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
     padding-right: $segment-fake-italic-horizontal-padding;
-}
-@supports (--foo: green) {
-    .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
-    .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
+    @supports (--foo: green) {
         padding-right: var(--segment-fake-italic-horizontal-padding);
     }
 }
@@ -219,10 +199,7 @@ body {
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
     padding-right: $segment-fake-italic-horizontal-padding;
-}
-@supports (--foo: green) {
-    .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
-    .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
+    @supports (--foo: green) {
         padding-right: var(--segment-fake-italic-horizontal-padding);
     }
 }
