@@ -49,6 +49,8 @@
                         </div>
                         <div data-flip-clock-date class="flip-clock-segment flip-clock-segment-date">
                         </div>
+                    </div>
+                    <div class="flip-clock-window flip-clock-date-window">
                         <div data-flip-clock-year class="flip-clock-segment flip-clock-segment-year">
                         </div>
                     </div>
@@ -60,18 +62,19 @@
                         <div data-flip-clock-hour class="flip-clock-segment flip-clock-segment-hour">
                         </div>
                     </div>
-                    :
+                    <!-- <span>:</span> -->
                     <div class="flip-clock-window flip-clock-time-window">
                         <div data-flip-clock-minute class="flip-clock-segment flip-clock-segment-minute">
                         </div>
                     </div>
-                    :
+                    <!-- <span>:</span> -->
                     <div class="flip-clock-window flip-clock-time-window">
                         <div data-flip-clock-second class="flip-clock-segment flip-clock-segment-second">
                         </div>
                     </div>
                 </div>
             </div>
+            <!--
             <div class="flip-clock-line flip-clock-epoch-line" data-flip-clock-line>
                 <div class="x-inner">
                     <div class="flip-clock-window flip-clock-epoch-window" data-flip-clock-epoch-window>
@@ -98,16 +101,19 @@
                     </div>
                 </div>
             </div>
+            -->
         </div>
 
-        <div class="bottom-right-buttons">
-            <!-- &zwj; shuts up a tidy warning -->
-            <button class="settings-button" data-open="settings-modal"><i class="fas fa-cog">&zwj;</i></button>
-        </div>
-
-        <div class="bottom-left-buttons">
-            <!-- &zwj; shuts up a tidy warning -->
-            <button class="happy-button" data-flip-clock-happy><i class="fas fa-smile">&zwj;</i></button>
+        <div class="bottom-buttons">
+            <div class="bottom-right-buttons">
+                <!-- &zwj; shuts up a tidy warning -->
+                <button class="settings-button" data-open="settings-modal"><i class="fas fa-cog">&zwj;</i></button>
+            </div>
+            <div class="bottom-left-buttons">
+                <!-- &zwj; shuts up a tidy warning -->
+                <button class="happy-button" data-flip-clock-happy><i class="fas fa-smile">&zwj;</i></button>
+                <button class="reload-button" data-flip-clock-reload><i class="fas fa-redo">&zwj;</i></button>
+            </div>
         </div>
 
         <div class="reveal settings-modal" id="settings-modal" data-reveal>

@@ -524,7 +524,9 @@ var FlipClock = (function () {
             }.bind(this));
         }
 
-        this.segments.epoch.reverse();
+        if (this.segments.epoch) {
+            this.segments.epoch.reverse();
+        }
 
         ['year', 'month', 'date', 'day', 'hour', 'minute', 'second'].forEach(function (unit) {
             var element = this.elements[unit];
@@ -535,12 +537,14 @@ var FlipClock = (function () {
             }
         }.bind(this));
 
-        this.segments.epoch.forEach(function (segment) {
-            var element = segment.element;
-            if (!element.parentNode) {
-                element.appendChild(segment);
-            }
-        });
+        if (this.segments.epoch) {
+            this.segments.epoch.forEach(function (segment) {
+                var element = segment.element;
+                if (!element.parentNode) {
+                    element.appendChild(segment);
+                }
+            });
+        }
 
         this.element.classList.add('flip-clock');
         this.ticker = new Ticker({
@@ -601,11 +605,13 @@ var FlipClock = (function () {
         }
         var ms = Math.floor(date.getTime() / 1000);
         var delay = 1/3 * FlipClock.segmentDelay;
-        this.segments.epoch.forEach(function (segment) {
-            segment.setDesiredValue(ms % 10, delay);
-            ms = Math.floor(ms / 10);
-            delay += FlipClock.segmentDelay / 4;
-        }.bind(this));
+        if (this.segments.epoch) {
+            this.segments.epoch.forEach(function (segment) {
+                segment.setDesiredValue(ms % 10, delay);
+                ms = Math.floor(ms / 10);
+                delay += FlipClock.segmentDelay / 4;
+            }.bind(this));
+        }
     };
 
     FlipClock.prototype.flipWrap = function () {

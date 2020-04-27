@@ -197,12 +197,19 @@ var FlipClockPage = {
             this.flipClock.flipWrap();
             event.preventDefault();
         }.bind(this);
+        var reloadHandler = function (event) {
+            if (!event.target.closest('[data-flip-clock-reload]')) {
+                return;
+            }
+            location.reload();
+        }.bind(this);
         document.addEventListener('click', flipWrapHandler);
         document.addEventListener('change', formChangeHandler);
         document.addEventListener('input', formCheckboxHandler);
         document.addEventListener('change', formCheckboxHandler);
         document.addEventListener('click', setDefaultsHandler);
         document.addEventListener('click', happyHandler);
+        document.addEventListener('click', reloadHandler);
     },
     setPropertiesFromStorage: function () {
         var style = document.documentElement.style;
