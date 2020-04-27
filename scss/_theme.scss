@@ -1,37 +1,56 @@
+$flip-clock-window-padding:              1vw;
+$flip-clock-segment-gutter:              1vw;
+$flip-clock-window-gutter:               1vw;
+$segment-border-radius:                  1vw;
+$flip-clock-border-radius:               $segment-border-radius + $flip-clock-window-padding;
+$segment-horizontal-padding:             0.05em;
+$segment-ampm-position:                  0.2em;
+$segment-fake-italic-horizontal-padding: 0.25em;
+$background-color:                       #181818;
+$segment-background-color:               #111111;
+$segment-foreground-color:               #ffff66;
+$font-family:                            "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$font-weight:                            normal;
+$font-style:                             normal;
+$transition-duration:                    300ms;
+$rushed-transition-duration:             50ms;
+$flip-clock-window-border-width:         0.25vw;
+
 @supports (--foo: green) {
     :root {
-        --flip-clock-window-padding: 1vw;
-        --flip-clock-gutter:         1vw;
-        --segment-border-radius:     1vw;
-        --flip-clock-border-radius:  2vw; /* --segment-border-radius + --flip-clock-window-padding */
-        --segment-horizontal-padding: 0.05em;
-        --segment-ampm-position: 0.2em;
-        --segment-fake-italic-horizontal-padding: 0.25em;
-        --background-color:         #181818;
-        --segment-background-color: #111111;
-        --segment-foreground-color: #ffff66;
-        --font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-        --font-weight:  normal;
-        --font-style:   normal;
-        --transition-duration: 300ms;
-        --rushed-transition-duration: 50ms;
-        --flip-clock-window-border-width: 0.25vw;
+        --flip-clock-window-padding:              #{$flip-clock-window-padding};
+        --flip-clock-segment-gutter:              #{$flip-clock-segment-gutter};
+        --flip-clock-window-gutter:               #{$flip-clock-window-gutter};
+        --segment-border-radius:                  #{$segment-border-radius};
+        --flip-clock-border-radius:               #{$flip-clock-border-radius};
+        --segment-horizontal-padding:             #{$segment-horizontal-padding};
+        --segment-ampm-position:                  #{$segment-ampm-position};
+        --segment-fake-italic-horizontal-padding: #{$segment-fake-italic-horizontal-padding};
+        --background-color:                       #{$background-color};
+        --segment-background-color:               #{$segment-background-color};
+        --segment-foreground-color:               #{$segment-foreground-color};
+        --font-family:                            #{$font-family};
+        --font-weight:                            #{$font-weight};
+        --font-style:                             #{$font-style};
+        --transition-duration:                    #{$transition-duration};
+        --rushed-transition-duration:             #{$rushed-transition-duration};
+        --flip-clock-window-border-width:         #{$flip-clock-window-border-width};
     }
     .flip-clock-date-window {
         --segment-horizontal-padding: 0.1em;
     }
     .flip-clock-epoch-window {
-        --flip-clock-window-padding:  0.5vw;
-        --flip-clock-gutter:          0.5vw;
-        --segment-border-radius:      0.5vw;
-        --segment-horizontal-padding: 0.5vw;
-        --flip-clock-border-radius:   1vw; /* --segment-border-radius + --flip-clock-window-padding */
-        --flip-clock-window-border-width:               0.125vw;
+        --flip-clock-window-padding:      0.5vw;
+        --flip-clock-segment-gutter:              0.5vw;
+        --segment-border-radius:          0.5vw;
+        --segment-horizontal-padding:     0.5vw;
+        --flip-clock-border-radius:       1vw; /* --segment-border-radius + --flip-clock-window-padding */
+        --flip-clock-window-border-width: 0.125vw;
     }
 }
 
 body {
-    background-color: #181818;
+    background-color: $background-color;
 }
 @supports (--foo: green) {
     body {
@@ -40,36 +59,39 @@ body {
 }
 
 .flip-clock {
-    font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    font-weight: normal;
-    font-style: normal;
+    font-family: $font-family;
+    font-weight: $font-weight;
+    font-style: $font-style;
 }
 @supports (--foo: green) {
     .flip-clock {
-        font-family:  var(--font-family);
-        font-weight:  var(--font-weight);
-        font-style:   var(--font-style);
+        font-family: var(--font-family);
+        font-weight: var(--font-weight);
+        font-style: var(--font-style);
     }
 }
 
 .flip-clock-line {
-    color: #ffff66;
+    color: $segment-foreground-color;
 }
 @supports (--foo: green) {
     .flip-clock-line {
         color: var(--segment-foreground-color);
     }
 }
-.flip-clock-line > .x-inner > .flip-clock-window:not(:first-child) {
-    margin-left: 0.5vw;
+
+.flip-clock-line > .x-inner > .flip-clock-window + .flip-clock-window {
+    margin-left: $flip-clock-window-gutter;
 }
-.flip-clock-line > .x-inner > .flip-clock-window:not(:last-child) {
-    margin-right: 0.5vw;
+@supports (--foo: green) {
+    .flip-clock-line > .x-inner > .flip-clock-window + .flip-clock-window {
+        margin-left: var(--flip-clock-window-gutter);
+    }
 }
 
 .flip-clock-window {
-    border-radius: 2vw;
-    padding: 1vw;
+    border-radius: $flip-clock-border-radius;
+    padding: $flip-clock-window-padding;
 }
 @supports (--foo: green) {
     .flip-clock-window {
@@ -81,8 +103,9 @@ body {
 /* gussied-up */
 .flip-clock-window {
     border-style: solid;
-    border-width: 0.5vw 0 0.5vw 0;
-    border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
+    border-width: #{$flip-clock-window-border-width} 0 #{$flip-clock-window-border-width} 0;
+    border-color:
+        rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
     background-clip: padding-box;
 }
 @supports (--foo: green) {
@@ -92,16 +115,16 @@ body {
 }
 
 .flip-clock-segment + .flip-clock-segment {
-    margin-left: 1vw;
+    margin-left: $flip-clock-segment-gutter;
 }
 @supports (--foo: green) {
     .flip-clock-segment + .flip-clock-segment {
-        margin-left: var(--flip-clock-gutter);
+        margin-left: var(--flip-clock-segment-gutter);
     }
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
-    left: 0.2em
+    left: $segment-ampm-position;
 }
 @supports (--foo: green) {
     .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
@@ -110,8 +133,8 @@ body {
 }
 
 .flip-clock-segment-inner::before {
-    padding-left: calc(1em / 12 + 1vw);
-    padding-right: calc(1em / 12 + 1vw);
+    padding-left: $segment-horizontal-padding;
+    padding-right: $segment-horizontal-padding;
 }
 @supports (--foo: green) {
     .flip-clock-segment-inner::before {
@@ -128,7 +151,7 @@ body {
 .flip-clock-segment-piece,
 .flip-clock-segment-animated > .x-obverse,
 .flip-clock-segment-animated > .x-reverse {
-    border-radius: 1vw;
+    border-radius: $segment-border-radius;
 }
 @supports (--foo: green) {
     .flip-clock-segment-piece,
@@ -169,11 +192,11 @@ body {
 }
 
 .flip-clock-segment-piece-inner {
-    background-color: #111111;
-    color: #ffff66;
-    border-radius: 1vw;
-    padding-left: calc(1em / 12 + 1vw);
-    padding-right: calc(1em / 12 + 1vw);
+    background-color: $segment-background-color;
+    color: $segment-foreground-color;
+    border-radius: $segment-border-radius;
+    padding-left: $segment-horizontal-padding;
+    padding-right: $segment-horizontal-padding;
 }
 @supports (--foo: green) {
     .flip-clock-segment-piece-inner {
@@ -187,7 +210,7 @@ body {
 
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-inner::before {
-    padding-right: 0.25em;
+    padding-right: $segment-fake-italic-horizontal-padding;
 }
 @supports (--foo: green) {
     .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-inner::before,
@@ -198,7 +221,7 @@ body {
 
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
-    padding-right: calc(1em / 6);
+    padding-right: $segment-fake-italic-horizontal-padding;
 }
 @supports (--foo: green) {
     .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,

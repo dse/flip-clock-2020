@@ -136,33 +136,33 @@
 
 @supports (--foo: green) {
   :root {
-    --flip-clock-window-padding: 1vw;
-    --flip-clock-gutter:         1vw;
-    --segment-border-radius:     1vw;
-    --flip-clock-border-radius:  2vw;
-    /* --segment-border-radius + --flip-clock-window-padding */
-    --segment-horizontal-padding: 0.05em;
-    --segment-ampm-position: 0.2em;
+    --flip-clock-window-padding:              1vw;
+    --flip-clock-segment-gutter:              1vw;
+    --flip-clock-window-gutter:               1vw;
+    --segment-border-radius:                  1vw;
+    --flip-clock-border-radius:               2vw;
+    --segment-horizontal-padding:             0.05em;
+    --segment-ampm-position:                  0.2em;
     --segment-fake-italic-horizontal-padding: 0.25em;
-    --background-color:         #181818;
-    --segment-background-color: #111111;
-    --segment-foreground-color: #ffff66;
-    --font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    --font-weight:  normal;
-    --font-style:   normal;
-    --transition-duration: 300ms;
-    --rushed-transition-duration: 50ms;
-    --flip-clock-window-border-width: 0.25vw; }
+    --background-color:                       #181818;
+    --segment-background-color:               #111111;
+    --segment-foreground-color:               #ffff66;
+    --font-family:                            Helvetica Neue, Helvetica, Arial, sans-serif;
+    --font-weight:                            normal;
+    --font-style:                             normal;
+    --transition-duration:                    300ms;
+    --rushed-transition-duration:             50ms;
+    --flip-clock-window-border-width:         0.25vw; }
   .flip-clock-date-window {
     --segment-horizontal-padding: 0.1em; }
   .flip-clock-epoch-window {
-    --flip-clock-window-padding:  0.5vw;
-    --flip-clock-gutter:          0.5vw;
-    --segment-border-radius:      0.5vw;
-    --segment-horizontal-padding: 0.5vw;
-    --flip-clock-border-radius:   1vw;
+    --flip-clock-window-padding:      0.5vw;
+    --flip-clock-segment-gutter:              0.5vw;
+    --segment-border-radius:          0.5vw;
+    --segment-horizontal-padding:     0.5vw;
+    --flip-clock-border-radius:       1vw;
     /* --segment-border-radius + --flip-clock-window-padding */
-    --flip-clock-window-border-width:               0.125vw; } }
+    --flip-clock-window-border-width: 0.125vw; } }
 
 body {
   background-color: #181818; }
@@ -172,7 +172,7 @@ body {
     background-color: var(--background-color); } }
 
 .flip-clock {
-  font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-weight: normal;
   font-style: normal; }
 
@@ -189,11 +189,12 @@ body {
   .flip-clock-line {
     color: var(--segment-foreground-color); } }
 
-.flip-clock-line > .x-inner > .flip-clock-window:not(:first-child) {
-  margin-left: 0.5vw; }
+.flip-clock-line > .x-inner > .flip-clock-window + .flip-clock-window {
+  margin-left: 1vw; }
 
-.flip-clock-line > .x-inner > .flip-clock-window:not(:last-child) {
-  margin-right: 0.5vw; }
+@supports (--foo: green) {
+  .flip-clock-line > .x-inner > .flip-clock-window + .flip-clock-window {
+    margin-left: var(--flip-clock-window-gutter); } }
 
 .flip-clock-window {
   border-radius: 2vw;
@@ -207,7 +208,7 @@ body {
 /* gussied-up */
 .flip-clock-window {
   border-style: solid;
-  border-width: 0.5vw 0 0.5vw 0;
+  border-width: 0.25vw 0 0.25vw 0;
   border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
   background-clip: padding-box; }
 
@@ -220,7 +221,7 @@ body {
 
 @supports (--foo: green) {
   .flip-clock-segment + .flip-clock-segment {
-    margin-left: var(--flip-clock-gutter); } }
+    margin-left: var(--flip-clock-segment-gutter); } }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
   left: 0.2em; }
@@ -230,8 +231,8 @@ body {
     left: var(--segment-ampm-position); } }
 
 .flip-clock-segment-inner::before {
-  padding-left: calc(1em / 12 + 1vw);
-  padding-right: calc(1em / 12 + 1vw); }
+  padding-left: 0.05em;
+  padding-right: 0.05em; }
 
 @supports (--foo: green) {
   .flip-clock-segment-inner::before {
@@ -278,8 +279,8 @@ body {
   background-color: #111111;
   color: #ffff66;
   border-radius: 1vw;
-  padding-left: calc(1em / 12 + 1vw);
-  padding-right: calc(1em / 12 + 1vw); }
+  padding-left: 0.05em;
+  padding-right: 0.05em; }
 
 @supports (--foo: green) {
   .flip-clock-segment-piece-inner {
@@ -300,7 +301,7 @@ body {
 
 .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
-  padding-right: calc(1em / 6); }
+  padding-right: 0.25em; }
 
 @supports (--foo: green) {
   .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment-piece-inner,
