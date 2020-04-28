@@ -62,6 +62,25 @@ var Segment = (function () {
     caf = caf || window.oCancelRequestAnimationFrame;
     window.cancelAnimationFrame = caf;
 
+    var supportsAudioContext = typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined';
+    var needsAudioContext = /\bSafari\//.test(navigator.userAgent) && !/\bChrome\//.test(navigator.userAgent);
+    // Safari needs it:
+    //     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Safari/605.1.15" = $1
+    // Chrome doesn't:
+    //     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36"
+
+    var useAudioContext = supportsAudioContext && needsAudioContext;
+
+    function createAudioContext() {
+        if (typeof AudioContext !== 'undefined') {
+            return new AudioContext();
+        }
+        if (typeof webkitAudioContext !== 'undefined') {
+            return new webkitAudioContext();
+        }
+        return;
+    }
+
     if (!window.requestAnimationFrame || !window.cancelAnimationFrame) {
         window.requestAnimationFrame = function (callback, element) {
             var currTime = new Date().getTime();
@@ -79,12 +98,18 @@ var Segment = (function () {
         this.animationStyle = 1;
         this.digitCount = options.digitCount;
         this.flipClock = options.flipClock;
-        this.enableAudio = false;
 
-        this.isTwelveHour = false;
-        if (options.isTwelveHour) {
-            this.isTwelveHour = true;
+        this.enableAudio = false;
+        if (options.enableAudio) {
+            this.enableAudio = true;
         }
+        console.debug("Segment: enableAudio initialized to " + JSON.stringify(this.enableAudio));
+
+        this.is24Hour = false;
+        if (options.is24Hour) {
+            this.is24Hour = true;
+        }
+        console.debug("Segment: is24Hour initialized to " + JSON.stringify(this.is24Hour));
 
         if (options.states && options.states instanceof Array) {
             this.states = options.states;
@@ -151,15 +176,28 @@ var Segment = (function () {
         this.topText = topText;
         this.bottomText = bottomText;
 
-        this.audio = document.createElement('audio');
-        this.audio.setAttribute('src', 'tick8.wav');
+        if (useAudioContext) {
+            if (!Segment.audioContext) {
+                Segment.audioContext = createAudioContext();
+            }
+            this.audioContext = Segment.audioContext;
+
+            this.audio = document.createElement('audio');
+            this.audio.src = 'tick8.wav';
+
+            this.track = this.audioContext.createMediaElementSource(this.audio);
+            this.track.connect(this.audioContext.destination);
+        } else {
+            this.audio = document.createElement('audio');
+            this.audio.setAttribute('src', 'tick8.wav');
+        }
 
         this.callback = [];
         this.addOrRemove12HourClass();
     }
     Segment.prototype.addOrRemove12HourClass = function () {
-        this.element.classList[this.isTwelveHour ? 'add' : 'remove']('flip-clock-segment-twelve-hour');
-        this.flipClock.element.classList[this.isTwelveHour ? 'add' : 'remove']('flip-clock-twelve-hour');
+        this.element.classList[this.is24Hour ? 'add' : 'remove']('flip-clock-segment-twelve-hour');
+        this.flipClock.element.classList[this.is24Hour ? 'add' : 'remove']('flip-clock-twelve-hour');
     };
     Segment.prototype.setDesiredValue = function (value, delay, callback) {
         if ('startAt' in this) {
@@ -194,7 +232,7 @@ var Segment = (function () {
             return this.states[stateIndex];
         }
         var newText;
-        if (this.isTwelveHour) {
+        if (this.isHour && !this.is24Hour) {
             newText = String((stateIndex + 11) % 12 + 1);
             if (stateIndex >= 0 && stateIndex < 12) {
                 newText = newText + '<span class="ampm">am</span>';
@@ -274,7 +312,15 @@ var Segment = (function () {
             flipTop.style.display = 'inline-block';
             this.topText.innerHTML = newText;
             if (this.enableAudio) {
-                this.audio.play();
+                if (useAudioContext) {
+                    if (this.audioContext.state === 'suspended') {
+                        this.audioContext.resume();
+                    }
+                    this.audio.currentTime = 0;
+                    this.audio.play();
+                } else {
+                    this.audio.play();
+                }
             }
             setTimeout(function () {
                 flipTopInner.removeChild(flipTopText);
@@ -294,13 +340,17 @@ var Segment = (function () {
     var a = 0;
     var b = 0;
 
-    Segment.prototype.set24Hour = function (flag) {
-        this.isTwelveHour = !flag;
+    Segment.prototype.setIs24Hour = function (flag) {
+        flag = !!flag;
+        console.debug("Segment: setting is24Hour to " + JSON.stringify(flag));
+        this.is24Hour = !!flag;
         this.addOrRemove12HourClass();
         this.refresh();
     };
     Segment.prototype.setEnableAudio = function (flag) {
-        this.enableAudio = !!flag;
+        flag = !!flag;
+        console.debug("Segment: setting enableAudio to " + JSON.stringify(flag));
+        this.enableAudio = flag;
     };
     Segment.prototype.setAnimationStyle = function (index) {
         this.animationStyle = index;
@@ -359,7 +409,7 @@ var FlipClock = (function () {
         this.elements.epoch  = Array.from(this.element.querySelectorAll('[data-flip-clock-epoch]'));
 
         var date = testRollover || new Date();
-        console.log(date);
+        console.debug(date);
 
         if (this.elements.year) {
             this.segmentArray.push(
@@ -424,7 +474,8 @@ var FlipClock = (function () {
         if (this.elements.hour) {
             this.segmentArray.push(
                 this.segments.hour = new Segment({
-                    isTwelveHour: !this.is24Hour,
+                    isHour: true,
+                    is24Hour: !this.is24Hour,
                     digitCount: 2,
                     stateCount: 24,
                     element: this.elements.hour,
@@ -508,6 +559,9 @@ var FlipClock = (function () {
     };
 
     FlipClock.prototype.setEnableAudio = function (flag) {
+        flag = !!flag;
+        console.debug("FlipClock: setting enableAudio to " + JSON.stringify(flag));
+        this.enableAudio = flag;
         this.segmentArray.forEach(function (segment) {
             segment.setEnableAudio(flag);
         }.bind(this));
@@ -519,10 +573,12 @@ var FlipClock = (function () {
         }.bind(this));
     };
 
-    FlipClock.prototype.set24Hour = function (flag) {
+    FlipClock.prototype.setIs24Hour = function (flag) {
+        flag = !!flag;
+        console.debug("FlipClock: setting is24Hour to " + JSON.stringify(flag));
         this.is24Hour = flag;
         if (this.segments.hour) {
-            this.segments.hour.set24Hour(flag);
+            this.segments.hour.setIs24Hour(flag);
         }
     };
 

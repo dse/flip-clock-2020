@@ -204,13 +204,17 @@ var FlipClockPage = {
         var formCheckboxHandler = function (event) {
             if (event.target.hasAttribute('data-flip-clock-twenty-four-hour')) {
                 var checked = event.target.checked; // is twenty-four hour?
+                console.debug("FlipClockPage: addEvents: 24-hour checkbox is " + (checked ? "checked" : "NOT checked"));
                 try { localStorage.setItem('flip-clock--twenty-four-hour', JSON.stringify(checked)); } catch (e) { }
-                this.flipClock.set24Hour(checked);
+                console.debug("FlipClockPage: addEvents: setting is24Hour to " + JSON.stringify(checked));
+                this.flipClock.setIs24Hour(checked);
                 event.preventDefault();
             }
             if (event.target.hasAttribute('data-flip-clock-enable-audio')) {
                 var checked = event.target.checked; // is twenty-four hour?
+                console.debug("FlipClockPage: addEvents: audio checkbox is " + (checked ? "checked" : "NOT checked"));
                 try { localStorage.setItem('flip-clock--enable-audio', JSON.stringify(checked)); } catch (e) { }
+                console.debug("FlipClockPage: addEvents: setting enableAudio to " + JSON.stringify(checked));
                 this.flipClock.setEnableAudio(checked);
                 event.preventDefault();
             }
@@ -270,20 +274,27 @@ var FlipClockPage = {
         }
         this.computeAndSetZoomValue();
 
-        if ((value = localStorage.getItem('flip-clock--twenty-four-hour')) !== null) {
+        value = localStorage.getItem('flip-clock--twenty-four-hour');
+        console.debug("FlipClockPage: localStorage.getItem('flip-clock--twenty-four-hour') returned " + JSON.stringify(value));
+        if (value !== null) {
             try {
                 value = !!JSON.parse(value);
             } catch (e) {
                 value = false;
             }
-            this.flipClock.set24Hour(value);
+            console.debug("value is now " + JSON.stringify(value) + "; setting is24Hour to it");
+            this.flipClock.setIs24Hour(value);
         }
-        if ((value = localStorage.getItem('flip-clock--enable-audio')) !== null) {
+
+        value = localStorage.getItem('flip-clock--enable-audio');
+        console.debug("FlipClockPage: localStorage.getItem('flip-clock--enable-audio') returned " + JSON.stringify(value));
+        if (value !== null) {
             try {
                 value = !!JSON.parse(value);
             } catch (e) {
                 value = false;
             }
+            console.debug("value is now " + JSON.stringify(value) + "; setting enableAudio to it");
             this.flipClock.setEnableAudio(value);
         }
     },
@@ -349,11 +360,17 @@ var FlipClockPage = {
         }
         Array.from(document.querySelectorAll('[data-flip-clock-twenty-four-hour]')).forEach(function (input) {
             var flag = this.flipClock.is24Hour;
-            input.checked = !!flag;
+            console.debug("FlipClockPage: is24Hour is " + JSON.stringify(flag));
+            flag = !!flag;
+            console.debug("FlipClockPage: setting checked flag on 24-hour checkbox to " + JSON.stringify(flag));
+            input.checked = flag;
         }.bind(this));
         Array.from(document.querySelectorAll('[data-flip-clock-enable-audio]')).forEach(function (input) {
             var flag = this.flipClock.enableAudio;
-            input.checked = !!flag;
+            console.debug("FlipClockPage: enableAudio is " + JSON.stringify(flag));
+            flag = !!flag;
+            console.debug("FlipClockPage: setting checked flag on audio checkbox to " + JSON.stringify(flag));
+            input.checked = flag;
         }.bind(this));
     },
 
@@ -421,7 +438,7 @@ var FlipClockPage = {
 
         this.computeAndSetZoomValue();
 
-        this.flipClock.set24Hour(false);
+        this.flipClock.setIs24Hour(false);
         this.flipClock.setEnableAudio(false);
         this.setFormValues();
 
