@@ -152,7 +152,7 @@ var Segment = (function () {
         this.bottomText = bottomText;
 
         this.audio = document.createElement('audio');
-        this.audio.src = 'tick8.wav';
+        this.audio.setAttribute('src', 'tick8.wav');
 
         this.callback = [];
         this.addOrRemove12HourClass();
@@ -245,12 +245,6 @@ var Segment = (function () {
 
     Segment.prototype.animate0 = function (currentText, newText, nextStateIndex, callback) {
         var promise;
-        if (this.enableAudio) {
-            promise = this.audio.play();
-            if (promise !== undefined) {
-                promise.then(function () {}, function () {});
-            }
-        }
         window.requestAnimationFrame(function () {
             this.topText.innerHTML = newText;
             this.bottomText.innerHTML = newText;
