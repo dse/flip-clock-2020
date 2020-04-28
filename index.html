@@ -115,6 +115,12 @@
         <script>
             document.write('<' + 'script src="flip-clock.js?cachebuster=' + cachebuster + '"></' + 'script>');
             document.write('<' + 'script src="flip-clock-page.js?cachebuster=' + cachebuster + '"></' + 'script>');
+            document.addEventListener('load', function () {
+                FlipClockPage.init({
+                    enableThemeConfiguration: false,
+                    enableGoodies: true
+                });
+            });
         </script>
 
     </body>

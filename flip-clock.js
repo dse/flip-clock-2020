@@ -335,6 +335,9 @@ var FlipClock = (function () {
         this.is24Hour = false;
         var testRollover;
 
+        this.enableThemeConfiguration = options && options.enableThemeConfiguration;
+        this.enableGoodies            = options && options.enableGoodies;
+
         if (options) {
             if (!this.element && options.elementId) {
                 this.element = document.getElementById(options.elementId);

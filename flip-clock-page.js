@@ -8,16 +8,22 @@ var FlipClockPage = {
     fakeItalic: false,
     fontStyle: 'normal',
     testRollover: undefined,
-    init: function () {
+
+    init: function (options) {
+        this.enableThemeConfiguration = options && options.enableThemeConfiguration;
+        this.enableGoodies            = options && options.enableGoodies;
         this.flipClock = new FlipClock({
-            elementId: 'flip-clock',
-            testRollover: this.testRollover
+            elementId:                'flip-clock',
+            testRollover:             this.testRollover,
+            enableThemeConfiguration: this.enableThemeConfiguration,
+            enableGoodies:            this.enableGoodies
         });
         this.flipClock.setAnimationStyle(1);
         this.setPropertiesFromStorage();
         this.setFormValues();
         this.addEvents();
     },
+
     setSegmentForegroundColor: function (color) {
         this.segmentForegroundColor = color;
         var style = document.documentElement.style;
@@ -29,6 +35,7 @@ var FlipClockPage = {
             }
         }
     },
+
     setSegmentBackgroundColor: function (color) {
         this.segmentBackgroundColor = color;
         var style = document.documentElement.style;
@@ -40,6 +47,7 @@ var FlipClockPage = {
             }
         }
     },
+
     setBackgroundColor: function (color) {
         this.backgroundColor = color;
         var style = document.documentElement.style;
@@ -51,6 +59,7 @@ var FlipClockPage = {
             }
         }
     },
+
     setFontFamily: function (fontFamily) {
         this.fontFamily = fontFamily;
         var style = document.documentElement.style;
@@ -62,6 +71,7 @@ var FlipClockPage = {
             }
         }
     },
+
     setFontWeight: function (fontWeight) {
         this.fontWeight = fontWeight;
         var style = document.documentElement.style;
@@ -73,6 +83,7 @@ var FlipClockPage = {
             }
         }
     },
+
     setFontStyle: function (fontStyle) {
         this.fontStyle = fontStyle;
         var style = document.documentElement.style;
@@ -90,11 +101,13 @@ var FlipClockPage = {
             inner.style.fontSize = '';
         });
     },
+
     setZoomValue: function (value) {
         Array.from(document.querySelectorAll('.flip-clock-line-inner')).forEach(function (inner) {
             inner.style.fontSize = (value * 100) + '%';
         });
     },
+
     computeAndSetZoomValue: function () {
         this.clearZoomValue();
         var maxWidth;
@@ -106,23 +119,7 @@ var FlipClockPage = {
         this.setZoomValue(document.body.clientWidth / maxWidth * 0.95);
     },
 
-    addEvents: function () {
-        var flipWrapHandler = function (event) {
-            var element = event.target.closest('.flip-clock-segment');
-            if (!element) {
-                return;
-            }
-            var id = element.getAttribute('data-segment-id');
-            if (!id) {
-                return;
-            }
-            var segment = Segment.segmentsById[id];
-            if (!segment) {
-                return;
-            }
-            segment.flipWrap();
-            event.preventDefault();
-        }.bind(this);
+    addThemeEvents: function () {
         var formChangeHandler = function (event) {
             var style = document.documentElement.style;
             if (event.target.hasAttribute('data-flip-clock-segment-foreground-color')) {
@@ -169,6 +166,41 @@ var FlipClockPage = {
                 event.preventDefault();
             }
         }.bind(this);
+
+        document.addEventListener('change', formChangeHandler);
+    },
+
+    addGoodyEvents: function () {
+        var flipWrapHandler = function (event) {
+            var element = event.target.closest('.flip-clock-segment');
+            if (!element) {
+                return;
+            }
+            var id = element.getAttribute('data-segment-id');
+            if (!id) {
+                return;
+            }
+            var segment = Segment.segmentsById[id];
+            if (!segment) {
+                return;
+            }
+            segment.flipWrap();
+            event.preventDefault();
+        }.bind(this);
+
+        var happyHandler = function (event) {
+            if (!event.target.closest('[data-flip-clock-happy]')) {
+                return;
+            }
+            this.flipClock.flipWrap();
+            event.preventDefault();
+        }.bind(this);
+
+        document.addEventListener('click', flipWrapHandler);
+        document.addEventListener('click', happyHandler);
+    },
+
+    addEvents: function () {
         var formCheckboxHandler = function (event) {
             if (event.target.hasAttribute('data-flip-clock-twenty-four-hour')) {
                 var checked = event.target.checked; // is twenty-four hour?
@@ -183,6 +215,7 @@ var FlipClockPage = {
                 event.preventDefault();
             }
         }.bind(this);
+
         var setDefaultsHandler = function (event) {
             if (!event.target.closest('[data-flip-clock-set-defaults]')) {
                 return;
@@ -190,47 +223,50 @@ var FlipClockPage = {
             this.setDefaults();
             event.preventDefault();
         }.bind(this);
-        var happyHandler = function (event) {
-            if (!event.target.closest('[data-flip-clock-happy]')) {
-                return;
-            }
-            this.flipClock.flipWrap();
-            event.preventDefault();
-        }.bind(this);
+
         var reloadHandler = function (event) {
             if (!event.target.closest('[data-flip-clock-reload]')) {
                 return;
             }
             location.reload();
         }.bind(this);
-        document.addEventListener('click', flipWrapHandler);
-        document.addEventListener('change', formChangeHandler);
+
         document.addEventListener('input', formCheckboxHandler);
         document.addEventListener('change', formCheckboxHandler);
         document.addEventListener('click', setDefaultsHandler);
-        document.addEventListener('click', happyHandler);
         document.addEventListener('click', reloadHandler);
+
+        if (this.enableGoodies) {
+            this.addGoodyEvents();
+        }
+        if (this.enableThemeConfiguration) {
+            this.addThemeEvents();
+        }
     },
+
     setPropertiesFromStorage: function () {
         var style = document.documentElement.style;
         var value;
-        if ((value = localStorage.getItem('flip-clock--segment-foreground-color'))) {
-            this.setSegmentForegroundColor(value);
-        }
-        if ((value = localStorage.getItem('flip-clock--segment-background-color'))) {
-            this.setSegmentBackgroundColor(value);
-        }
-        if ((value = localStorage.getItem('flip-clock--background-color'))) {
-            this.setBackgroundColor(value);
-        }
-        if ((value = localStorage.getItem('flip-clock--font-family'))) {
-            this.setFontFamily(value);
-        }
-        if ((value = localStorage.getItem('flip-clock--font-weight'))) {
-            this.setFontWeight(value);
-        }
-        if ((value = localStorage.getItem('flip-clock--font-style'))) {
-            this.setFontStyle(value);
+
+        if (this.enableThemeConfiguration) {
+            if ((value = localStorage.getItem('flip-clock--segment-foreground-color'))) {
+                this.setSegmentForegroundColor(value);
+            }
+            if ((value = localStorage.getItem('flip-clock--segment-background-color'))) {
+                this.setSegmentBackgroundColor(value);
+            }
+            if ((value = localStorage.getItem('flip-clock--background-color'))) {
+                this.setBackgroundColor(value);
+            }
+            if ((value = localStorage.getItem('flip-clock--font-family'))) {
+                this.setFontFamily(value);
+            }
+            if ((value = localStorage.getItem('flip-clock--font-weight'))) {
+                this.setFontWeight(value);
+            }
+            if ((value = localStorage.getItem('flip-clock--font-style'))) {
+                this.setFontStyle(value);
+            }
         }
         this.computeAndSetZoomValue();
 
@@ -251,62 +287,66 @@ var FlipClockPage = {
             this.flipClock.setEnableAudio(value);
         }
     },
+
     setFormValues: function () {
-        var cs  = getComputedStyle(document.documentElement);
-        Array.from(document.querySelectorAll('[data-flip-clock-segment-foreground-color]')).forEach(function (input) {
-            try {
-                var value = cs.getPropertyValue('--segment-foreground-color').trim();
-                this.setInputValue(input, value);
-            } catch (e) { }
-        }.bind(this));
-        Array.from(document.querySelectorAll('[data-flip-clock-segment-background-color]')).forEach(function (input) {
-            try {
-                var value = cs.getPropertyValue('--segment-background-color').trim();
-                this.setInputValue(input, value);
-            } catch (e) { }
-        }.bind(this));
-        Array.from(document.querySelectorAll('[data-flip-clock-background-color]')).forEach(function (input) {
-            try {
-                var value = cs.getPropertyValue('--background-color').trim();
-                this.setInputValue(input, value);
-            } catch (e) { }
-        }.bind(this));
-        Array.from(document.querySelectorAll('[data-flip-clock-font-family]')).forEach(function (input) {
-            try {
-                var value = cs.getPropertyValue('--font-family').trim();
-                var option;
-                if (input.tagName.toLowerCase() === 'select') {
-                    option = this.setSelectValue(input, value);
-                    this.fakeItalic = option.hasAttribute('data-fake-italic');
-                    this.addOrRemoveFakeItalicClass();
-                    this.computeAndSetZoomValue();
-                } else {
+        var cs = getComputedStyle(document.documentElement);
+
+        if (this.enableThemeConfiguration) {
+            Array.from(document.querySelectorAll('[data-flip-clock-segment-foreground-color]')).forEach(function (input) {
+                try {
+                    var value = cs.getPropertyValue('--segment-foreground-color').trim();
                     this.setInputValue(input, value);
-                }
-            } catch (e) { }
-        }.bind(this));
-        Array.from(document.querySelectorAll('[data-flip-clock-font-weight]')).forEach(function (input) {
-            try {
-                var value = cs.getPropertyValue('--font-weight').trim();
-                if (input.tagName.toLowerCase() === 'select') {
-                    this.setSelectValue(input, value);
-                } else {
+                } catch (e) { }
+            }.bind(this));
+            Array.from(document.querySelectorAll('[data-flip-clock-segment-background-color]')).forEach(function (input) {
+                try {
+                    var value = cs.getPropertyValue('--segment-background-color').trim();
                     this.setInputValue(input, value);
-                }
-            } catch (e) { }
-        }.bind(this));
-        Array.from(document.querySelectorAll('[data-flip-clock-font-style]')).forEach(function (input) {
-            try {
-                var value = cs.getPropertyValue('--font-style').trim();
-                if (input.tagName.toLowerCase() === 'select') {
-                    this.setSelectValue(input, value);
-                    this.fontStyle = value;
-                    this.addOrRemoveItalicClass();
-                } else {
+                } catch (e) { }
+            }.bind(this));
+            Array.from(document.querySelectorAll('[data-flip-clock-background-color]')).forEach(function (input) {
+                try {
+                    var value = cs.getPropertyValue('--background-color').trim();
                     this.setInputValue(input, value);
-                }
-            } catch (e) { }
-        }.bind(this));
+                } catch (e) { }
+            }.bind(this));
+            Array.from(document.querySelectorAll('[data-flip-clock-font-family]')).forEach(function (input) {
+                try {
+                    var value = cs.getPropertyValue('--font-family').trim();
+                    var option;
+                    if (input.tagName.toLowerCase() === 'select') {
+                        option = this.setSelectValue(input, value);
+                        this.fakeItalic = option.hasAttribute('data-fake-italic');
+                        this.addOrRemoveFakeItalicClass();
+                        this.computeAndSetZoomValue();
+                    } else {
+                        this.setInputValue(input, value);
+                    }
+                } catch (e) { }
+            }.bind(this));
+            Array.from(document.querySelectorAll('[data-flip-clock-font-weight]')).forEach(function (input) {
+                try {
+                    var value = cs.getPropertyValue('--font-weight').trim();
+                    if (input.tagName.toLowerCase() === 'select') {
+                        this.setSelectValue(input, value);
+                    } else {
+                        this.setInputValue(input, value);
+                    }
+                } catch (e) { }
+            }.bind(this));
+            Array.from(document.querySelectorAll('[data-flip-clock-font-style]')).forEach(function (input) {
+                try {
+                    var value = cs.getPropertyValue('--font-style').trim();
+                    if (input.tagName.toLowerCase() === 'select') {
+                        this.setSelectValue(input, value);
+                        this.fontStyle = value;
+                        this.addOrRemoveItalicClass();
+                    } else {
+                        this.setInputValue(input, value);
+                    }
+                } catch (e) { }
+            }.bind(this));
+        }
         Array.from(document.querySelectorAll('[data-flip-clock-twenty-four-hour]')).forEach(function (input) {
             var flag = this.flipClock.is24Hour;
             input.checked = !!flag;
@@ -316,6 +356,7 @@ var FlipClockPage = {
             input.checked = !!flag;
         }.bind(this));
     },
+
     setInputValue: function (input, value) {
         if (input.tagName.toLowerCase() === 'select') {
             return this.setSelectValue(input, value);
@@ -327,6 +368,7 @@ var FlipClockPage = {
         input.value = value;
         return input;
     },
+
     setSelectValue: function (input, value) {
         var options;
         var option;
@@ -345,12 +387,14 @@ var FlipClockPage = {
             return option;
         }
     },
+
     addOrRemoveFakeItalicClass: function () {
         Array.from(document.querySelectorAll('.flip-clock')).forEach(function (element) {
             element.classList[this.fakeItalic    ? 'add' : 'remove']('with-fake-italic');
             element.classList[(!this.fakeItalic) ? 'add' : 'remove']('without-fake-italic');
         }.bind(this));
     },
+
     addOrRemoveItalicClass: function () {
         Array.from(document.querySelectorAll('.flip-clock')).forEach(function (element) {
             element.classList[this.fontStyle === 'normal'  ? 'add' : 'remove']('with-font-style--normal');
@@ -358,59 +402,43 @@ var FlipClockPage = {
             element.classList[this.fontStyle === 'oblique' ? 'add' : 'remove']('with-font-style--oblique');
         }.bind(this));
     },
+
     setDefaults: function () {
         var style = document.documentElement.style;
 
-        this.setSegmentForegroundColor(undefined);
-        this.setSegmentBackgroundColor(undefined);
-        this.setBackgroundColor(undefined);
-        this.setFontFamily(undefined);
-        this.setFontWeight(undefined);
-        this.setFontStyle(undefined);
-
-        this.fakeItalic = false;
-        this.fontStyle = 'normal';
-        this.addOrRemoveFakeItalicClass();
-        this.addOrRemoveItalicClass();
+        if (this.enableThemeConfiguration) {
+            this.setSegmentForegroundColor(undefined);
+            this.setSegmentBackgroundColor(undefined);
+            this.setBackgroundColor(undefined);
+            this.setFontFamily(undefined);
+            this.setFontWeight(undefined);
+            this.setFontStyle(undefined);
+            this.fakeItalic = false;
+            this.fontStyle = 'normal';
+            this.addOrRemoveFakeItalicClass();
+            this.addOrRemoveItalicClass();
+        }
 
         this.computeAndSetZoomValue();
 
         this.flipClock.set24Hour(false);
         this.flipClock.setEnableAudio(false);
         this.setFormValues();
-        try {
-            localStorage.removeItem('flip-clock--segment-foreground-color');
-            localStorage.removeItem('flip-clock--segment-background-color');
-            localStorage.removeItem('flip-clock--background-color');
-            localStorage.removeItem('flip-clock--font-family');
-            localStorage.removeItem('flip-clock--font-weight');
-            localStorage.removeItem('flip-clock--font-style');
-        } catch (e) { }
+
+        if (this.enableThemeConfiguration) {
+            try {
+                localStorage.removeItem('flip-clock--segment-foreground-color');
+                localStorage.removeItem('flip-clock--segment-background-color');
+                localStorage.removeItem('flip-clock--background-color');
+                localStorage.removeItem('flip-clock--font-family');
+                localStorage.removeItem('flip-clock--font-weight');
+                localStorage.removeItem('flip-clock--font-style');
+            } catch (e) { }
+        }
+
         try {
             localStorage.removeItem('flip-clock--twenty-four-hour');
             localStorage.removeItem('flip-clock--enable-audio');
         } catch (e) { }
     }
 };
-
-(function () {
-    var matches;
-    var date;
-    var match;
-    if ((matches = /(?:^|\?|&)testRolloverYear=([^&=]+)/.exec(location.search))) {
-        number = Number(decodeURIComponent(matches[1]));
-        if (number) {
-            date = new Date(number, 0, 1, 0, 0, 0, 0);
-        }
-    }
-    if ((matches = /(?:^|\?|&)testRolloverEpoch=([^&=]+)/.exec(location.search))) {
-        number = Number(decodeURIComponent(matches[1]));
-        if (number) {
-            date = new Date(number * 1000);
-        }
-    }
-    if (date) {
-        FlipClockPage.testRollover = date;
-    }
-    FlipClockPage.init();
-}());

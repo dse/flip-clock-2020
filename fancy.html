@@ -224,6 +224,30 @@
         <script>
             document.write('<' + 'script src="flip-clock.js?cachebuster=' + cachebuster + '"></' + 'script>');
             document.write('<' + 'script src="flip-clock-page.js?cachebuster=' + cachebuster + '"></' + 'script>');
+            document.addEventListener('load', function () {
+                var matches;
+                var date;
+                var match;
+                if ((matches = /(?:^|\?|&)testRolloverYear=([^&=]+)/.exec(location.search))) {
+                    number = Number(decodeURIComponent(matches[1]));
+                    if (number) {
+                        date = new Date(number, 0, 1, 0, 0, 0, 0);
+                    }
+                }
+                if ((matches = /(?:^|\?|&)testRolloverEpoch=([^&=]+)/.exec(location.search))) {
+                    number = Number(decodeURIComponent(matches[1]));
+                    if (number) {
+                        date = new Date(number * 1000);
+                    }
+                }
+                if (date) {
+                    FlipClockPage.testRollover = date;
+                }
+                FlipClockPage.init({
+                    enableThemeConfiguration: true,
+                    enableGoodies: true
+                });
+            });
         </script>
 
     </body>
