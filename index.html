@@ -35,14 +35,30 @@
                 display: none;
             }
             [type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch::before {
-                content: '\f204'; /* toggle-off */
                 font-family: 'Font Awesome 5 Free';
                 font-weight: 900;
+                content: '\f204'; /* toggle-off */
             }
             [type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch::before {
                 content: '\f205'; /* toggle-on */
+            }
+
+            [type="checkbox"].audio-switch {
+                width: 0;
+                opacity: 0;
+                display: none;
+            }
+            [type="checkbox"].audio-switch + :not([type="checkbox"]).audio-switch::before {
                 font-family: 'Font Awesome 5 Free';
                 font-weight: 900;
+                content: '\f6a9'; /* volume-mute */
+            }
+            [type="checkbox"]:checked.audio-switch + :not([type="checkbox"]).audio-switch::before {
+                content: '\f028'; /* volume-up */
+            }
+
+            .bottom-buttons label + label {
+                margin-left: 0.5em;
             }
         </style>
         <style>
@@ -89,19 +105,24 @@
             </div>
         </div>
 
+        <!-- &zwj; shuts up a tidy warning -->
         <div class="bottom-buttons">
             <div class="bottom-right-buttons">
                 <label class="css-reset">
-                    12
+                    <button class="happy-button" data-flip-clock-happy><i class="fas fa-smile">&zwj;</i></button>
+                </label>
+                <label class="css-reset">
+                    <button class="reload-button" data-flip-clock-reload><i class="fas fa-redo">&zwj;</i></button>
+                </label>
+                <label class="css-reset">
+                    <input type="checkbox" class="audio-switch" name="enable-audio" value="true" data-flip-clock-enable-audio>
+                    <span class="audio-switch">&zwj;</span>
+                </label>
+                <label class="css-reset">
                     <input type="checkbox" class="toggle-switch" name="twenty-four-hour" value="true" data-flip-clock-twenty-four-hour>
                     <span class="toggle-switch">&zwj;</span>
                     24
                 </label>
-            </div>
-            <div class="bottom-left-buttons">
-                <!-- &zwj; shuts up a tidy warning -->
-                <button class="happy-button" data-flip-clock-happy><i class="fas fa-smile">&zwj;</i></button>
-                <button class="reload-button" data-flip-clock-reload><i class="fas fa-redo">&zwj;</i></button>
             </div>
         </div>
 
