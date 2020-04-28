@@ -96,7 +96,10 @@ body {
 /* gussied-up */
 .flip-clock-window {
     border-style: solid;
-    border-width: #{$flip-clock-window-border-width} 0 #{$flip-clock-window-border-width} 0;
+
+    /* border-width: #{$flip-clock-window-border-width} 0 #{$flip-clock-window-border-width} 0; */
+    border-width: 0 0 #{$flip-clock-window-border-width} 0; /* safari bug */
+
     background-clip: padding-box;
     border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
     @supports (--foo: green) {
