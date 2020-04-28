@@ -204,17 +204,8 @@ body {
   border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent; }
   @supports (--foo: green) {
     .flip-clock-window {
-      border-width: var(--flip-clock-window-border-width) 0 var(--flip-clock-window-border-width) 0; } }
+      border-width: 0 0 var(--flip-clock-window-border-width) 0; } }
 
-/* .flip-clock-segment {
-   padding-left: $segment-horizontal-padding;
-   padding-right: $segment-horizontal-padding;
-   @supports (--foo: green) {
-   padding-left: var(--segment-horizontal-padding);
-   padding-right: var(--segment-horizontal-padding);
-   }
-   }
- */
 .flip-clock-segment + .flip-clock-segment {
   margin-left: 1vw; }
   @supports (--foo: green) {
@@ -227,15 +218,6 @@ body {
     .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
       left: var(--segment-ampm-position); } }
 
-/* .flip-clock-segment::before {
-   padding-left: $segment-horizontal-padding;
-   padding-right: $segment-horizontal-padding;
-   @supports (--foo: green) {
-   padding-left: var(--segment-horizontal-padding);
-   padding-right: var(--segment-horizontal-padding);
-   }
-   }
- */
 .flip-clock-segment-piece {
   border-radius: 1vw; }
   @supports (--foo: green) {

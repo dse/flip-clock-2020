@@ -103,7 +103,7 @@ body {
     background-clip: padding-box;
     border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
     @supports (--foo: green) {
-        border-width: var(--flip-clock-window-border-width) 0 var(--flip-clock-window-border-width) 0;
+        border-width: 0 0 var(--flip-clock-window-border-width) 0;
     }
 }
 
