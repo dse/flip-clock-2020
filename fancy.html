@@ -222,9 +222,9 @@
         </script>
 
         <script>
-            document.write('<' + 'script src="flip-clock.js?cachebuster=' + cachebuster + '"></' + 'script>');
-            document.write('<' + 'script src="flip-clock-page.js?cachebuster=' + cachebuster + '"></' + 'script>');
-            document.addEventListener('load', function () {
+            document.write('<' + 'script defer src="flip-clock.js?cachebuster=' + cachebuster + '"></' + 'script>');
+            document.write('<' + 'script defer src="flip-clock-page.js?cachebuster=' + cachebuster + '"></' + 'script>');
+            document.addEventListener('DOMContentLoaded', function () {
                 var matches;
                 var date;
                 var match;
