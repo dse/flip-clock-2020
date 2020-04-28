@@ -98,6 +98,7 @@ var Segment = (function () {
         this.animationStyle = 1;
         this.digitCount = options.digitCount;
         this.flipClock = options.flipClock;
+        this.isHour = options.isHour;
 
         this.enableAudio = false;
         if (options.enableAudio) {
@@ -196,8 +197,9 @@ var Segment = (function () {
         this.addOrRemove12HourClass();
     }
     Segment.prototype.addOrRemove12HourClass = function () {
-        this.element.classList[this.is24Hour ? 'add' : 'remove']('flip-clock-segment-twelve-hour');
-        this.flipClock.element.classList[this.is24Hour ? 'add' : 'remove']('flip-clock-twelve-hour');
+        var twelveHourClassAddOrRemove = (this.isHour && !this.is24Hour) ? 'add' : 'remove';
+        this.element.classList[twelveHourClassAddOrRemove]('flip-clock-segment-twelve-hour');
+        this.flipClock.element.classList[twelveHourClassAddOrRemove]('flip-clock-twelve-hour');
     };
     Segment.prototype.setDesiredValue = function (value, delay, callback) {
         if ('startAt' in this) {
