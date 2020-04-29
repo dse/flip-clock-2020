@@ -125,7 +125,7 @@
   -webkit-transform: scaleY(0.75); }
 
 @supports (--foo: green) {
-  :root {
+  html.has-theme-support {
     --flip-clock-window-padding:              1vw;
     --flip-clock-segment-gutter:              1vw;
     --flip-clock-window-gutter:               1vw;
@@ -146,9 +146,9 @@
     --rushed-transition-duration:             50ms;
     --flip-clock-window-border-width:         2px;
     --flip-clock-segment-highlight-width:     2px; }
-  .flip-clock-date-window {
+  html.has-theme-support .flip-clock-date-window {
     --segment-horizontal-padding:             1vw; }
-  .flip-clock-epoch-window {
+  html.has-theme-support .flip-clock-epoch-window {
     --flip-clock-window-padding:              1vw;
     --flip-clock-segment-gutter:              1vw;
     --flip-clock-window-gutter:               1vw;
@@ -164,7 +164,7 @@ body {
   min-height: 100vh;
   overflow: hidden; }
   @supports (--foo: green) {
-    body {
+    html.has-theme-support body {
       background-color: var(--background-color);
       background-image: var(--background-gradient); } }
 
@@ -183,7 +183,7 @@ body {
   font-weight: normal;
   font-style: normal; }
   @supports (--foo: green) {
-    .flip-clock {
+    html.has-theme-support .flip-clock {
       font-family: var(--font-family);
       font-weight: var(--font-weight);
       font-style: var(--font-style); } }
@@ -194,19 +194,19 @@ body {
 .flip-clock-line {
   color: #ffff66; }
   @supports (--foo: green) {
-    .flip-clock-line {
+    html.has-theme-support .flip-clock-line {
       color: var(--segment-foreground-color); } }
 
 .flip-clock-line + .flip-clock-line {
   margin-top: 1vw; }
   @supports (--foo: green) {
-    .flip-clock-line + .flip-clock-line {
+    html.has-theme-support .flip-clock-line + .flip-clock-line {
       margin-top: var(--flip-clock-window-gutter); } }
 
 .flip-clock-line .flip-clock-window + .flip-clock-window {
   margin-left: 1vw; }
   @supports (--foo: green) {
-    .flip-clock-line .flip-clock-window + .flip-clock-window {
+    html.has-theme-support .flip-clock-line .flip-clock-window + .flip-clock-window {
       margin-left: var(--flip-clock-window-gutter); } }
 
 /**
@@ -216,7 +216,7 @@ body {
   border-radius: 2vw;
   padding: 1vw; }
   @supports (--foo: green) {
-    .flip-clock-window {
+    html.has-theme-support .flip-clock-window {
       border-radius: var(--flip-clock-border-radius);
       padding: var(--flip-clock-window-padding); } }
 
@@ -227,7 +227,7 @@ body {
   background-clip: padding-box;
   border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent; }
   @supports (--foo: green) {
-    .flip-clock-window {
+    html.has-theme-support .flip-clock-window {
       border-width: 0 0 var(--flip-clock-window-border-width) 0; } }
 
 /**
@@ -236,13 +236,13 @@ body {
 .flip-clock-segment + .flip-clock-segment {
   margin-left: 1vw; }
   @supports (--foo: green) {
-    .flip-clock-segment + .flip-clock-segment {
+    html.has-theme-support .flip-clock-segment + .flip-clock-segment {
       margin-left: var(--flip-clock-segment-gutter); } }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
   left: 1vw; }
   @supports (--foo: green) {
-    .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
+    html.has-theme-support .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
       left: var(--segment-ampm-position); } }
 
 /**
@@ -256,7 +256,7 @@ body {
   padding-left: 1vw;
   padding-right: 1vw; }
   @supports (--foo: green) {
-    .flip-clock-segment-piece {
+    html.has-theme-support .flip-clock-segment-piece {
       background-color: var(--segment-background-color);
       background-image: var(--segment-background-gradient);
       color: var(--segment-foreground-color);
@@ -271,10 +271,10 @@ body {
   background-clip: padding-box;
   border-color: rgba(255, 255, 255, 0.25) transparent rgba(0, 0, 0, 0.5) transparent; }
   @supports (--foo: green) {
-    .flip-clock-segment-piece {
+    html.has-theme-support .flip-clock-segment-piece {
       border-width: var(--flip-clock-segment-highlight-width) 0 0 0; } }
 
-.flip-clock-segment-piece::after {
+html:not(.molasses) .flip-clock-segment-piece::after {
   content: '';
   position: absolute;
   top: 0;
@@ -290,16 +290,14 @@ body {
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
   padding-right: 0.25em; }
   @supports (--foo: green) {
-    .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment::before,
-    .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
+    html.has-theme-support .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment::before, html.has-theme-support .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
       padding-right: var(--segment-fake-italic-horizontal-padding); } }
 
 .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
   padding-right: 0.25em; }
   @supports (--foo: green) {
-    .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment-piece-inner,
-    .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
+    html.has-theme-support .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment-piece-inner, html.has-theme-support .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
       padding-right: var(--segment-fake-italic-horizontal-padding); } }
 
 .bottom-buttons {

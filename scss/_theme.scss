@@ -251,7 +251,7 @@ body {
 }
 
 @if $segment-gradient-overlay != null {
-    .flip-clock-segment-piece::after {
+    html:not(.molasses) .flip-clock-segment-piece::after {
         content: '';
         position: absolute;
         top: 0;
