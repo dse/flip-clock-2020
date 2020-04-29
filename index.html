@@ -10,6 +10,14 @@
 
         <title>Flip Clock</title>
 
+        <script>
+            // Mozilla/5.0 (iPad; CPU OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36
+            if (/\bMobile\/13G36\b/.test(navigator.userAgent)) {
+                document.documentElement.classList.add('molasses');
+                document.documentElement.setAttribute('data-molasses', '');
+            }
+        </script>
+
         <script src="node_modules/css-vars-ponyfill/dist/css-vars-ponyfill.js"></script>
         <script>
             if (typeof cssVars !== 'undefined') {
