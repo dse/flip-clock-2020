@@ -27,3 +27,38 @@
     text-shadow:         .125em .125em .125em rgba(0, 0, 0, 0.5);
     -webkit-text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
 }
+
+.css-reset {
+    all: unset;
+}
+[type="checkbox"].toggle-switch {
+    width: 0;
+    opacity: 0;
+    display: none;
+}
+[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: '\f204'; /* toggle-off */
+}
+[type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch::before {
+    content: '\f205'; /* toggle-on */
+}
+
+[type="checkbox"].audio-switch {
+    width: 0;
+    opacity: 0;
+    display: none;
+}
+[type="checkbox"].audio-switch + :not([type="checkbox"]).audio-switch::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: '\f6a9'; /* volume-mute */
+}
+[type="checkbox"]:checked.audio-switch + :not([type="checkbox"]).audio-switch::before {
+    content: '\f028'; /* volume-up */
+}
+
+.bottom-buttons label + label {
+    margin-left: 0.5em;
+}

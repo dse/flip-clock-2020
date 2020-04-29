@@ -25,6 +25,7 @@ $segment-horizontal-padding--epoch:      1vw;
 $flip-clock-border-radius--epoch:        $segment-border-radius--epoch + $flip-clock-window-padding--epoch;
 $flip-clock-window-border-width--epoch:  $flip-clock-window-padding--epoch / 4;
 
+
 @supports (--foo: green) {
     :root {
         --flip-clock-window-padding:              #{$flip-clock-window-padding};
@@ -83,6 +84,13 @@ body {
     color: $segment-foreground-color;
     @supports (--foo: green) {
         color: var(--segment-foreground-color);
+    }
+}
+
+.flip-clock-line + .flip-clock-line {
+    margin-top: #{$flip-clock-window-gutter};
+    @supports (--foo: green) {
+        margin-top: var(--flip-clock-window-gutter);
     }
 }
 
