@@ -139,23 +139,22 @@
     --background-color:                       #181818;
     --segment-background-color:               #111111;
     --segment-foreground-color:               #ffff66;
-    --font-family:                            HelveticaNeue-CondensedBold, Arial Narrow, Helvetica Neue, Helvetica, Arial, sans-serif;
+    --font-family:                            HelveticaNeue-x-CondensedBold, x-Helvetica Neue, x-Helvetica, Arial, sans-serif;
     --font-weight:                            normal;
     --font-style:                             normal;
     --transition-duration:                    300ms;
     --rushed-transition-duration:             50ms;
     --flip-clock-window-border-width:         0.25vw; }
   .flip-clock-date-window {
-    --segment-horizontal-padding: 0.1em; }
+    --segment-horizontal-padding:             1vw; }
   .flip-clock-epoch-window {
-    --flip-clock-window-padding:      0.5vw;
-    --flip-clock-segment-gutter:      0.5vw;
-    --flip-clock-window-gutter:       0.5vw;
-    --segment-border-radius:          0.5vw;
-    --segment-horizontal-padding:     0.5vw;
-    --flip-clock-border-radius:       1vw;
-    /* --segment-border-radius + --flip-clock-window-padding */
-    --flip-clock-window-border-width: 0.125vw; } }
+    --flip-clock-window-padding:              1vw;
+    --flip-clock-segment-gutter:              1vw;
+    --flip-clock-window-gutter:               1vw;
+    --segment-border-radius:                  1vw;
+    --segment-horizontal-padding:             1vw;
+    --flip-clock-border-radius:               2vw;
+    --flip-clock-window-border-width:         0.25vw; } }
 
 body {
   background-color: #181818; }
@@ -165,7 +164,7 @@ body {
     background-color: var(--background-color); } }
 
 .flip-clock {
-  font-family: "HelveticaNeue-CondensedBold", "Arial Narrow", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family: "HelveticaNeue-x-CondensedBold", "x-Helvetica Neue", "x-Helvetica", "Arial", sans-serif;
   font-weight: normal;
   font-style: normal; }
   @supports (--foo: green) {

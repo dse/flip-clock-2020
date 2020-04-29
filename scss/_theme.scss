@@ -4,17 +4,26 @@ $flip-clock-window-gutter:               1vw;
 $segment-border-radius:                  1vw;
 $flip-clock-border-radius:               $segment-border-radius + $flip-clock-window-padding;
 $segment-horizontal-padding:             1vw;
+$segment-horizontal-padding--date:       1vw;
 $segment-ampm-position:                  1vw;
 $segment-fake-italic-horizontal-padding: 0.25em;
 $background-color:                       #181818;
 $segment-background-color:               #111111;
 $segment-foreground-color:               #ffff66;
-$font-family:                            'HelveticaNeue-CondensedBold', 'Arial Narrow', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$font-family:                            'HelveticaNeue-x-CondensedBold', 'x-Helvetica Neue', 'x-Helvetica', 'Arial', sans-serif;
 $font-weight:                            normal;
 $font-style:                             normal;
 $transition-duration:                    300ms;
 $rushed-transition-duration:             50ms;
-$flip-clock-window-border-width:         0.25vw;
+$flip-clock-window-border-width:         $flip-clock-window-padding / 4;
+
+$flip-clock-window-padding--epoch:       1vw;
+$flip-clock-segment-gutter--epoch:       1vw;
+$flip-clock-window-gutter--epoch:        1vw;
+$segment-border-radius--epoch:           1vw;
+$segment-horizontal-padding--epoch:      1vw;
+$flip-clock-border-radius--epoch:        $segment-border-radius--epoch + $flip-clock-window-padding--epoch;
+$flip-clock-window-border-width--epoch:  $flip-clock-window-padding--epoch / 4;
 
 @supports (--foo: green) {
     :root {
@@ -37,16 +46,16 @@ $flip-clock-window-border-width:         0.25vw;
         --flip-clock-window-border-width:         #{$flip-clock-window-border-width};
     }
     .flip-clock-date-window {
-        --segment-horizontal-padding: 0.1em;
+        --segment-horizontal-padding:             #{$segment-horizontal-padding--date};
     }
     .flip-clock-epoch-window {
-        --flip-clock-window-padding:      0.5vw;
-        --flip-clock-segment-gutter:      0.5vw;
-        --flip-clock-window-gutter:       0.5vw;
-        --segment-border-radius:          0.5vw;
-        --segment-horizontal-padding:     0.5vw;
-        --flip-clock-border-radius:       1vw; /* --segment-border-radius + --flip-clock-window-padding */
-        --flip-clock-window-border-width: 0.125vw;
+        --flip-clock-window-padding:              #{$flip-clock-window-padding--epoch};
+        --flip-clock-segment-gutter:              #{$flip-clock-segment-gutter--epoch};
+        --flip-clock-window-gutter:               #{$flip-clock-window-gutter--epoch};
+        --segment-border-radius:                  #{$segment-border-radius--epoch};
+        --segment-horizontal-padding:             #{$segment-horizontal-padding--epoch};
+        --flip-clock-border-radius:               #{$flip-clock-border-radius--epoch};
+        --flip-clock-window-border-width:         #{$flip-clock-window-border-width--epoch};
     }
 }
 
