@@ -1,30 +1,51 @@
-$flip-clock-window-padding:              1vw;
-$flip-clock-segment-gutter:              1vw;
-$flip-clock-window-gutter:               1vw;
-$segment-border-radius:                  1vw;
-$flip-clock-border-radius:               $segment-border-radius + $flip-clock-window-padding;
-$segment-horizontal-padding:             1vw;
-$segment-horizontal-padding--date:       1vw;
-$segment-ampm-position:                  1vw;
-$segment-fake-italic-horizontal-padding: 0.25em;
-$background-color:                       #181818;
-$segment-background-color:               #111111;
-$segment-foreground-color:               #ffff66;
-$font-family:                            'HelveticaNeue-CondensedBold', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-$font-weight:                            normal;
-$font-style:                             normal;
-$transition-duration:                    300ms;
-$rushed-transition-duration:             50ms;
-$flip-clock-window-border-width:         $flip-clock-window-padding / 4;
+$flip-clock-window-padding:                 1vw;
+$flip-clock-segment-gutter:                 1vw;
+$flip-clock-window-gutter:                  1vw;
+$segment-border-radius:                     1vw;
+$flip-clock-border-radius:                  $segment-border-radius + $flip-clock-window-padding;
+$segment-horizontal-padding:                1vw;
+$segment-horizontal-padding--date:          1vw;
+$segment-ampm-position:                     1vw;
+$segment-fake-italic-horizontal-padding:    0.25em;
+$background-color:                          #181818;
+$segment-background-color:                  #111111;
+$segment-foreground-color:                  #ffff66;
+$font-family:                               'HelveticaNeue-CondensedBold', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$font-weight:                               normal;
+$font-style:                                normal;
+$transition-duration:                       300ms;
+$rushed-transition-duration:                50ms;
+$flip-clock-window-border-width:            2px;
+$flip-clock-segment-highlight-width:        2px;
 
-$flip-clock-window-padding--epoch:       1vw;
-$flip-clock-segment-gutter--epoch:       1vw;
-$flip-clock-window-gutter--epoch:        1vw;
-$segment-border-radius--epoch:           1vw;
-$segment-horizontal-padding--epoch:      1vw;
-$flip-clock-border-radius--epoch:        $segment-border-radius--epoch + $flip-clock-window-padding--epoch;
-$flip-clock-window-border-width--epoch:  $flip-clock-window-padding--epoch / 4;
+$flip-clock-window-padding--epoch:          1vw;
+$flip-clock-segment-gutter--epoch:          1vw;
+$flip-clock-window-gutter--epoch:           1vw;
+$segment-border-radius--epoch:              1vw;
+$segment-horizontal-padding--epoch:         1vw;
+$flip-clock-border-radius--epoch:           $segment-border-radius--epoch + $flip-clock-window-padding--epoch;
+$flip-clock-window-border-width--epoch:     2px;
+$flip-clock-segment-highlight-width--epoch: 2px;
 
+$background-gradient: linear-gradient(
+    to bottom,
+    color-multiply($background-color, 1.5),
+    color-multiply($background-color, 0.75)
+);
+$segment-foreground-gradient: linear-gradient(
+    to bottom,
+    #{$segment-foreground-color}                      0%,
+    #{color-multiply($segment-foreground-color, 70%)} 50%,
+    #{$segment-foreground-color}                      50%,
+    #{color-multiply($segment-foreground-color, 80%)} 100%
+);
+$segment-background-gradient: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(black, 25%) 50%,
+    transparent 50%,
+    rgba(black, 25%) 100%
+);
 
 @supports (--foo: green) {
     :root {
@@ -37,14 +58,18 @@ $flip-clock-window-border-width--epoch:  $flip-clock-window-padding--epoch / 4;
         --segment-ampm-position:                  #{$segment-ampm-position};
         --segment-fake-italic-horizontal-padding: #{$segment-fake-italic-horizontal-padding};
         --background-color:                       #{$background-color};
+        --background-gradient:                    #{$background-gradient};
         --segment-background-color:               #{$segment-background-color};
+        --segment-background-gradient:            #{$segment-background-gradient};
         --segment-foreground-color:               #{$segment-foreground-color};
+        --segment-foreground-gradient:            #{$segment-foreground-gradient};
         --font-family:                            #{$font-family};
         --font-weight:                            #{$font-weight};
         --font-style:                             #{$font-style};
         --transition-duration:                    #{$transition-duration};
         --rushed-transition-duration:             #{$rushed-transition-duration};
         --flip-clock-window-border-width:         #{$flip-clock-window-border-width};
+        --flip-clock-segment-highlight-width:     #{$flip-clock-segment-highlight-width};
     }
     .flip-clock-date-window {
         --segment-horizontal-padding:             #{$segment-horizontal-padding--date};
@@ -57,17 +82,24 @@ $flip-clock-window-border-width--epoch:  $flip-clock-window-padding--epoch / 4;
         --segment-horizontal-padding:             #{$segment-horizontal-padding--epoch};
         --flip-clock-border-radius:               #{$flip-clock-border-radius--epoch};
         --flip-clock-window-border-width:         #{$flip-clock-window-border-width--epoch};
+        --flip-clock-segment-highlight-width:     #{$flip-clock-segment-highlight-width--epoch};
     }
 }
 
 body {
     background-color: $background-color;
-}
-@supports (--foo: green) {
-    body {
+    background-image: $background-gradient;
+    @supports (--foo: green) {
         background-color: var(--background-color);
+        background-image: var(--background-gradient);
     }
+    min-height: 100vh;
+    overflow: hidden;
 }
+
+/**
+ * Overall styles
+ */
 
 .flip-clock {
     font-family: $font-family;
@@ -79,6 +111,10 @@ body {
         font-style: var(--font-style);
     }
 }
+
+/**
+ * Overall layout
+ */
 
 .flip-clock-line {
     color: $segment-foreground-color;
@@ -101,6 +137,10 @@ body {
     }
 }
 
+/**
+ * Viewmaster styles
+ */
+
 .flip-clock-window {
     border-radius: $flip-clock-border-radius;
     padding: $flip-clock-window-padding;
@@ -110,19 +150,20 @@ body {
     }
 }
 
-/* gussied-up */
+/* "highlighting" simulacrum */
 .flip-clock-window {
     border-style: solid;
-
-    /* border-width: #{$flip-clock-window-border-width} 0 #{$flip-clock-window-border-width} 0; */
-    border-width: 0 0 #{$flip-clock-window-border-width} 0; /* safari bug */
-
+    border-width: 0 0 #{$flip-clock-window-border-width} 0;
     background-clip: padding-box;
     border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
     @supports (--foo: green) {
         border-width: 0 0 var(--flip-clock-window-border-width) 0;
     }
 }
+
+/**
+ * Segment sizing and layout
+ */
 
 .flip-clock-segment + .flip-clock-segment {
     margin-left: $flip-clock-segment-gutter;
@@ -138,57 +179,51 @@ body {
     }
 }
 
-.flip-clock-segment-piece {
-    border-radius: $segment-border-radius;
-    @supports (--foo: green) {
-        border-radius: var(--segment-border-radius);
-    }
-}
-
-.flip-clock-segment-piece-top::after,
-.flip-clock-segment-piece-flip-top::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(0, 0, 0, 0.2) 50%
-    );
-}
-
-.flip-clock-segment-piece-bottom::after,
-.flip-clock-segment-piece-flip-bottom::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(
-        to bottom,
-        transparent 50%,
-        rgba(0, 0, 0, 0.2) 100%
-    );
-}
+/**
+ * Segment piece styles
+ */
 
 .flip-clock-segment-piece {
     background-color: $segment-background-color;
+    background-image: $segment-background-gradient;
     color: $segment-foreground-color;
     border-radius: $segment-border-radius;
     padding-left: $segment-horizontal-padding;
     padding-right: $segment-horizontal-padding;
     @supports (--foo: green) {
         background-color: var(--segment-background-color);
+        background-image: var(--segment-background-gradient);
         color: var(--segment-foreground-color);
         border-radius: var(--segment-border-radius);
         padding-left: var(--segment-horizontal-padding);
         padding-right: var(--segment-horizontal-padding);
     }
 }
+
+/* "highlighting" simulacrum */
+.flip-clock-segment-piece {
+    border-style: solid;
+    border-width: #{$flip-clock-segment-highlight-width} 0 0 0;
+    background-clip: padding-box;
+    border-color: rgba(255, 255, 255, 0.25) transparent rgba(0, 0, 0, 0.5) transparent;
+    @supports (--foo: green) {
+        border-width: var(--flip-clock-segment-highlight-width) 0 0 0;
+    }
+}
+
+@if $segment-foreground-gradient != null {
+    .flip-clock-segment-piece-inner {
+        background-image: $segment-foreground-gradient;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+    }
+}
+
+/**
+ * Styles required for fake italics.
+ */
 
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment::before,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {

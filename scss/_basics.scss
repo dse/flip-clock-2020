@@ -9,7 +9,6 @@
     display: inline-block;
     color: transparent;
     position: relative;
-    height: 1em;
 }
 
 .flip-clock-segment + .flip-clock-segment {
@@ -38,7 +37,6 @@
     padding-right: 1rem;
     background-color: #111111;
     color: white;
-    height: 1em;
     display: inline-block;
     width: 2ch;
     box-sizing: content-box;
