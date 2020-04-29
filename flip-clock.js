@@ -296,7 +296,6 @@ var Segment = (function () {
     };
 
     var isMolasses = document.documentElement.hasAttribute('data-molasses') || /(^|\?|&)molasses($|&|=)/.test(location.search);
-    console.log('isMolasses is ' + isMolasses);
 
     Segment.prototype.tick = function () {
         if (this.enableAudio) {
