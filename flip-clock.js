@@ -25,6 +25,12 @@ var Ticker = (function () {
     return Ticker;
 }());
 
+function absoluteURL(url) {
+    var a = document.createElement('a');
+    a.href = url;
+    return a.href;
+}
+
 var Segment = (function () {
 
     var transitionEndEventName;
@@ -69,7 +75,7 @@ var Segment = (function () {
     // Chrome doesn't:
     //     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36"
 
-    var useAudioContext = supportsAudioContext && needsAudioContext;
+    var useAudioContext = false; // supportsAudioContext && needsAudioContext;
 
     function createAudioContext() {
         if (typeof AudioContext !== 'undefined') {
@@ -93,6 +99,9 @@ var Segment = (function () {
             clearTimeout(id);
         };
     }
+
+    // stackoverflow says absolute URLs work in safari
+    var tickURL = absoluteURL('tick8.wav');
 
     function Segment(options) {
         this.animationStyle = 1;
@@ -198,19 +207,11 @@ var Segment = (function () {
         this.flipBottomText  = flipBottomText;
 
         if (useAudioContext) {
-            if (!Segment.audioContext) {
-                Segment.audioContext = createAudioContext();
-            }
-            this.audioContext = Segment.audioContext;
-
-            this.audio = document.createElement('audio');
-            this.audio.src = 'tick8.wav';
-
-            this.track = this.audioContext.createMediaElementSource(this.audio);
-            this.track.connect(this.audioContext.destination);
+            // ...
         } else {
-            this.audio = document.createElement('audio');
-            this.audio.setAttribute('src', 'tick8.wav');
+            this.audio = new Audio(tickURL);
+            this.audio.preload = 'auto';
+            this.audio.volume = 1;
         }
 
         this.callback = [];
@@ -320,12 +321,9 @@ var Segment = (function () {
     Segment.prototype.tick = function () {
         if (this.enableAudio) {
             if (useAudioContext) {
-                if (this.audioContext.state === 'suspended') {
-                    this.audioContext.resume();
-                }
-                this.audio.currentTime = 0;
-                this.audio.play();
+                // ...
             } else {
+                this.audio.currentTime = 0;
                 this.audio.play();
             }
         }
