@@ -58,7 +58,7 @@ $segment-gradient-overlay: null;
 }
 
 @supports (--foo: green) {
-    :root {
+    html.has-theme-support {
         --flip-clock-window-padding:              #{$flip-clock-window-padding};
         --flip-clock-segment-gutter:              #{$flip-clock-segment-gutter};
         --flip-clock-window-gutter:               #{$flip-clock-window-gutter};
@@ -80,10 +80,10 @@ $segment-gradient-overlay: null;
         --flip-clock-window-border-width:         #{$flip-clock-window-border-width};
         --flip-clock-segment-highlight-width:     #{$flip-clock-segment-highlight-width};
     }
-    .flip-clock-date-window {
+    html.has-theme-support .flip-clock-date-window {
         --segment-horizontal-padding:             #{$segment-horizontal-padding--date};
     }
-    .flip-clock-epoch-window {
+    html.has-theme-support .flip-clock-epoch-window {
         --flip-clock-window-padding:              #{$flip-clock-window-padding--epoch};
         --flip-clock-segment-gutter:              #{$flip-clock-segment-gutter--epoch};
         --flip-clock-window-gutter:               #{$flip-clock-window-gutter--epoch};
@@ -99,8 +99,10 @@ body {
     background-color: $background-color;
     background-image: $background-gradient;
     @supports (--foo: green) {
-        background-color: var(--background-color);
-        background-image: var(--background-gradient);
+        @at-root html.has-theme-support & {
+            background-color: var(--background-color);
+            background-image: var(--background-gradient);
+        }
     }
     min-height: 100vh;
     overflow: hidden;
@@ -123,9 +125,11 @@ body {
     font-weight: $font-weight;
     font-style: $font-style;
     @supports (--foo: green) {
-        font-family: var(--font-family);
-        font-weight: var(--font-weight);
-        font-style: var(--font-style);
+        @at-root html.has-theme-support & {
+            font-family: var(--font-family);
+            font-weight: var(--font-weight);
+            font-style: var(--font-style);
+        }
     }
 }
 
@@ -136,21 +140,27 @@ body {
 .flip-clock-line {
     color: $segment-foreground-color;
     @supports (--foo: green) {
-        color: var(--segment-foreground-color);
+        @at-root html.has-theme-support & {
+            color: var(--segment-foreground-color);
+        }
     }
 }
 
 .flip-clock-line + .flip-clock-line {
     margin-top: #{$flip-clock-window-gutter};
     @supports (--foo: green) {
-        margin-top: var(--flip-clock-window-gutter);
+        @at-root html.has-theme-support & {
+            margin-top: var(--flip-clock-window-gutter);
+        }
     }
 }
 
 .flip-clock-line .flip-clock-window + .flip-clock-window {
     margin-left: $flip-clock-window-gutter;
     @supports (--foo: green) {
-        margin-left: var(--flip-clock-window-gutter);
+        @at-root html.has-theme-support & {
+            margin-left: var(--flip-clock-window-gutter);
+        }
     }
 }
 
@@ -162,8 +172,10 @@ body {
     border-radius: $flip-clock-border-radius;
     padding: $flip-clock-window-padding;
     @supports (--foo: green) {
-        border-radius: var(--flip-clock-border-radius);
-        padding: var(--flip-clock-window-padding);
+        @at-root html.has-theme-support & {
+            border-radius: var(--flip-clock-border-radius);
+            padding: var(--flip-clock-window-padding);
+        }
     }
 }
 
@@ -174,7 +186,9 @@ body {
     background-clip: padding-box;
     border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
     @supports (--foo: green) {
-        border-width: 0 0 var(--flip-clock-window-border-width) 0;
+        @at-root html.has-theme-support & {
+            border-width: 0 0 var(--flip-clock-window-border-width) 0;
+        }
     }
 }
 
@@ -185,14 +199,18 @@ body {
 .flip-clock-segment + .flip-clock-segment {
     margin-left: $flip-clock-segment-gutter;
     @supports (--foo: green) {
-        margin-left: var(--flip-clock-segment-gutter);
+        @at-root html.has-theme-support & {
+            margin-left: var(--flip-clock-segment-gutter);
+        }
     }
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
     left: $segment-ampm-position;
     @supports (--foo: green) {
-        left: var(--segment-ampm-position);
+        @at-root html.has-theme-support & {
+            left: var(--segment-ampm-position);
+        }
     }
 }
 
@@ -208,12 +226,14 @@ body {
     padding-left: $segment-horizontal-padding;
     padding-right: $segment-horizontal-padding;
     @supports (--foo: green) {
-        background-color: var(--segment-background-color);
-        background-image: var(--segment-background-gradient);
-        color: var(--segment-foreground-color);
-        border-radius: var(--segment-border-radius);
-        padding-left: var(--segment-horizontal-padding);
-        padding-right: var(--segment-horizontal-padding);
+        @at-root html.has-theme-support & {
+            background-color: var(--segment-background-color);
+            background-image: var(--segment-background-gradient);
+            color: var(--segment-foreground-color);
+            border-radius: var(--segment-border-radius);
+            padding-left: var(--segment-horizontal-padding);
+            padding-right: var(--segment-horizontal-padding);
+        }
     }
 }
 
@@ -224,7 +244,9 @@ body {
     background-clip: padding-box;
     border-color: rgba(255, 255, 255, 0.25) transparent rgba(0, 0, 0, 0.5) transparent;
     @supports (--foo: green) {
-        border-width: var(--flip-clock-segment-highlight-width) 0 0 0;
+        @at-root html.has-theme-support & {
+            border-width: var(--flip-clock-segment-highlight-width) 0 0 0;
+        }
     }
 }
 
@@ -248,7 +270,9 @@ body {
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
     padding-right: $segment-fake-italic-horizontal-padding;
     @supports (--foo: green) {
-        padding-right: var(--segment-fake-italic-horizontal-padding);
+        @at-root html.has-theme-support & {
+            padding-right: var(--segment-fake-italic-horizontal-padding);
+        }
     }
 }
 
@@ -256,6 +280,8 @@ body {
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
     padding-right: $segment-fake-italic-horizontal-padding;
     @supports (--foo: green) {
-        padding-right: var(--segment-fake-italic-horizontal-padding);
+        @at-root html.has-theme-support & {
+            padding-right: var(--segment-fake-italic-horizontal-padding);
+        }
     }
 }
