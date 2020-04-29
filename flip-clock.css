@@ -137,9 +137,9 @@
     --background-color:                       #181818;
     --background-gradient:                    linear-gradient(to bottom, #242424, #121212);
     --segment-background-color:               #111111;
-    --segment-background-gradient:            linear-gradient(to bottom, transparent 0%, black 50%, transparent 50%, black 100%);
+    --segment-background-gradient:            linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
     --segment-foreground-color:               #ffff66;
-    --segment-foreground-gradient:            linear-gradient(to bottom, #ffff66 0%, #b3b347 50%, #ffff66 50%, #cccc52 100%);
+    --segment-foreground-gradient:            ;
     --font-family:                            HelveticaNeue-CondensedBold, Helvetica Neue, Helvetica, Arial, sans-serif;
     --font-weight:                            normal;
     --font-style:                             normal;
@@ -244,7 +244,7 @@ body {
  */
 .flip-clock-segment-piece {
   background-color: #111111;
-  background-image: linear-gradient(to bottom, transparent 0%, black 50%, transparent 50%, black 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
   color: #ffff66;
   border-radius: 1vw;
   padding-left: 1vw;
@@ -268,12 +268,14 @@ body {
     .flip-clock-segment-piece {
       border-width: var(--flip-clock-segment-highlight-width) 0 0 0; } }
 
-.flip-clock-segment-piece-inner {
-  background-image: linear-gradient(to bottom, #ffff66 0%, #b3b347 50%, #ffff66 50%, #cccc52 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent; }
+.flip-clock-segment-piece::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%); }
 
 /**
  * Styles required for fake italics.
