@@ -38,7 +38,7 @@ $segment-gradient-overlay: null;
         color-multiply($background-color, 0.75)
     );
 }
-@if false {
+@if true {
     $segment-background-gradient: linear-gradient(
         to bottom,
         transparent 0%,
