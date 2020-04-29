@@ -27,21 +27,26 @@ $flip-clock-border-radius--epoch:           $segment-border-radius--epoch + $fli
 $flip-clock-window-border-width--epoch:     2px;
 $flip-clock-segment-highlight-width--epoch: 2px;
 
-$segment-foreground-gradient: null;
+$background-gradient: null;
+$segment-background-gradient: null;
 $segment-gradient-overlay: null;
 
-$background-gradient: linear-gradient(
-    to bottom,
-    color-multiply($background-color, 1.5),
-    color-multiply($background-color, 0.75)
-);
-$segment-background-gradient: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(black, 0.25) 50%,
-    transparent 50%,
-    rgba(black, 0.25) 100%
-);
+@if true {
+    $background-gradient: linear-gradient(
+        to bottom,
+        color-multiply($background-color, 1.5),
+        color-multiply($background-color, 0.75)
+    );
+}
+@if false {
+    $segment-background-gradient: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(black, 0.25) 50%,
+        transparent 50%,
+        rgba(black, 0.25) 100%
+    );
+}
 @if true {
     $segment-gradient-overlay: linear-gradient(
         to bottom,
