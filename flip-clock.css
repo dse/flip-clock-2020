@@ -124,6 +124,12 @@
   transform: scaleY(0.75);
   -webkit-transform: scaleY(0.75); }
 
+.flip-clock-segment[data-animation-frame="1"] .flip-clock-segment-piece-flip-top {
+  display: inline-block; }
+
+.flip-clock-segment[data-animation-frame="2"] .flip-clock-segment-piece-flip-bottom {
+  display: inline-block; }
+
 @supports (--foo: green) {
   html.has-theme-support {
     --flip-clock-window-padding:              1vw;

@@ -161,6 +161,14 @@ var Segment = (function () {
         var topText    = E('span');
         var bottomText = E('span');
 
+        var flipTop         = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-top');
+        var flipBottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-bottom');
+        var flipTopInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-flip-top-inner');
+        var flipBottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-flip-bottom-inner');
+
+        var flipTopText     = E('span');
+        var flipBottomText  = E('span');
+
         element.appendChild(top);
         element.appendChild(bottom);
         top.appendChild(topInner);
@@ -168,14 +176,26 @@ var Segment = (function () {
         topInner.appendChild(topText);
         bottomInner.appendChild(bottomText);
 
-        this.element = element;
-        this.top = top;
-        this.bottom = bottom;
-        this.topInner = topInner;
-        this.bottomInner = bottomInner;
+        element.appendChild(flipTop);
+        element.appendChild(flipBottom);
+        flipTop.appendChild(flipTopInner);
+        flipBottom.appendChild(flipBottomInner);
+        flipTopInner.appendChild(flipTopText);
+        flipBottomInner.appendChild(flipBottomText);
 
-        this.topText = topText;
-        this.bottomText = bottomText;
+        this.element         = element;
+        this.top             = top;
+        this.bottom          = bottom;
+        this.topInner        = topInner;
+        this.bottomInner     = bottomInner;
+        this.topText         = topText;
+        this.bottomText      = bottomText;
+        this.flipTop         = flipTop;
+        this.flipBottom      = flipBottom;
+        this.flipTopInner    = flipTopInner;
+        this.flipBottomInner = flipBottomInner;
+        this.flipTopText     = flipTopText;
+        this.flipBottomText  = flipBottomText;
 
         if (useAudioContext) {
             if (!Segment.audioContext) {
@@ -312,12 +332,6 @@ var Segment = (function () {
     };
 
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
-        var flipTop         = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-top');
-        var flipBottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-bottom');
-        var flipTopInner    = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-flip-top-inner');
-        var flipBottomInner = E('span', 'flip-clock-segment-piece-inner flip-clock-segment-piece-flip-bottom-inner');
-        var flipTopText     = E('span');
-        var flipBottomText  = E('span');
         window.requestAnimationFrame(function () {
             var isRushed = nextStateIndex !== this.desiredState;
             if (isRushed && isMolasses) {
@@ -328,33 +342,24 @@ var Segment = (function () {
                     setTimeout(function () {
                         this.stateIndex = nextStateIndex;
                         this.setNextState(callback);
-                    }.bind(this), Segment.transitionTime * 0.4);
-                }.bind(this), Segment.transitionTime * 0.2);
+                    }.bind(this), Segment.transitionTime * 0.35);
+                }.bind(this), Segment.transitionTime * 0.15);
                 return;
             }
-            flipTop.appendChild(flipTopInner);
-            flipBottom.appendChild(flipBottomInner);
-            flipTopInner.appendChild(flipTopText);
-            flipBottomInner.appendChild(flipBottomText);
-            this.element.appendChild(flipTop);
-            this.element.appendChild(flipBottom);
-            flipTopText.innerHTML = currentText;
-            flipBottomText.innerHTML = newText;
-            flipTop.style.display = 'inline-block';
+            this.flipTopText.innerHTML = currentText;
+            this.flipBottomText.innerHTML = newText;
             this.topText.innerHTML = newText;
+            this.element.setAttribute('data-animation-frame', 1);
             this.tick();
             setTimeout(function () {
-                flipTopInner.removeChild(flipTopText);
-                this.element.removeChild(flipTop);
-                flipBottom.style.display = 'inline-block';
+                this.element.setAttribute('data-animation-frame', 2);
                 setTimeout(function () {
-                    flipBottomInner.removeChild(flipBottomText);
-                    this.element.removeChild(flipBottom);
                     this.bottomText.innerHTML = newText;
+                    this.element.removeAttribute('data-animation-frame');
                     this.stateIndex = nextStateIndex;
                     this.setNextState(callback);
-                }.bind(this), Segment.transitionTime);
-            }.bind(this), Segment.transitionTime);
+                }.bind(this), Segment.transitionTime / 2);
+            }.bind(this), Segment.transitionTime / 2);
         }.bind(this));
     };
 
@@ -377,7 +382,7 @@ var Segment = (function () {
         this.animationStyle = index;
     };
 
-    Segment.transitionTime = 50;
+    Segment.transitionTime = 100;
 
     function E(tagName, className) {
         var e = document.createElement(tagName);
