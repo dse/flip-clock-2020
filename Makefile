@@ -12,3 +12,7 @@ test:
 %.css: scss/%.scss scss/_*.scss Makefile
 	sassc $< > $@.tmp.css
 	mv $@.tmp.css $@
+
+images/grain.png:
+	~/git/dse.d/pnggrain/bin/pnggrain -m 0 -M 63 -T 43 -W 256 -H 256 images/grain.png
+.PHONY: images/grain.png
