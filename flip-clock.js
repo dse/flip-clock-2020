@@ -295,6 +295,23 @@ var Segment = (function () {
         }.bind(this));
     };
 
+    var isMolasses = document.documentElement.hasAttribute('data-molasses') || /(^|\?|&)molasses($|&|=)/.test(location.search);
+    console.log('isMolasses is ' + isMolasses);
+
+    Segment.prototype.tick = function () {
+        if (this.enableAudio) {
+            if (useAudioContext) {
+                if (this.audioContext.state === 'suspended') {
+                    this.audioContext.resume();
+                }
+                this.audio.currentTime = 0;
+                this.audio.play();
+            } else {
+                this.audio.play();
+            }
+        }
+    };
+
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
         var flipTop         = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-top');
         var flipBottom      = E('span', 'flip-clock-segment-piece flip-clock-segment-piece-flip-bottom');
@@ -303,6 +320,19 @@ var Segment = (function () {
         var flipTopText     = E('span');
         var flipBottomText  = E('span');
         window.requestAnimationFrame(function () {
+            var isRushed = nextStateIndex !== this.desiredState;
+            if (isRushed && isMolasses) {
+                this.topText.innerHTML = newText;
+                this.tick();
+                setTimeout(function () {
+                    this.bottomText.innerHTML = newText;
+                    setTimeout(function () {
+                        this.stateIndex = nextStateIndex;
+                        this.setNextState(callback);
+                    }.bind(this), Segment.transitionTime * 0.4);
+                }.bind(this), Segment.transitionTime * 0.2);
+                return;
+            }
             flipTop.appendChild(flipTopInner);
             flipBottom.appendChild(flipBottomInner);
             flipTopInner.appendChild(flipTopText);
@@ -313,17 +343,7 @@ var Segment = (function () {
             flipBottomText.innerHTML = newText;
             flipTop.style.display = 'inline-block';
             this.topText.innerHTML = newText;
-            if (this.enableAudio) {
-                if (useAudioContext) {
-                    if (this.audioContext.state === 'suspended') {
-                        this.audioContext.resume();
-                    }
-                    this.audio.currentTime = 0;
-                    this.audio.play();
-                } else {
-                    this.audio.play();
-                }
-            }
+            this.tick();
             setTimeout(function () {
                 flipTopInner.removeChild(flipTopText);
                 this.element.removeChild(flipTop);
