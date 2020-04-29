@@ -1,0 +1,16 @@
+@function color-multiply($color, $multiplicand) {
+    $red:   red($color);
+    $green: green($color);
+    $blue:  blue($color);
+    @if unit($multiplicand) == '%' {
+        $red:   $red   * $multiplicand / 100%;
+        $green: $green * $multiplicand / 100%;
+        $blue:  $blue  * $multiplicand / 100%;
+    }
+    @else {
+        $red:   $red   * $multiplicand;
+        $green: $green * $multiplicand;
+        $blue:  $blue  * $multiplicand;
+    }
+    @return change-color($color: $color, $red: $red, $green: $green, $blue: $blue);
+}
