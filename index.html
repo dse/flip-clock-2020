@@ -33,80 +33,82 @@
         </style>
     </head>
     <body>
+        <div class="body-inner">
 
-        <div data-flip-clock class="flip-clock" id="flip-clock">
-            <div class="flip-clock-line flip-clock-date-line" data-flip-clock-line>
-                <div class="flip-clock-line-inner">
-                    <div class="flip-clock-window flip-clock-day-window">
-                        <div data-flip-clock-day class="flip-clock-segment flip-clock-segment-day">
+            <div data-flip-clock class="flip-clock" id="flip-clock">
+                <div class="flip-clock-line flip-clock-date-line" data-flip-clock-line>
+                    <div class="flip-clock-line-inner">
+                        <div class="flip-clock-window flip-clock-day-window">
+                            <div data-flip-clock-day class="flip-clock-segment flip-clock-segment-day">
+                            </div>
+                        </div>
+                        <div class="flip-clock-window flip-clock-month-window">
+                            <div data-flip-clock-month class="flip-clock-segment flip-clock-segment-month">
+                            </div>
+                        </div>
+                        <div class="flip-clock-window flip-clock-date-window">
+                            <div data-flip-clock-date class="flip-clock-segment flip-clock-segment-date">
+                            </div>
                         </div>
                     </div>
-                    <div class="flip-clock-window flip-clock-month-window">
-                        <div data-flip-clock-month class="flip-clock-segment flip-clock-segment-month">
+                </div>
+                <div class="flip-clock-line flip-clock-time-line" data-flip-clock-line>
+                    <div class="flip-clock-line-inner">
+                        <div class="flip-clock-window flip-clock-time-window">
+                            <div data-flip-clock-hour class="flip-clock-segment flip-clock-segment-hour">
+                            </div>
                         </div>
-                    </div>
-                    <div class="flip-clock-window flip-clock-date-window">
-                        <div data-flip-clock-date class="flip-clock-segment flip-clock-segment-date">
+                        <div class="flip-clock-window flip-clock-time-window">
+                            <div data-flip-clock-minute class="flip-clock-segment flip-clock-segment-minute">
+                            </div>
+                        </div>
+                        <div class="flip-clock-window flip-clock-time-window">
+                            <div data-flip-clock-second class="flip-clock-segment flip-clock-segment-second">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="flip-clock-line flip-clock-time-line" data-flip-clock-line>
-                <div class="flip-clock-line-inner">
-                    <div class="flip-clock-window flip-clock-time-window">
-                        <div data-flip-clock-hour class="flip-clock-segment flip-clock-segment-hour">
-                        </div>
-                    </div>
-                    <div class="flip-clock-window flip-clock-time-window">
-                        <div data-flip-clock-minute class="flip-clock-segment flip-clock-segment-minute">
-                        </div>
-                    </div>
-                    <div class="flip-clock-window flip-clock-time-window">
-                        <div data-flip-clock-second class="flip-clock-segment flip-clock-segment-second">
-                        </div>
-                    </div>
+
+            <!-- &zwj; shuts up a tidy warning -->
+            <div class="bottom-buttons">
+                <div class="bottom-right-buttons">
+                    <label class="css-reset">
+                        <button class="happy-button" data-flip-clock-happy><i class="fas fa-smile">&zwj;</i></button>
+                    </label>
+                    <label class="css-reset">
+                        <button class="reload-button" data-flip-clock-reload><i class="fas fa-redo">&zwj;</i></button>
+                    </label>
+                    <label class="css-reset">
+                        <input type="checkbox" class="audio-switch" name="enable-audio" value="true" data-flip-clock-enable-audio>
+                        <span class="audio-switch">&zwj;</span>
+                    </label>
+                    <label class="css-reset">
+                        <input type="checkbox" class="toggle-switch" name="twenty-four-hour" value="true" data-flip-clock-twenty-four-hour>
+                        <span class="toggle-switch">&zwj;</span>
+                        24
+                    </label>
                 </div>
             </div>
-        </div>
 
-        <!-- &zwj; shuts up a tidy warning -->
-        <div class="bottom-buttons">
-            <div class="bottom-right-buttons">
-                <label class="css-reset">
-                    <button class="happy-button" data-flip-clock-happy><i class="fas fa-smile">&zwj;</i></button>
-                </label>
-                <label class="css-reset">
-                    <button class="reload-button" data-flip-clock-reload><i class="fas fa-redo">&zwj;</i></button>
-                </label>
-                <label class="css-reset">
-                    <input type="checkbox" class="audio-switch" name="enable-audio" value="true" data-flip-clock-enable-audio>
-                    <span class="audio-switch">&zwj;</span>
-                </label>
-                <label class="css-reset">
-                    <input type="checkbox" class="toggle-switch" name="twenty-four-hour" value="true" data-flip-clock-twenty-four-hour>
-                    <span class="toggle-switch">&zwj;</span>
-                    24
-                </label>
-            </div>
-        </div>
+            <script src="node_modules/jquery/dist/jquery.min.js"></script>
+            <script src="node_modules/foundation-sites/dist/js/foundation.min.js"></script>
+            <script>
+                var $ = jQuery;
+                $(document).foundation();
+            </script>
 
-        <script src="node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="node_modules/foundation-sites/dist/js/foundation.min.js"></script>
-        <script>
-            var $ = jQuery;
-            $(document).foundation();
-        </script>
-
-        <script>
-            document.write('<' + 'script defer src="flip-clock.js?cachebuster=' + cachebuster + '"></' + 'script>');
-            document.write('<' + 'script defer src="flip-clock-page.js?cachebuster=' + cachebuster + '"></' + 'script>');
-            document.addEventListener('DOMContentLoaded', function () {
-                FlipClockPage.init({
-                    enableThemeConfiguration: false,
-                    enableGoodies: true
+            <script>
+                document.write('<' + 'script defer src="flip-clock.js?cachebuster=' + cachebuster + '"></' + 'script>');
+                document.write('<' + 'script defer src="flip-clock-page.js?cachebuster=' + cachebuster + '"></' + 'script>');
+                document.addEventListener('DOMContentLoaded', function () {
+                    FlipClockPage.init({
+                        enableThemeConfiguration: false,
+                        enableGoodies: true
+                    });
                 });
-            });
-        </script>
+            </script>
 
+        </div>
     </body>
 </html>

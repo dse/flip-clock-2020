@@ -106,6 +106,14 @@ body {
     overflow: hidden;
 }
 
+.body-inner {
+    background-image: url('images/grain63.png');
+    background-repeat: repeat;
+    background-position: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
 /**
  * Overall styles
  */
