@@ -139,7 +139,7 @@
     --background-color:                       #181818;
     --segment-background-color:               #111111;
     --segment-foreground-color:               #ffff66;
-    --font-family:                            HelveticaNeue-x-CondensedBold, x-Helvetica Neue, x-Helvetica, Arial, sans-serif;
+    --font-family:                            HelveticaNeue-CondensedBold, Helvetica Neue, Helvetica, Arial, sans-serif;
     --font-weight:                            normal;
     --font-style:                             normal;
     --transition-duration:                    300ms;
@@ -164,7 +164,7 @@ body {
     background-color: var(--background-color); } }
 
 .flip-clock {
-  font-family: "HelveticaNeue-x-CondensedBold", "x-Helvetica Neue", "x-Helvetica", "Arial", sans-serif;
+  font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-weight: normal;
   font-style: normal; }
   @supports (--foo: green) {
