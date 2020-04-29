@@ -295,7 +295,7 @@ var Segment = (function () {
         }.bind(this));
     };
 
-    var isMolasses = document.documentElement.hasAttribute('data-molasses') || /(^|\?|&)molasses($|&|=)/.test(location.search);
+    var isMolasses = document.documentElement.hasAttribute('data-molasses');
 
     Segment.prototype.tick = function () {
         if (this.enableAudio) {
