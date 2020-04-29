@@ -169,7 +169,7 @@ body {
       background-image: var(--background-gradient); } }
 
 .body-inner {
-  background-image: url("images/grain63.png");
+  background-image: url("images/grain.png");
   background-repeat: repeat;
   background-position: center;
   min-height: 100vh;
