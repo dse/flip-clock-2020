@@ -92,16 +92,6 @@ var Segment = (function () {
 
     var useAudioContext = false; // supportsAudioContext && needsAudioContext;
 
-    function createAudioContext() {
-        if (typeof AudioContext !== 'undefined') {
-            return new AudioContext();
-        }
-        if (typeof webkitAudioContext !== 'undefined') {
-            return new webkitAudioContext();
-        }
-        return;
-    }
-
     if (!window.requestAnimationFrame || !window.cancelAnimationFrame) {
         window.requestAnimationFrame = function (callback, element) {
             var currTime = new Date().getTime();
