@@ -31,33 +31,11 @@ function absoluteURL(url) {
     return a.href;
 }
 
-var Segment = (function () {
+/**
+ * requestAnimationFrame polyfill
+ */
 
-    /**
-     * transition event name polyfill
-     */
-
-    var transitionEndEventName;
-    var transitionCancelEventName;
-    var e = document.createElement('div');
-    if (e.style.transition !== undefined) {
-        transitionEndEventName = 'transitionend';
-        transitionCancelEventName = 'transitioncancel';
-    } else if (e.style.OTransition !== undefined) {
-        transitionEndEventName = 'oTransitionEnd';
-        transitionCancelEventName = 'oTransitionCancel';
-    } else if (e.style.MozTransition !== undefined) {
-        transitionEndEventName = 'transitionend';
-        transitionCancelEventName = 'transitioncancel';
-    } else if (e.style.WebkitTransition !== undefined) {
-        transitionEndEventName = 'webkitTransitionEnd';
-        transitionCancelEventName = 'webkitTransitionCancel';
-    }
-
-    /**
-     * requestAnimationFrame polyfill
-     */
-
+(function () {
     var raf = window.requestAnimationFrame;
     raf = raf || window.mozRequestAnimationFrame;
     raf = raf || window.webkitRequestAnimationFrame;
@@ -87,6 +65,30 @@ var Segment = (function () {
         window.cancelAnimationFrame = function (id) {
             clearTimeout(id);
         };
+    }
+}());
+
+var Segment = (function () {
+
+    /**
+     * transition event name polyfill
+     */
+
+    var transitionEndEventName;
+    var transitionCancelEventName;
+    var e = document.createElement('div');
+    if (e.style.transition !== undefined) {
+        transitionEndEventName = 'transitionend';
+        transitionCancelEventName = 'transitioncancel';
+    } else if (e.style.OTransition !== undefined) {
+        transitionEndEventName = 'oTransitionEnd';
+        transitionCancelEventName = 'oTransitionCancel';
+    } else if (e.style.MozTransition !== undefined) {
+        transitionEndEventName = 'transitionend';
+        transitionCancelEventName = 'transitioncancel';
+    } else if (e.style.WebkitTransition !== undefined) {
+        transitionEndEventName = 'webkitTransitionEnd';
+        transitionCancelEventName = 'webkitTransitionCancel';
     }
 
     /**
