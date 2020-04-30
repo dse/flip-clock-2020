@@ -172,6 +172,8 @@
   display: inline-block;
 }
 
+/* does not darken text */
+/* this darkens text.  experiment tweaking this with segment-background-gradient. */
 @supports (--foo: green) {
   html.has-theme-support {
     --flip-clock-window-padding:              1vw;
@@ -387,6 +389,18 @@ html:not(.molasses) .flip-clock-segment-piece::after {
   height: 100%;
   background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.25)), color-stop(50%, transparent), to(rgba(0, 0, 0, 0.25)));
   background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+html.molasses .flip-clock-segment-piece-top::after,
+html.molasses .flip-clock-segment-piece-flip-top::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.25;
 }
 
 /**
