@@ -33,6 +33,10 @@ function absoluteURL(url) {
 
 var Segment = (function () {
 
+    /**
+     * transition event name polyfill
+     */
+
     var transitionEndEventName;
     var transitionCancelEventName;
     var e = document.createElement('div');
@@ -49,6 +53,10 @@ var Segment = (function () {
         transitionEndEventName = 'webkitTransitionEnd';
         transitionCancelEventName = 'webkitTransitionCancel';
     }
+
+    /**
+     * requestAnimationFrame polyfill
+     */
 
     var raf = window.requestAnimationFrame;
     raf = raf || window.mozRequestAnimationFrame;
@@ -67,6 +75,13 @@ var Segment = (function () {
     caf = caf || window.msCancelRequestAnimationFrame;
     caf = caf || window.oCancelRequestAnimationFrame;
     window.cancelAnimationFrame = caf;
+
+    /**
+     * Audio
+     */
+
+    // stackoverflow says absolute URLs work in safari
+    var tickURL = absoluteURL('tick8.wav');
 
     var supportsAudioContext = typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined';
     var needsAudioContext = /\bSafari\//.test(navigator.userAgent) && !/\bChrome\//.test(navigator.userAgent);
@@ -100,8 +115,9 @@ var Segment = (function () {
         };
     }
 
-    // stackoverflow says absolute URLs work in safari
-    var tickURL = absoluteURL('tick8.wav');
+    /**
+     * Flip clock segment
+     */
 
     function Segment(options) {
         this.animationStyle = 1;
