@@ -31,6 +31,7 @@
             .flip-clock                        .flip-clock-month-window .flip-clock-segment-piece { width: 6ch; }
             .flip-clock                        .flip-clock-date-window  .flip-clock-segment-piece { width: 6ch; }
             .flip-clock.flip-clock-twelve-hour .flip-clock-day-window   .flip-clock-segment-piece { width: 7.5ch; }
+            .bottom-buttons { text-transform: uppercase; }
         </style>
     </head>
     <body>
@@ -75,19 +76,18 @@
             <div class="bottom-buttons">
                 <div class="bottom-right-buttons">
                     <label class="css-reset">
-                        <button class="happy-button" data-flip-clock-happy><i class="fas fa-smile">&zwj;</i></button>
+                        <button class="push-button" data-flip-clock-reload>&zwj;</button>
+                        Reload
                     </label>
                     <label class="css-reset">
-                        <button class="reload-button" data-flip-clock-reload><i class="fas fa-redo">&zwj;</i></button>
-                    </label>
-                    <label class="css-reset">
-                        <input type="checkbox" class="audio-switch" name="enable-audio" value="true" data-flip-clock-enable-audio>
-                        <span class="audio-switch">&zwj;</span>
+                        <input type="checkbox" class="toggle-switch" name="enable-audio" value="true" data-flip-clock-enable-audio>
+                        <span class="toggle-switch"><span class="inner">&zwj;</span></span>
+                        Ticks
                     </label>
                     <label class="css-reset">
                         <input type="checkbox" class="toggle-switch" name="twenty-four-hour" value="true" data-flip-clock-twenty-four-hour>
-                        <span class="toggle-switch">&zwj;</span>
-                        24
+                        <span class="toggle-switch"><span class="inner">&zwj;</span></span>
+                        24-Hour
                     </label>
                 </div>
             </div>

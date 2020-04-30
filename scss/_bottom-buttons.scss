@@ -1,15 +1,18 @@
+.css-reset {
+    all: unset;
+}
+
 .bottom-buttons {
     position: fixed;
     bottom: 0.5rem;
     left: 1rem;
     right: 1rem;
-    font-size: 2rem;
+    font-size: 1rem;
     &::after {
         content: '';
         clear: both;
     }
 }
-
 .bottom-left-buttons {
     float: left;
 }
@@ -18,8 +21,7 @@
 }
 .bottom-left-buttons,
 .bottom-right-buttons {
-    color: white;
-    opacity: 0.1;
+    color: rgba(white, 0.25);
 }
 .bottom-left-buttons button,
 .bottom-right-buttons button {
@@ -27,38 +29,109 @@
     text-shadow:         .125em .125em .125em rgba(0, 0, 0, 0.5);
     -webkit-text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
 }
-
-.css-reset {
-    all: unset;
+.bottom-buttons label {
+    display: inline-block;
 }
+.bottom-buttons label + label {
+    margin-left: 1em;
+}
+
+/**
+ * Push Buttons and Switches
+ */
+
+$push-button-switch-height:           1.4em;
+$push-button-switch-width:            $push-button-switch-height * 2;
+$push-button-switch-border-style:     solid;
+$push-button-switch-border-width:     2px;
+$push-button-switch-border-color:     black;
+$push-button-switch-border:           #{$push-button-switch-border-width} #{$push-button-switch-border-style} #{$push-button-switch-border-color};
+$push-button-switch-border-radius:    0.4em;
+$push-button-switch-bg-color:         #ccc;
+$push-button-switch-bg-image:         linear-gradient(to bottom, #eee, #999);
+$push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
+
+.push-button {
+    display: inline-block;
+    vertical-align: middle;
+    border: #{$push-button-switch-border};
+    box-sizing: padding-box;
+    height: #{$push-button-switch-height};
+    width: #{$push-button-switch-width};
+    border-radius: #{$push-button-switch-border-radius};
+    position: relative;
+    top: -0.1em;
+    background-color: #{$push-button-switch-bg-color};
+    background-image: #{$push-button-switch-bg-image};
+    &::after {
+        content: '';
+        position: absolute;
+        border-radius: calc(#{$push-button-switch-border-radius} - 3px);
+        top: 1px;
+        bottom: 1px;
+        left: 1px;
+        right: 1px;
+        background-image: #{$push-button-switch-bg-image-reverse};
+        content: '';
+    }
+}
+
 [type="checkbox"].toggle-switch {
     width: 0;
     opacity: 0;
     display: none;
 }
+[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch {
+    display: inline-block;
+    vertical-align: middle;
+    border: #{$push-button-switch-border};
+    box-sizing: padding-box;
+    height: #{$push-button-switch-height};
+    width: #{$push-button-switch-width};
+    background-color: black;
+    border-radius: #{$push-button-switch-border-radius};
+    position: relative;
+    top: -0.1em;
+    overflow: hidden;
+}
 [type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch::before {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    content: '\f204'; /* toggle-off */
+    background-color: #cc6600;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 50%;
+    width: 100%;
+    height: #{$push-button-switch-height};
+    border-radius: calc(#{$push-button-switch-border-radius} - #{$push-button-switch-border-width});
+    content: '';
+    transition: right 125ms;
 }
 [type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch::before {
-    content: '\f205'; /* toggle-on */
+    right: 0;
 }
-
-[type="checkbox"].audio-switch {
-    width: 0;
-    opacity: 0;
-    display: none;
+[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch > .inner {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 50%;
+    height: #{$push-button-switch-height};
+    width: #{$push-button-switch-height};
+    border-radius: calc(#{$push-button-switch-border-radius} - #{$push-button-switch-border-width});
+    background-color: #{$push-button-switch-bg-color};
+    background-image: #{$push-button-switch-bg-image};
+    content: '';
+    transition: right 125ms;
+    &::after {
+        content: '';
+        position: absolute;
+        border-radius: calc(#{$push-button-switch-border-radius} - #{$push-button-switch-border-width} - 1px);
+        top: 1px;
+        bottom: 1px;
+        left: 1px;
+        right: 1px;
+        background-image: #{$push-button-switch-bg-image-reverse};
+    }
 }
-[type="checkbox"].audio-switch + :not([type="checkbox"]).audio-switch::before {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    content: '\f6a9'; /* volume-mute */
-}
-[type="checkbox"]:checked.audio-switch + :not([type="checkbox"]).audio-switch::before {
-    content: '\f028'; /* volume-up */
-}
-
-.bottom-buttons label + label {
-    margin-left: 0.5em;
+[type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch > .inner {
+    right: 0;
 }
