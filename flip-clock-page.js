@@ -203,7 +203,6 @@ var FlipClockPage = {
     addEvents: function () {
         var formCheckboxHandler = function (event) {
             if (event.target.hasAttribute('data-flip-clock-twenty-four-hour')) {
-                this.flipClock.enableAudioByUserRequest();
                 var checked = event.target.checked;
                 console.debug("FlipClockPage: addEvents: 24-hour checkbox is " + (checked ? "checked" : "NOT checked"));
                 try { localStorage.setItem('flip-clock--twenty-four-hour', JSON.stringify(checked)); } catch (e) { }
@@ -287,18 +286,6 @@ var FlipClockPage = {
             console.debug("value is now " + JSON.stringify(value) + "; setting is24Hour to it");
             this.flipClock.setIs24Hour(value);
         }
-
-        value = localStorage.getItem('flip-clock--enable-audio');
-        console.debug("FlipClockPage: localStorage.getItem('flip-clock--enable-audio') returned " + JSON.stringify(value));
-        if (value !== null) {
-            try {
-                value = !!JSON.parse(value);
-            } catch (e) {
-                value = false;
-            }
-            console.debug("value is now " + JSON.stringify(value) + "; setting enableAudio to it");
-            this.flipClock.setEnableAudio(value);
-        }
     },
 
     setFormValues: function () {
@@ -368,11 +355,7 @@ var FlipClockPage = {
             input.checked = flag;
         }.bind(this));
         Array.from(document.querySelectorAll('[data-flip-clock-enable-audio]')).forEach(function (input) {
-            var flag = this.flipClock.enableAudio;
-            console.debug("FlipClockPage: enableAudio is " + JSON.stringify(flag));
-            flag = !!flag;
-            console.debug("FlipClockPage: setting checked flag on audio checkbox to " + JSON.stringify(flag));
-            input.checked = flag;
+            input.checked = false;
         }.bind(this));
     },
 
@@ -441,7 +424,6 @@ var FlipClockPage = {
         this.computeAndSetZoomValue();
 
         this.flipClock.setIs24Hour(false);
-        this.flipClock.setEnableAudio(false);
         this.setFormValues();
 
         if (this.enableThemeConfiguration) {
@@ -457,7 +439,6 @@ var FlipClockPage = {
 
         try {
             localStorage.removeItem('flip-clock--twenty-four-hour');
-            localStorage.removeItem('flip-clock--enable-audio');
         } catch (e) { }
     }
 };
