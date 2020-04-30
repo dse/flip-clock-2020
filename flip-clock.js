@@ -68,20 +68,10 @@ function absoluteURL(url) {
     }
 }());
 
+// stackoverflow says absolute URLs work in safari
+var tickURL = absoluteURL('tick8.wav');
+
 var Segment = (function () {
-
-    /**
-     * Audio
-     */
-
-    // stackoverflow says absolute URLs work in safari
-    var tickURL = absoluteURL('tick8.wav');
-    console.log('audio tick URL is ' + tickURL);
-
-    /**
-     * Flip clock segment
-     */
-
     function Segment(options) {
         this.animationStyle = 1;
         this.digitCount = options.digitCount;
@@ -186,6 +176,7 @@ var Segment = (function () {
         this.flipBottomText  = flipBottomText;
 
         this.audio = new Audio(tickURL);
+        this.audio.volume = 1;
 
         this.callback = [];
         this.addOrRemove12HourClass();
@@ -295,7 +286,7 @@ var Segment = (function () {
         if (!this.enableAudio) {
             return;
         }
-        // this.audio.currentTime = 0;
+        this.audio.currentTime = 0;
         this.audio.play();
     };
 
@@ -536,6 +527,11 @@ var FlipClock = (function () {
             });
         }
 
+        // for shits and giggles but also so we can plan a thingy on
+        // user request
+        this.audio = new Audio(tickURL);
+        this.audio.volume = 1;
+
         this.element.classList.add('flip-clock');
         this.ticker = new TimeTicker({
             testRollover: testRollover
@@ -613,6 +609,11 @@ var FlipClock = (function () {
         this.segmentArray.forEach(function (segment) {
             segment.flipWrap();
         }.bind(this));
+    };
+
+    FlipClock.prototype.enableAudioByUserRequest = function () {
+        this.audio.currentTime = 0;
+        this.audio.play();
     };
 
     return FlipClock;
