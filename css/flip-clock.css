@@ -340,22 +340,27 @@ body {
  */
 .flip-clock-segment-piece {
   background-color: #111111;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.25)), color-stop(50%, transparent), to(rgba(0, 0, 0, 0.25)));
-  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
   color: #ffff66;
   border-radius: 1vw;
   padding-left: 1vw;
   padding-right: 1vw;
 }
 
+html:not(.molasses) .flip-clock-segment-piece {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.25)), color-stop(50%, transparent), to(rgba(0, 0, 0, 0.25)));
+  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
+}
+
 @supports (--foo: green) {
   html.has-theme-support .flip-clock-segment-piece {
     background-color: var(--segment-background-color);
-    background-image: var(--segment-background-gradient);
     color: var(--segment-foreground-color);
     border-radius: var(--segment-border-radius);
     padding-left: var(--segment-horizontal-padding);
     padding-right: var(--segment-horizontal-padding);
+  }
+  html:not(.molasses) html.has-theme-support .flip-clock-segment-piece {
+    background-image: var(--segment-background-gradient);
   }
 }
 
