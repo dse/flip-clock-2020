@@ -31,6 +31,19 @@ function absoluteURL(url) {
     return a.href;
 }
 
+var FlipClockAudio = (function () {
+    function FlipClockAudio(url) {
+        this.url = url = absoluteURL(url);
+        this.audio = new Audio(url);
+        this.audio.volume = 1;
+    }
+    FlipClockAudio.prototype.play = function () {
+        this.audio.currentTime = 0;
+        this.audio.play();
+    };
+    return FlipClockAudio;
+}());
+
 /**
  * requestAnimationFrame polyfill
  */
@@ -175,8 +188,7 @@ var Segment = (function () {
         this.flipTopText     = flipTopText;
         this.flipBottomText  = flipBottomText;
 
-        this.audio = new Audio(tickURL);
-        this.audio.volume = 1;
+        this.audio = new FlipClockAudio(tickURL);
 
         this.callback = [];
         this.addOrRemove12HourClass();
@@ -286,7 +298,6 @@ var Segment = (function () {
         if (!this.enableAudio) {
             return;
         }
-        this.audio.currentTime = 0;
         this.audio.play();
     };
 
@@ -529,8 +540,7 @@ var FlipClock = (function () {
 
         // for shits and giggles but also so we can plan a thingy on
         // user request
-        this.audio = new Audio(tickURL);
-        this.audio.volume = 1;
+        this.audio = new FlipClockAudio(tickURL);
 
         this.element.classList.add('flip-clock');
         this.ticker = new TimeTicker({
@@ -612,7 +622,6 @@ var FlipClock = (function () {
     };
 
     FlipClock.prototype.enableAudioByUserRequest = function () {
-        this.audio.currentTime = 0;
         this.audio.play();
     };
 
