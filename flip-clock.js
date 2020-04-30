@@ -295,8 +295,8 @@ var Segment = (function () {
         if (!this.enableAudio) {
             return;
         }
-        this.audio.currentTime = 0;
-        var promise = this.audio.play();
+        // this.audio.currentTime = 0;
+        this.audio.play();
     };
 
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
