@@ -1,8 +1,8 @@
-var Ticker = (function () {
-    function Ticker(options) {
+var TimeTicker = (function () {
+    function TimeTicker(options) {
         this.testRollover = options && options.testRollover;
     }
-    Ticker.prototype.start = function () {
+    TimeTicker.prototype.start = function () {
         var date = new Date();
         if (this.testRollover) {
             this.msOffset = this.testRollover.getTime() - 20000 - date.getTime();
@@ -16,13 +16,13 @@ var Ticker = (function () {
             this.start();
         }.bind(this), 1000 - date.getTime() % 1000);
     };
-    Ticker.prototype.stop = function () {
+    TimeTicker.prototype.stop = function () {
         if (this.timeout) {
             clearTimeout(this.timeout);
             this.timeout = null;
         }
     };
-    return Ticker;
+    return TimeTicker;
 }());
 
 function absoluteURL(url) {
@@ -583,7 +583,7 @@ var FlipClock = (function () {
         }
 
         this.element.classList.add('flip-clock');
-        this.ticker = new Ticker({
+        this.ticker = new TimeTicker({
             testRollover: testRollover
         });
         this.ticker.callback = this.setTime.bind(this);
