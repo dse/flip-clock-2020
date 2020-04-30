@@ -76,6 +76,19 @@ var Segment = (function () {
     caf = caf || window.oCancelRequestAnimationFrame;
     window.cancelAnimationFrame = caf;
 
+    if (!window.requestAnimationFrame || !window.cancelAnimationFrame) {
+        window.requestAnimationFrame = function (callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+        window.cancelAnimationFrame = function (id) {
+            clearTimeout(id);
+        };
+    }
+
     /**
      * Audio
      */
@@ -91,19 +104,6 @@ var Segment = (function () {
     //     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36"
 
     var useAudioContext = false; // supportsAudioContext && needsAudioContext;
-
-    if (!window.requestAnimationFrame || !window.cancelAnimationFrame) {
-        window.requestAnimationFrame = function (callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-        window.cancelAnimationFrame = function (id) {
-            clearTimeout(id);
-        };
-    }
 
     /**
      * Flip clock segment
