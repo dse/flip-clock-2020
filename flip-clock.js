@@ -71,27 +71,6 @@ function absoluteURL(url) {
 var Segment = (function () {
 
     /**
-     * transition event name polyfill
-     */
-
-    var transitionEndEventName;
-    var transitionCancelEventName;
-    var e = document.createElement('div');
-    if (e.style.transition !== undefined) {
-        transitionEndEventName = 'transitionend';
-        transitionCancelEventName = 'transitioncancel';
-    } else if (e.style.OTransition !== undefined) {
-        transitionEndEventName = 'oTransitionEnd';
-        transitionCancelEventName = 'oTransitionCancel';
-    } else if (e.style.MozTransition !== undefined) {
-        transitionEndEventName = 'transitionend';
-        transitionCancelEventName = 'transitioncancel';
-    } else if (e.style.WebkitTransition !== undefined) {
-        transitionEndEventName = 'webkitTransitionEnd';
-        transitionCancelEventName = 'webkitTransitionCancel';
-    }
-
-    /**
      * Audio
      */
 
