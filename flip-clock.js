@@ -307,12 +307,8 @@ var Segment = (function () {
 
     Segment.prototype.tick = function () {
         if (this.enableAudio) {
-            if (useAudioContext) {
-                // ...
-            } else {
-                this.audio.currentTime = 0;
-                this.audio.play();
-            }
+            this.audio.currentTime = 0;
+            this.audio.play();
         }
     };
 
