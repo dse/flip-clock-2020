@@ -76,15 +76,7 @@ var Segment = (function () {
 
     // stackoverflow says absolute URLs work in safari
     var tickURL = absoluteURL('tick8.wav');
-
-    var supportsAudioContext = typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined';
-    var needsAudioContext = /\bSafari\//.test(navigator.userAgent) && !/\bChrome\//.test(navigator.userAgent);
-    // Safari needs it:
-    //     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Safari/605.1.15" = $1
-    // Chrome doesn't:
-    //     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36"
-
-    var useAudioContext = false; // supportsAudioContext && needsAudioContext;
+    console.log('audio tick URL is ' + tickURL);
 
     /**
      * Flip clock segment
@@ -193,13 +185,7 @@ var Segment = (function () {
         this.flipTopText     = flipTopText;
         this.flipBottomText  = flipBottomText;
 
-        if (useAudioContext) {
-            // ...
-        } else {
-            this.audio = new Audio(tickURL);
-            this.audio.preload = 'auto';
-            this.audio.volume = 1;
-        }
+        this.audio = new Audio(tickURL);
 
         this.callback = [];
         this.addOrRemove12HourClass();
@@ -306,10 +292,11 @@ var Segment = (function () {
     var isMolasses = document.documentElement.hasAttribute('data-molasses');
 
     Segment.prototype.tick = function () {
-        if (this.enableAudio) {
-            this.audio.currentTime = 0;
-            this.audio.play();
+        if (!this.enableAudio) {
+            return;
         }
+        this.audio.currentTime = 0;
+        var promise = this.audio.play();
     };
 
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
