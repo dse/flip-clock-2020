@@ -156,7 +156,8 @@ var Segment = (function () {
 
         this.currentStateIndex = -1;
         this.desiredStateIndex = -1;
-        this.displayedStateIndex = -1;
+        this.currentDisplayedStateIndex = -1;
+        this.desiredDisplayedStateIndex = -1;
         this.deltaForFun = 0;
 
         var parent;
@@ -238,24 +239,22 @@ var Segment = (function () {
         this.element.classList[twelveHourClassAddOrRemove]('flip-clock-segment-twelve-hour');
         this.flipClock.element.classList[twelveHourClassAddOrRemove]('flip-clock-twelve-hour');
     };
-    Segment.prototype.setDesiredValue = function (value, delay, callback) {
+    Segment.prototype.setDesiredValue = function (value, delay) {
         if ('startAt' in this) {
-            return this.setDesiredState(value - this.startAt, delay, callback);
+            return this.setDesiredState(value - this.startAt, delay);
         }
-        return this.setDesiredState(value, delay, callback);
+        return this.setDesiredState(value, delay);
     };
-    Segment.prototype.setDesiredState = function (stateIndex, delay, callback) {
+    Segment.prototype.setDesiredState = function (stateIndex, delay) {
         if (delay) {
             setTimeout(function () {
-                this.setDesiredState(stateIndex, null, callback);
+                this.setDesiredState(stateIndex, null);
             }.bind(this), delay);
             return;
         }
-        this.desiredStateIndex = stateIndex;
-        if (!this.moving) {
-            this.moving = true;
-            this.setNextState(callback);
-        }
+        this.desiredStateIndex          = stateIndex;
+        this.desiredDisplayedStateIndex = (stateIndex + this.deltaForFun) % this.stateCount;
+        this.move();
     };
     Segment.prototype.valueText = function (value) {
         if ('startAt' in this) {
@@ -291,48 +290,49 @@ var Segment = (function () {
         }
         return '<span class="numeric-value" data-numeric-value="' + newText + '">' + newText + '</span>';
     };
-    Segment.prototype.setNextState = function (callback) {
-        if (this.currentStateIndex === this.desiredStateIndex) {
-            this.moving = false;
-            if (callback) {
-                callback();
-            }
+    Segment.prototype.move = function () {
+        if (this.currentDisplayedStateIndex === this.desiredDisplayedStateIndex) {
             return;
         }
-        var nextStateIndex;
-        nextStateIndex = (this.currentStateIndex + 1) % this.stateCount;
-        var newText = this.stateText(nextStateIndex);
+        var nextStateIndex          = (this.currentStateIndex          + 1) % this.stateCount;
+        var nextDisplayedStateIndex = (this.currentDisplayedStateIndex + 1) % this.stateCount;
+        var newText     = this.stateText(nextDisplayedStateIndex);
         var currentText = this.topText.innerHTML;
         if (this.animationStyle === 1) {
-            this.animate1(currentText, newText, nextStateIndex, callback);
+            this.animate1(currentText, newText, nextStateIndex, nextDisplayedStateIndex);
         } else {
-            this.animate0(currentText, newText, nextStateIndex, callback);
+            this.animate0(currentText, newText, nextStateIndex, nextDisplayedStateIndex);
         }
     };
-    Segment.prototype.flipWrap = function () {
-        var thisState = this.currentStateIndex;
-        this.setNextState(function () {
-            this.setDesiredState(this.state);
-        }.bind(this));
-    };
+
     Segment.prototype.refresh = function () {
-        var text = this.stateText(this.currentStateIndex);
+        var text = this.stateText(this.currentDisplayedStateIndex);
         this.topText.innerHTML = text;
         this.bottomText.innerHTML = text;
     };
 
     Segment.prototype.addDeltaForFun = function () {
         this.deltaForFun = (this.deltaForFun + 1) % this.stateCount;
+        this.desiredDisplayedStateIndex = (this.desiredStateIndex + this.deltaForFun) % this.stateCount;
+        this.move();
     };
 
-    Segment.prototype.animate0 = function (currentText, newText, nextStateIndex, callback) {
+    Segment.prototype.resetDeltaForFun = function () {
+        console.log('resetDeltaForFun');
+        this.deltaForFun = 0;
+        this.desiredDisplayedStateIndex = this.desiredStateIndex;
+        this.move();
+    };
+
+    Segment.prototype.animate0 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {
         var promise;
         window.requestAnimationFrame(function () {
             this.topText.innerHTML = newText;
             this.bottomText.innerHTML = newText;
             setTimeout(function () {
                 this.currentStateIndex = nextStateIndex;
-                this.setNextState(callback);
+                this.currentDisplayedStateIndex = nextDisplayedStateIndex;
+                this.move();
             }.bind(this), Segment.transitionTime * 2);
         }.bind(this));
     };
@@ -346,9 +346,9 @@ var Segment = (function () {
         this.audio.play();
     };
 
-    Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
+    Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {
         window.requestAnimationFrame(function () {
-            var isRushed = nextStateIndex !== this.desiredStateIndex;
+            var isRushed = nextDisplayedStateIndex !== this.desiredDisplayedStateIndex;
             if (isRushed && isMolasses) {
                 this.topText.innerHTML = newText;
                 this.tick();
@@ -356,7 +356,8 @@ var Segment = (function () {
                     this.bottomText.innerHTML = newText;
                     setTimeout(function () {
                         this.currentStateIndex = nextStateIndex;
-                        this.setNextState(callback);
+                        this.currentDisplayedStateIndex = nextDisplayedStateIndex;
+                        this.move();
                     }.bind(this), Segment.transitionTime * 0.35);
                 }.bind(this), Segment.transitionTime * 0.15);
                 return;
@@ -372,7 +373,8 @@ var Segment = (function () {
                     this.bottomText.innerHTML = newText;
                     this.element.removeAttribute('data-animation-frame');
                     this.currentStateIndex = nextStateIndex;
-                    this.setNextState(callback);
+                    this.currentDisplayedStateIndex = nextDisplayedStateIndex;
+                    this.move();
                 }.bind(this), Segment.transitionTime / 2);
             }.bind(this), Segment.transitionTime / 2);
         }.bind(this));
@@ -660,9 +662,9 @@ var FlipClock = (function () {
         }
     };
 
-    FlipClock.prototype.flipWrap = function () {
+    FlipClock.prototype.resetDeltaForFun = function () {
         this.segmentArray.forEach(function (segment) {
-            segment.flipWrap();
+            segment.resetDeltaForFun();
         }.bind(this));
     };
 

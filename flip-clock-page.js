@@ -171,7 +171,7 @@ var FlipClockPage = {
     },
 
     addGoodyEvents: function () {
-        var flipWrapHandler = function (event) {
+        var addDeltaForFunHandler = function (event) {
             var element = event.target.closest('.flip-clock-segment');
             if (!element) {
                 return;
@@ -184,7 +184,7 @@ var FlipClockPage = {
             if (!segment) {
                 return;
             }
-            segment.flipWrap();
+            segment.addDeltaForFun();
             event.preventDefault();
         }.bind(this);
 
@@ -192,11 +192,11 @@ var FlipClockPage = {
             if (!event.target.closest('[data-flip-clock-happy]')) {
                 return;
             }
-            this.flipClock.flipWrap();
+            // this.flipClock.flipWrap();
             event.preventDefault();
         }.bind(this);
 
-        document.addEventListener('click', flipWrapHandler);
+        document.addEventListener('click', addDeltaForFunHandler);
         document.addEventListener('click', happyHandler);
     },
 
@@ -236,10 +236,20 @@ var FlipClockPage = {
             location.reload();
         }.bind(this);
 
+        var resetHandler = function (event) {
+            console.log('reset?');
+            if (!event.target.closest('[data-flip-clock-reset]')) {
+                return;
+            }
+            console.log('reset!');
+            this.flipClock.resetDeltaForFun();
+        }.bind(this);
+
         document.addEventListener('input', formCheckboxHandler);
         document.addEventListener('change', formCheckboxHandler);
         document.addEventListener('click', setDefaultsHandler);
         document.addEventListener('click', reloadHandler);
+        document.addEventListener('click', resetHandler);
 
         if (this.enableGoodies) {
             this.addGoodyEvents();
