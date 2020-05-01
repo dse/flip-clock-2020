@@ -25,8 +25,9 @@
         text-align: left;
         left: 1rem;
     }
-    .flip-clock-segment-piece {
-        text-align: right;
+    .flip-clock-segment-piece .numeric-value {
+        position: relative;
+        left: 0.125em;
     }
 }
 

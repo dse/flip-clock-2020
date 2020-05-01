@@ -159,6 +159,7 @@ var Segment = (function () {
         this.currentDisplayedStateIndex = -1;
         this.desiredDisplayedStateIndex = -1;
         this.deltaForFun = 0;
+        this.autoResetDeltaForFun = true;
 
         var parent;
         var element;
@@ -254,7 +255,7 @@ var Segment = (function () {
         }
         this.desiredStateIndex          = stateIndex;
         this.desiredDisplayedStateIndex = (stateIndex + this.deltaForFun) % this.stateCount;
-        this.move();
+        this.startMoving();
     };
     Segment.prototype.valueText = function (value) {
         if ('startAt' in this) {
@@ -290,10 +291,29 @@ var Segment = (function () {
         }
         return '<span class="numeric-value" data-numeric-value="' + newText + '">' + newText + '</span>';
     };
-    Segment.prototype.move = function () {
+
+    Segment.prototype.startMoving = function () {
         if (this.currentDisplayedStateIndex === this.desiredDisplayedStateIndex) {
+            this.moving = false;
             return;
         }
+        if (this.moving) {
+            return;
+        }
+        this.moving = true;
+        this.move();
+    };
+
+    Segment.prototype.keepMoving = function () {
+        if (this.currentDisplayedStateIndex === this.desiredDisplayedStateIndex) {
+            this.moving = false;
+            return;
+        }
+        this.moving = true;
+        this.move();
+    };
+
+    Segment.prototype.move = function () {
         var nextStateIndex          = (this.currentStateIndex          + 1) % this.stateCount;
         var nextDisplayedStateIndex = (this.currentDisplayedStateIndex + 1) % this.stateCount;
         var newText     = this.stateText(nextDisplayedStateIndex);
@@ -314,14 +334,23 @@ var Segment = (function () {
     Segment.prototype.addDeltaForFun = function () {
         this.deltaForFun = (this.deltaForFun + 1) % this.stateCount;
         this.desiredDisplayedStateIndex = (this.desiredStateIndex + this.deltaForFun) % this.stateCount;
-        this.move();
+        this.startMoving();
+
+        if (this.autoResetDeltaForFun) {
+            if (this.resetDeltaForFunTimeout) {
+                cancelTimeout(this.resetDeltaForFunTimeout);
+            }
+            this.resetDeltaForFunTimeout = setTimeout(function () {
+                this.resetDeltaForFun();
+            }.bind(this), 2000);
+        }
     };
 
     Segment.prototype.resetDeltaForFun = function () {
         console.log('resetDeltaForFun');
         this.deltaForFun = 0;
         this.desiredDisplayedStateIndex = this.desiredStateIndex;
-        this.move();
+        this.startMoving();
     };
 
     Segment.prototype.animate0 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {
@@ -332,7 +361,7 @@ var Segment = (function () {
             setTimeout(function () {
                 this.currentStateIndex = nextStateIndex;
                 this.currentDisplayedStateIndex = nextDisplayedStateIndex;
-                this.move();
+                this.keepMoving();
             }.bind(this), Segment.transitionTime * 2);
         }.bind(this));
     };
@@ -357,7 +386,7 @@ var Segment = (function () {
                     setTimeout(function () {
                         this.currentStateIndex = nextStateIndex;
                         this.currentDisplayedStateIndex = nextDisplayedStateIndex;
-                        this.move();
+                        this.keepMoving();
                     }.bind(this), Segment.transitionTime * 0.35);
                 }.bind(this), Segment.transitionTime * 0.15);
                 return;
@@ -374,7 +403,7 @@ var Segment = (function () {
                     this.element.removeAttribute('data-animation-frame');
                     this.currentStateIndex = nextStateIndex;
                     this.currentDisplayedStateIndex = nextDisplayedStateIndex;
-                    this.move();
+                    this.keepMoving();
                 }.bind(this), Segment.transitionTime / 2);
             }.bind(this), Segment.transitionTime / 2);
         }.bind(this));
@@ -663,8 +692,16 @@ var FlipClock = (function () {
     };
 
     FlipClock.prototype.resetDeltaForFun = function () {
+        var delayMs = 0;
         this.segmentArray.forEach(function (segment) {
-            segment.resetDeltaForFun();
+            if (delayMs) {
+                setTimeout(function () {
+                    segment.resetDeltaForFun();
+                }, delayMs);
+            } else {
+                segment.resetDeltaForFun();
+            }
+            delayMs += FlipClock.segmentDelay / 3;
         }.bind(this));
     };
 

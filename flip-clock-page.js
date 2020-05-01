@@ -9,6 +9,24 @@ var FlipClockPage = {
     fontStyle: 'normal',
     testRollover: undefined,
 
+    avoidTextSelection: function () {
+        // thanks https://stackoverflow.com/questions/3779534/how-do-i-disable-text-selection-with-css-or-javascript
+        var sel = {};
+        if (window.getSelection) { // Moz
+            sel = window.getSelection();
+        } else if (document.selection) { // IE
+            sel = document.selection.createRange();
+        }
+        if (sel.rangeCount) {   // Moz
+            sel.removeAllRanges();
+            return;
+        }
+        if (sel.text > '') {    // IE
+            document.selection.empty();
+            return;
+        }
+    },
+
     init: function (options) {
         this.enableThemeConfiguration = options && options.enableThemeConfiguration;
         this.enableGoodies            = options && options.enableGoodies;
@@ -176,6 +194,7 @@ var FlipClockPage = {
             if (!element) {
                 return;
             }
+            this.avoidTextSelection();
             var id = element.getAttribute('data-segment-id');
             if (!id) {
                 return;
@@ -188,21 +207,13 @@ var FlipClockPage = {
             event.preventDefault();
         }.bind(this);
 
-        var happyHandler = function (event) {
-            if (!event.target.closest('[data-flip-clock-happy]')) {
-                return;
-            }
-            // this.flipClock.flipWrap();
-            event.preventDefault();
-        }.bind(this);
-
         document.addEventListener('click', addDeltaForFunHandler);
-        document.addEventListener('click', happyHandler);
     },
 
     addEvents: function () {
         var formCheckboxHandler = function (event) {
             if (event.target.hasAttribute('data-flip-clock-twenty-four-hour')) {
+                this.avoidTextSelection();
                 var checked = event.target.checked;
                 console.debug("FlipClockPage: addEvents: 24-hour checkbox is " + (checked ? "checked" : "NOT checked"));
                 try { localStorage.setItem('flip-clock--twenty-four-hour', JSON.stringify(checked)); } catch (e) { }
@@ -211,6 +222,7 @@ var FlipClockPage = {
                 event.preventDefault();
             }
             if (event.target.hasAttribute('data-flip-clock-enable-audio')) {
+                this.avoidTextSelection();
                 this.flipClock.enableAudioByUserRequest();
                 var checked = event.target.checked;
                 console.debug("FlipClockPage: addEvents: audio checkbox is " + (checked ? "checked" : "NOT checked"));
@@ -225,6 +237,7 @@ var FlipClockPage = {
             if (!event.target.closest('[data-flip-clock-set-defaults]')) {
                 return;
             }
+            this.avoidTextSelection();
             this.setDefaults();
             event.preventDefault();
         }.bind(this);
@@ -237,11 +250,10 @@ var FlipClockPage = {
         }.bind(this);
 
         var resetHandler = function (event) {
-            console.log('reset?');
             if (!event.target.closest('[data-flip-clock-reset]')) {
                 return;
             }
-            console.log('reset!');
+            this.avoidTextSelection();
             this.flipClock.resetDeltaForFun();
         }.bind(this);
 
