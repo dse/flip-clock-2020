@@ -338,9 +338,11 @@ var Segment = (function () {
 
         if (this.autoResetDeltaForFun) {
             if (this.resetDeltaForFunTimeout) {
+                delete this.resetDeltaForFunTimeout;
                 cancelTimeout(this.resetDeltaForFunTimeout);
             }
             this.resetDeltaForFunTimeout = setTimeout(function () {
+                delete this.resetDeltaForFunTimeout;
                 this.resetDeltaForFun();
             }.bind(this), 2000);
         }
