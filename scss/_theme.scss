@@ -310,3 +310,36 @@ html.molasses {
         }
     }
 }
+
+/* stupid font */
+.flip-clock--helvetica-neue-bold-condensed {
+    $letter-spacing-before-1: -0.03em;
+    $letter-spacing-after-1: -0.06em;
+
+    .numeric-value[data-numeric-value="10"],
+    .numeric-value[data-numeric-value="12"],
+    .numeric-value[data-numeric-value="13"],
+    .numeric-value[data-numeric-value="14"],
+    .numeric-value[data-numeric-value="15"],
+    .numeric-value[data-numeric-value="16"],
+    .numeric-value[data-numeric-value="17"],
+    .numeric-value[data-numeric-value="18"],
+    .numeric-value[data-numeric-value="19"] {
+        letter-spacing: $letter-spacing-after-1;
+    }
+
+    .numeric-value[data-numeric-value="01"],
+    .numeric-value[data-numeric-value="21"],
+    .numeric-value[data-numeric-value="31"],
+    .numeric-value[data-numeric-value="41"],
+    .numeric-value[data-numeric-value="51"] {
+        letter-spacing: $letter-spacing-before-1;
+    }
+
+    .numeric-value[data-numeric-value="11"] {
+        letter-spacing: $letter-spacing-before-1 + $letter-spacing-after-1;
+    }
+
+    .numeric-value[data-numeric-value^="1"] { margin-left: -0.1em; }
+    .numeric-value[data-numeric-value$="1"] { margin-right: -0.1em; }
+}

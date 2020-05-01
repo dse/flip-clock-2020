@@ -430,6 +430,39 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   }
 }
 
+/* stupid font */
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="10"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="12"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="13"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="14"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="15"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="16"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="17"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="18"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="19"] {
+  letter-spacing: -0.06em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="01"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="21"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="31"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="41"],
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="51"] {
+  letter-spacing: -0.03em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value="11"] {
+  letter-spacing: -0.09em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value^="1"] {
+  margin-left: -0.1em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed .numeric-value[data-numeric-value$="1"] {
+  margin-right: -0.1em;
+}
+
 .css-reset {
   all: unset;
 }
