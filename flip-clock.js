@@ -154,8 +154,10 @@ var Segment = (function () {
             this.endAt = options.endAt;
         }
 
-        this.stateIndex = -1;
-        this.desiredState = -1;
+        this.currentStateIndex = -1;
+        this.desiredStateIndex = -1;
+        this.displayedStateIndex = -1;
+        this.deltaForFun = 0;
 
         var parent;
         var element;
@@ -249,7 +251,7 @@ var Segment = (function () {
             }.bind(this), delay);
             return;
         }
-        this.desiredState = stateIndex;
+        this.desiredStateIndex = stateIndex;
         if (!this.moving) {
             this.moving = true;
             this.setNextState(callback);
@@ -271,6 +273,7 @@ var Segment = (function () {
         var newText;
         if (this.isHour && !this.is24Hour) {
             newText = String((stateIndex + 11) % 12 + 1);
+            newText = '<span class="numeric-value" data-numeric-value="' + newText + '">' + newText + '</span>';
             if (stateIndex >= 0 && stateIndex < 12) {
                 newText = newText + '<span class="ampm">am</span>';
             } else if (stateIndex >= 12 && stateIndex < 24) {
@@ -286,10 +289,10 @@ var Segment = (function () {
         while (this.digitCount && newText.length < this.digitCount) {
             newText = '0' + newText;
         }
-        return newText;
+        return '<span class="numeric-value" data-numeric-value="' + newText + '">' + newText + '</span>';
     };
     Segment.prototype.setNextState = function (callback) {
-        if (this.stateIndex === this.desiredState) {
+        if (this.currentStateIndex === this.desiredStateIndex) {
             this.moving = false;
             if (callback) {
                 callback();
@@ -297,7 +300,7 @@ var Segment = (function () {
             return;
         }
         var nextStateIndex;
-        nextStateIndex = (this.stateIndex + 1) % this.stateCount;
+        nextStateIndex = (this.currentStateIndex + 1) % this.stateCount;
         var newText = this.stateText(nextStateIndex);
         var currentText = this.topText.innerHTML;
         if (this.animationStyle === 1) {
@@ -307,15 +310,19 @@ var Segment = (function () {
         }
     };
     Segment.prototype.flipWrap = function () {
-        var thisState = this.stateIndex;
+        var thisState = this.currentStateIndex;
         this.setNextState(function () {
             this.setDesiredState(this.state);
         }.bind(this));
     };
     Segment.prototype.refresh = function () {
-        var text = this.stateText(this.stateIndex);
+        var text = this.stateText(this.currentStateIndex);
         this.topText.innerHTML = text;
         this.bottomText.innerHTML = text;
+    };
+
+    Segment.prototype.addDeltaForFun = function () {
+        this.deltaForFun = (this.deltaForFun + 1) % this.stateCount;
     };
 
     Segment.prototype.animate0 = function (currentText, newText, nextStateIndex, callback) {
@@ -324,7 +331,7 @@ var Segment = (function () {
             this.topText.innerHTML = newText;
             this.bottomText.innerHTML = newText;
             setTimeout(function () {
-                this.stateIndex = nextStateIndex;
+                this.currentStateIndex = nextStateIndex;
                 this.setNextState(callback);
             }.bind(this), Segment.transitionTime * 2);
         }.bind(this));
@@ -341,14 +348,14 @@ var Segment = (function () {
 
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, callback) {
         window.requestAnimationFrame(function () {
-            var isRushed = nextStateIndex !== this.desiredState;
+            var isRushed = nextStateIndex !== this.desiredStateIndex;
             if (isRushed && isMolasses) {
                 this.topText.innerHTML = newText;
                 this.tick();
                 setTimeout(function () {
                     this.bottomText.innerHTML = newText;
                     setTimeout(function () {
-                        this.stateIndex = nextStateIndex;
+                        this.currentStateIndex = nextStateIndex;
                         this.setNextState(callback);
                     }.bind(this), Segment.transitionTime * 0.35);
                 }.bind(this), Segment.transitionTime * 0.15);
@@ -364,7 +371,7 @@ var Segment = (function () {
                 setTimeout(function () {
                     this.bottomText.innerHTML = newText;
                     this.element.removeAttribute('data-animation-frame');
-                    this.stateIndex = nextStateIndex;
+                    this.currentStateIndex = nextStateIndex;
                     this.setNextState(callback);
                 }.bind(this), Segment.transitionTime / 2);
             }.bind(this), Segment.transitionTime / 2);
