@@ -339,7 +339,7 @@ var Segment = (function () {
         if (this.autoResetDeltaForFun) {
             if (this.resetDeltaForFunTimeout) {
                 delete this.resetDeltaForFunTimeout;
-                cancelTimeout(this.resetDeltaForFunTimeout);
+                clearTimeout(this.resetDeltaForFunTimeout);
             }
             this.resetDeltaForFunTimeout = setTimeout(function () {
                 delete this.resetDeltaForFunTimeout;
