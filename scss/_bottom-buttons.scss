@@ -46,7 +46,7 @@ $push-button-switch-border-style:     solid;
 $push-button-switch-border-width:     2px;
 $push-button-switch-border-color:     black;
 $push-button-switch-border:           #{$push-button-switch-border-width} #{$push-button-switch-border-style} #{$push-button-switch-border-color};
-$push-button-switch-border-radius:    0.4em;
+$push-button-switch-border-radius:    1em;
 $push-button-switch-bg-color:         #ccc;
 $push-button-switch-bg-image:         linear-gradient(to bottom, #eee, #999);
 $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);

@@ -531,7 +531,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
           box-sizing: padding-box;
   height: 1.4em;
   width: 2.8em;
-  border-radius: 0.4em;
+  border-radius: 1em;
   position: relative;
   top: -0.1em;
   background-color: #ccc;
@@ -542,7 +542,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 .push-button::after {
   content: '';
   position: absolute;
-  border-radius: calc(0.4em - 3px);
+  border-radius: calc(1em - 3px);
   top: 1px;
   bottom: 1px;
   left: 1px;
@@ -567,7 +567,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   height: 1.4em;
   width: 2.8em;
   background-color: black;
-  border-radius: 0.4em;
+  border-radius: 1em;
   position: relative;
   top: -0.1em;
   overflow: hidden;
@@ -583,7 +583,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   right: 50%;
   width: 100%;
   height: 1.4em;
-  border-radius: calc(0.4em - 2px);
+  border-radius: calc(1em - 2px);
   content: '';
   -webkit-transition: right 125ms;
   transition: right 125ms;
@@ -602,7 +602,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   right: 50%;
   height: 1.4em;
   width: 1.4em;
-  border-radius: calc(0.4em - 2px);
+  border-radius: calc(1em - 2px);
   background-color: #ccc;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
   background-image: linear-gradient(to bottom, #eee, #999);
@@ -614,7 +614,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 [type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch > .inner::after {
   content: '';
   position: absolute;
-  border-radius: calc(0.4em - 2px - 1px);
+  border-radius: calc(1em - 2px - 1px);
   top: 1px;
   bottom: 1px;
   left: 1px;
