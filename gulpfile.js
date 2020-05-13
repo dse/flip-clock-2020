@@ -43,6 +43,11 @@ function serve() {
     gulp.watch("*.html").on('change', browserSync.reload);
 }
 
+function watch() {
+    gulp.watch("scss/*.scss", gulp.parallel(sassDev, sassProd));
+}
+
 gulp.task('sass', gulp.parallel(sassDev, sassProd));
 gulp.task('serve', gulp.series('sass', serve));
 gulp.task('default', gulp.series('sass', serve));
+gulp.task('watch', gulp.series('sass', watch));
