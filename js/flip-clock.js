@@ -275,9 +275,9 @@ var Segment = (function () {
             newText = String((stateIndex + 11) % 12 + 1);
             newText = '<span class="numeric-value" data-numeric-value="' + newText + '">' + newText + '</span>';
             if (stateIndex >= 0 && stateIndex < 12) {
-                newText = newText + '<span class="ampm">am</span>';
+                newText = newText + '<span class="ampm am"></span>';
             } else if (stateIndex >= 12 && stateIndex < 24) {
-                newText = newText + '<span class="ampm">pm</span>';
+                newText = newText + '<span class="ampm pm"></span>';
             }
             return newText;
         }
