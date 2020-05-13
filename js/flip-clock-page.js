@@ -212,23 +212,25 @@ var FlipClockPage = {
 
     addEvents: function () {
         var formCheckboxHandler = function (event) {
+            var checked;
             if (event.target.hasAttribute('data-flip-clock-twenty-four-hour')) {
                 this.avoidTextSelection();
-                var checked = event.target.checked;
-                console.debug("FlipClockPage: addEvents: 24-hour checkbox is " + (checked ? "checked" : "NOT checked"));
-                try { localStorage.setItem('flip-clock--twenty-four-hour', JSON.stringify(checked)); } catch (e) { }
-                console.debug("FlipClockPage: addEvents: setting is24Hour to " + JSON.stringify(checked));
+                checked = event.target.checked;
                 this.flipClock.setIs24Hour(checked);
                 event.preventDefault();
             }
-            if (event.target.hasAttribute('data-flip-clock-enable-audio')) {
+            if (event.target.hasAttribute('data-flip-clock-enable-ticks')) {
                 this.avoidTextSelection();
                 this.flipClock.enableAudioByUserRequest();
-                var checked = event.target.checked;
-                console.debug("FlipClockPage: addEvents: audio checkbox is " + (checked ? "checked" : "NOT checked"));
-                try { localStorage.setItem('flip-clock--enable-audio', JSON.stringify(checked)); } catch (e) { }
-                console.debug("FlipClockPage: addEvents: setting enableAudio to " + JSON.stringify(checked));
-                this.flipClock.setEnableAudio(checked);
+                checked = event.target.checked;
+                this.flipClock.setEnableTicks(checked);
+                event.preventDefault();
+            }
+            if (event.target.hasAttribute('data-flip-clock-enable-seconds-ticks')) {
+                this.avoidTextSelection();
+                this.flipClock.enableAudioByUserRequest();
+                checked = event.target.checked;
+                this.flipClock.setEnableSecondsTicks(checked);
                 event.preventDefault();
             }
         }.bind(this);
@@ -378,7 +380,10 @@ var FlipClockPage = {
             console.debug("FlipClockPage: setting checked flag on 24-hour checkbox to " + JSON.stringify(flag));
             input.checked = flag;
         }.bind(this));
-        Array.from(document.querySelectorAll('[data-flip-clock-enable-audio]')).forEach(function (input) {
+        Array.from(document.querySelectorAll('[data-flip-clock-enable-ticks]')).forEach(function (input) {
+            input.checked = false;
+        }.bind(this));
+        Array.from(document.querySelectorAll('[data-flip-clock-enable-seconds-ticks]')).forEach(function (input) {
             input.checked = false;
         }.bind(this));
     },

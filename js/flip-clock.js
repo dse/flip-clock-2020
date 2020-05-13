@@ -120,7 +120,7 @@ if (window.AudioContext && (location.protocol === 'http:' || location.protocol =
 }());
 
 // stackoverflow says absolute URLs work in safari
-var tickURL = absoluteURL('tick8.wav');
+var tickURL = absoluteURL('sounds/tick2.wav');
 
 var Segment = (function () {
     function Segment(options) {
@@ -575,6 +575,7 @@ var FlipClock = (function () {
                     flipClock: this
                 })
             );
+            this.segments.second.isSeconds = true;
         }
 
         var i;
@@ -635,9 +636,32 @@ var FlipClock = (function () {
         }.bind(this));
     };
 
+    FlipClock.prototype.setEnableTicks = function (flag) {
+        flag = !!flag;
+        this.enableTicks = flag;
+        var segments = this.segmentArray.filter(function (segment) {
+            return !segment.isSeconds;
+        });
+        console.log(segments.length);
+        segments.forEach(function (segment) {
+            segment.setEnableAudio(flag);
+        });
+    };
+
+    FlipClock.prototype.setEnableSecondsTicks = function (flag) {
+        flag = !!flag;
+        this.enableSecondsTicks = flag;
+        var segments = this.segmentArray.filter(function (segment) {
+            return segment.isSeconds;
+        });
+        console.log(segments.length);
+        segments.forEach(function (segment) {
+            segment.setEnableAudio(flag);
+        });
+    };
+
     FlipClock.prototype.setEnableAudio = function (flag) {
         flag = !!flag;
-        console.debug("FlipClock: setting enableAudio to " + JSON.stringify(flag));
         this.enableAudio = flag;
         this.segmentArray.forEach(function (segment) {
             segment.setEnableAudio(flag);
