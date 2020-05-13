@@ -18,10 +18,24 @@
 .flip-clock-segment.flip-clock-segment-twelve-hour {
     .ampm {
         position: absolute;
-        bottom: 25%;
-        transform:         translateY(50%);
-        -webkit-transform: translateY(50%);
-        font-size: 25%;
+        &.am {
+            top: 25%;
+            transform:         translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            &::before {
+                content: 'am';
+            }
+        }
+        &.pm {
+            bottom: 25%;
+            transform:         translateY(50%);
+            -webkit-transform: translateY(50%);
+            &::before {
+                content: 'pm';
+            }
+        }
+        text-transform: uppercase;
+        font-size: 10%;
         text-align: left;
         left: 1rem;
     }

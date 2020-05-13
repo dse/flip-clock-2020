@@ -70,13 +70,32 @@
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
   position: absolute;
+  text-transform: uppercase;
+  font-size: 10%;
+  text-align: left;
+  left: 1rem;
+}
+
+.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am {
+  top: 25%;
+  -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+
+.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am::before {
+  content: 'am';
+}
+
+.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm {
   bottom: 25%;
   -ms-transform: translateY(50%);
       transform: translateY(50%);
   -webkit-transform: translateY(50%);
-  font-size: 25%;
-  text-align: left;
-  left: 1rem;
+}
+
+.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm::before {
+  content: 'pm';
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece .numeric-value {
@@ -174,6 +193,7 @@
 }
 
 /* depends on the font */
+/* depends on the font */
 /* does not darken text */
 /* this darkens text.  experiment tweaking this with segment-background-gradient. */
 @supports (--foo: green) {
@@ -185,7 +205,8 @@
     --flip-clock-border-radius:               2vw;
     --segment-horizontal-padding:             1vw;
     --segment-ampm-position-left:             1vw;
-    --segment-ampm-position-bottom:           22.35%;
+    --segment-ampm-position-top:              20%;
+    --segment-ampm-position-bottom:           17.5%;
     --segment-fake-italic-horizontal-padding: 0.25em;
     --background-color:                       #181818;
     --background-gradient:                    linear-gradient(to bottom, #242424, #121212);
@@ -331,12 +352,24 @@ body.flip-clock-page::before {
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
   left: 1vw;
-  bottom: 22.35%;
+}
+
+.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am {
+  top: 20%;
+}
+
+.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm {
+  bottom: 17.5%;
 }
 
 @supports (--foo: green) {
   html.has-theme-support .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
     left: var(--segment-ampm-position-left);
+  }
+  html.has-theme-support .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am {
+    top: var(--segment-ampm-position-top);
+  }
+  html.has-theme-support .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm {
     bottom: var(--segment-ampm-position-bottom);
   }
 }
@@ -434,40 +467,12 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   }
 }
 
-/* stupid font */
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value^="1"] {
-  margin-left: -0.02em;
+.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece {
+  width: calc(2.25ch);
 }
 
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value$="1"] {
-  margin-right: -0.13em;
-}
-
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="10"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="12"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="13"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="14"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="15"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="16"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="17"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="18"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="19"] {
-  letter-spacing: -0.13em;
-  margin-right: 0.13em;
-}
-
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="01"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="21"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="31"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="41"],
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="51"] {
-  letter-spacing: -0.02em;
-  margin-right: -0.11em;
-}
-
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="11"] {
-  letter-spacing: -0.15em;
-  margin-right: 0.02em;
+.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece .numeric-value {
+  left: 0.0625em;
 }
 
 .css-reset {
@@ -620,4 +625,85 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 
 [type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch > .inner {
   right: 0;
+}
+
+/* stupid font */
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals {
+  /**
+         * Stupid typography tricks.
+         */
+  /* tweaked tabular digit 1 */
+  /* The following tricks ONLY work when there are two characters and NO MORE. */
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value^="1"] {
+  margin-left: 0.05em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value$="1"] {
+  margin-right: -0.05em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="10"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="12"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="13"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="14"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="15"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="16"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="17"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="18"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="19"] {
+  letter-spacing: -0.05em;
+  margin-right: 0.05em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="01"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="21"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="31"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="41"],
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="51"] {
+  letter-spacing: 0.05em;
+  margin-right: -0.1em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals .numeric-value[data-numeric-value="11"] {
+  letter-spacing: 0em;
+  margin-right: -0.05em;
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--pnum {
+  -webkit-font-feature-settings: "pnum" 1;
+          font-feature-settings: "pnum" 1;
+  font-variant-numeric: proportional-nums;
+  /* pnum */
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--kern {
+  -webkit-font-feature-settings: "kern" 1;
+          font-feature-settings: "kern" 1;
+  -webkit-font-kerning: normal;
+          font-kerning: normal;
+  /* kern */
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--kerx {
+  -webkit-font-feature-settings: "kerx" 1;
+          font-feature-settings: "kerx" 1;
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--kern.flip-clock--pnum {
+  -webkit-font-feature-settings: "kern" 1, "pnum" 1;
+          font-feature-settings: "kern" 1, "pnum" 1;
+  -webkit-font-kerning: normal;
+          font-kerning: normal;
+  /* kern */
+  font-variant-numeric: proportional-nums;
+  /* pnum */
+}
+
+.flip-clock--helvetica-neue-bold-condensed.flip-clock--kerx.flip-clock--pnum {
+  -webkit-font-feature-settings: "kerx" 1, "pnum" 1;
+          font-feature-settings: "kerx" 1, "pnum" 1;
+  font-variant-numeric: proportional-nums;
+  /* pnum */
 }

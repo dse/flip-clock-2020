@@ -6,7 +6,8 @@ $flip-clock-border-radius:                  $segment-border-radius + $flip-clock
 $segment-horizontal-padding:                1vw;
 $segment-horizontal-padding--date:          1vw;
 $segment-ampm-position-left:                1vw;
-$segment-ampm-position-bottom:              22.35%; /* depends on the font */
+$segment-ampm-position-top:                 20%; /* depends on the font */
+$segment-ampm-position-bottom:              17.5%; /* depends on the font */
 $segment-fake-italic-horizontal-padding:    0.25em;
 $background-color:                          #181818;
 $segment-background-color:                  #111111;
@@ -73,6 +74,7 @@ $flip-clock-molasses-top-darken:    0.25;
         --flip-clock-border-radius:               #{$flip-clock-border-radius};
         --segment-horizontal-padding:             #{$segment-horizontal-padding};
         --segment-ampm-position-left:             #{$segment-ampm-position-left};
+        --segment-ampm-position-top:              #{$segment-ampm-position-top};
         --segment-ampm-position-bottom:           #{$segment-ampm-position-bottom};
         --segment-fake-italic-horizontal-padding: #{$segment-fake-italic-horizontal-padding};
         --background-color:                       #{$background-color};
@@ -214,11 +216,21 @@ body.flip-clock-page {
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
     left: $segment-ampm-position-left;
-    bottom: $segment-ampm-position-bottom;
+    &.am {
+        top: $segment-ampm-position-top;
+    }
+    &.pm {
+        bottom: $segment-ampm-position-bottom;
+    }
     @supports (--foo: green) {
         @at-root html.has-theme-support & {
             left: var(--segment-ampm-position-left);
-            bottom: var(--segment-ampm-position-bottom);
+            &.am {
+                top: var(--segment-ampm-position-top);
+            }
+            &.pm {
+                bottom: var(--segment-ampm-position-bottom);
+            }
         }
     }
 }
@@ -310,6 +322,15 @@ html.molasses {
     @supports (--foo: green) {
         @at-root html.has-theme-support & {
             padding-right: var(--segment-fake-italic-horizontal-padding);
+        }
+    }
+}
+
+.flip-clock-segment.flip-clock-segment-twelve-hour {
+    .flip-clock-segment-piece {
+        width: calc(2.25ch);
+        .numeric-value {
+            left: 0.0625em;
         }
     }
 }
