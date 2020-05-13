@@ -1,0 +1,64 @@
+/* stupid font */
+.flip-clock--helvetica-neue-bold-condensed {
+    &.flip-clock--fake-proportional-numerals {
+        /**
+         * Stupid typography tricks.
+         */
+        $space-before-1: 0.02em;
+        $space-after-1: 0.13em;
+
+        .numeric-value[data-numeric-value^="1"] {
+            margin-left: -$space-before-1;
+        }
+        .numeric-value[data-numeric-value$="1"] {
+            margin-right: -$space-after-1;
+        }
+
+        /* The following tricks ONLY work when there are two characters and NO MORE. */
+        .numeric-value[data-numeric-value="10"],
+        .numeric-value[data-numeric-value="12"],
+        .numeric-value[data-numeric-value="13"],
+        .numeric-value[data-numeric-value="14"],
+        .numeric-value[data-numeric-value="15"],
+        .numeric-value[data-numeric-value="16"],
+        .numeric-value[data-numeric-value="17"],
+        .numeric-value[data-numeric-value="18"],
+        .numeric-value[data-numeric-value="19"] {
+            letter-spacing: -$space-after-1;
+            margin-right: $space-after-1;
+        }
+        .numeric-value[data-numeric-value="01"],
+        .numeric-value[data-numeric-value="21"],
+        .numeric-value[data-numeric-value="31"],
+        .numeric-value[data-numeric-value="41"],
+        .numeric-value[data-numeric-value="51"] {
+            letter-spacing: -$space-before-1;
+            margin-right: $space-before-1 - $space-after-1;
+        }
+        .numeric-value[data-numeric-value="11"] {
+            letter-spacing: -($space-before-1 + $space-after-1);
+            margin-right: $space-before-1;
+        }
+    }
+
+    &.flip-clock--pnum {
+        font-feature-settings: "pnum" 1;
+        font-variant-numeric: proportional-nums;     /* pnum */
+    }
+    &.flip-clock--kern {
+        font-feature-settings: "kern" 1;
+        font-kerning: normal;                        /* kern */
+    }
+    &.flip-clock--kerx {
+        font-feature-settings: "kerx" 1;
+    }
+    &.flip-clock--kern.flip-clock--pnum {
+        font-feature-settings: "kern" 1, "pnum" 1;
+        font-kerning: normal;                        /* kern */
+        font-variant-numeric: proportional-nums;     /* pnum */
+    }
+    &.flip-clock--kerx.flip-clock--pnum {
+        font-feature-settings: "kerx" 1, "pnum" 1;
+        font-variant-numeric: proportional-nums;     /* pnum */
+    }
+}
