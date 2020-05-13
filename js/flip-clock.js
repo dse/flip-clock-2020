@@ -349,7 +349,6 @@ var Segment = (function () {
     };
 
     Segment.prototype.resetDeltaForFun = function () {
-        console.log('resetDeltaForFun');
         this.deltaForFun = 0;
         this.desiredDisplayedStateIndex = this.desiredStateIndex;
         this.startMoving();
