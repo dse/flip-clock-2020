@@ -305,9 +305,11 @@ var FlipClockPage = {
             } catch (e) {
                 value = false;
             }
-            console.debug("value is now " + JSON.stringify(value) + "; setting is24Hour to it");
-            this.flipClock.setIs24Hour(value);
+        } else {
+            value = false;
         }
+        console.debug("value is now " + JSON.stringify(value) + "; setting is24Hour to it");
+        this.flipClock.setIs24Hour(value);
     },
 
     setFormValues: function () {
