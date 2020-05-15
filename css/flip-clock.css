@@ -627,6 +627,12 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   right: 0;
 }
 
+.bottom-buttons a {
+  color: inherit;
+  -webkit-text-decoration-style: dotted;
+          text-decoration-style: dotted;
+}
+
 /* stupid font */
 .flip-clock--helvetica-neue-bold-condensed.flip-clock--fake-proportional-numerals {
   /**

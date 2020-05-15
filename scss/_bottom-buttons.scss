@@ -135,3 +135,8 @@ $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
 [type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch > .inner {
     right: 0;
 }
+
+.bottom-buttons a {
+    color: inherit;
+    text-decoration-style: dotted;
+}
