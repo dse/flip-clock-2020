@@ -33,7 +33,7 @@ function sassProd() {
         .pipe($.rename({ extname: '.min.css' }))
         .pipe(gulp.dest('css'))
         .pipe(browserSync.stream());
-};
+}
 
 function serve() {
     browserSync.init({
