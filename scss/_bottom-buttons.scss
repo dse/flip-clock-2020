@@ -63,14 +63,24 @@ $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
     display: inline-block;
     vertical-align: middle;
     border: #{$push-button-switch-border};
+    background-color: $push-button-switch-border-color;
     box-sizing: padding-box;
     height: #{$push-button-switch-height};
     width: #{$push-button-switch-width};
     border-radius: #{$push-button-switch-border-radius};
     position: relative;
     top: -0.1em;
-    background-color: #{$push-button-switch-bg-color};
-    background-image: #{$push-button-switch-bg-image};
+    &::before {
+        content: '';
+        position: absolute;
+        border-radius: calc(#{$push-button-switch-border-radius} - 3px);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #{$push-button-switch-bg-color};
+        background-image: #{$push-button-switch-bg-image};
+    }
     &::after {
         content: '';
         position: absolute;
@@ -81,6 +91,15 @@ $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
         right: 1px;
         background-image: #{$push-button-switch-bg-image-reverse};
         content: '';
+    }
+    &:active, &:focus {
+        outline: none;
+    }
+    &:active {
+        &::before, &::after {
+            transform: translateY(1px) scale(0.98);
+            opacity: 0.95;
+        }
     }
 }
 
