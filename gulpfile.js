@@ -8,28 +8,20 @@ var sassPaths = [
     'node_modules/motion-ui/src'
 ];
 
-function sassDev() {
+var autoprefixerOptions = {
+    browsers: ['last 2 versions', 'ie >= 9']
+};
+
+function sass() {
     return gulp.src('scss/*.scss')
         .pipe($.sass({
             includePaths: sassPaths,
             outputStyle: 'expanded' // if css compressed **file size**
         }).on('error', $.sass.logError))
         .pipe($.postcss([
-            autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] })
+            autoprefixer(autoprefixerOptions)
         ]))
         .pipe(gulp.dest('css'))
-        .pipe(browserSync.stream());
-};
-
-function sassProd() {
-    return gulp.src('scss/*.scss')
-        .pipe($.sass({
-            includePaths: sassPaths,
-            outputStyle: 'compressed' // if css compressed **file size**
-        }).on('error', $.sass.logError))
-        .pipe($.postcss([
-            autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] })
-        ]))
         .pipe($.rename({ extname: '.min.css' }))
         .pipe(gulp.dest('css'))
         .pipe(browserSync.stream());
@@ -39,7 +31,7 @@ function serve() {
     browserSync.init({
         server: "./"
     });
-    gulp.watch("scss/*.scss", gulp.parallel(sassDev, sassProd));
+    gulp.watch("scss/*.scss", gulp.series(sass));
     gulp.watch("*.html").on('change', browserSync.reload);
 }
 
@@ -47,7 +39,7 @@ function watch() {
     gulp.watch("scss/*.scss", gulp.parallel(sassDev, sassProd));
 }
 
-gulp.task('sass', gulp.parallel(sassDev, sassProd));
+gulp.task('sass', gulp.series(sass));
 gulp.task('serve', gulp.series('sass', serve));
 gulp.task('default', gulp.series('sass', serve));
 gulp.task('watch', gulp.series('sass', watch));
