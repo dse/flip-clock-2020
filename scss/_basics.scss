@@ -75,17 +75,14 @@
 
 .flip-clock-date-line .flip-clock-segment-date .flip-clock-segment-piece { width: calc(4ch); }
 
-$clip-path-top: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
-$clip-path-bottom: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
-
-.flip-clock-segment-piece-top,
-.flip-clock-segment-piece-flip-top {
-    clip-path: $clip-path-top;
+.flip-clock-segment {
+    @include flip-clock-segment-clip();
 }
 
-.flip-clock-segment-piece-bottom,
-.flip-clock-segment-piece-flip-bottom {
-    clip-path: $clip-path-bottom;
+.flip-clock-segment::before {
+}
+
+.flip-clock-segment::after {
 }
 
 .flip-clock-segment-piece-flip-top,

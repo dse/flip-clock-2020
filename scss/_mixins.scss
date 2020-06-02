@@ -14,3 +14,82 @@
     }
     @return change-color($color: $color, $red: $red, $green: $green, $blue: $blue);
 }
+
+@function clip-path-top($x: 0.5rem, $y: 2rem, $hsep: 2px) {
+    @if $x == 0 or $y == 0 {
+        @return polygon(
+            0% 0%,
+            100% 0%,
+            100% 50%,
+            0% 50%
+        );
+    } @else {
+        @return polygon(
+            0% 0%,
+            100% 0%,
+            100% calc(50% - #{$y} - 1px),
+            calc(100% - #{$x} - #{$hsep}) calc(50% - #{$y} - 1px),
+            calc(100% - #{$x} - #{$hsep}) 50%,
+            calc(#{$x} + #{$hsep}) 50%,
+            calc(#{$x} + #{$hsep}) calc(50% - #{$y} - 1px),
+            0 calc(50% - #{$y} - 1px)
+        );
+    }
+}
+
+@function clip-path-bottom($x: 0.5rem, $y: 2rem, $hsep: 2px) {
+    @if $x == 0 or $y == 0 {
+        @return polygon(
+            0% 100%,
+            100% 100%,
+            100% calc(50% + 1px),
+            0% calc(50% + 1px)
+        );
+    } @else {
+        @return polygon(
+            0% 100%,
+            100% 100%,
+            100% calc(50% + #{$y} + 1px),
+            calc(100% - #{$x} - #{$hsep}) calc(50% + #{$y} + 1px),
+            calc(100% - #{$x} - #{$hsep}) calc(50% + 1px),
+            calc(#{$x} + #{$hsep}) calc(50% + 1px),
+            calc(#{$x} + #{$hsep}) calc(50% + #{$y} + 1px),
+            0 calc(50% + #{$y} + 1px)
+        );
+    }
+}
+
+@mixin flip-clock-segment-clip($x: 0.5rem, $y: 2rem, $background-color: null, $background-image: null, $hsep: 2px) {
+    $clip-path-top:    clip-path-top($x: $x, $y: $y, $hsep: $hsep);
+    $clip-path-bottom: clip-path-bottom($x: $x, $y: $y, $hsep: $hsep);
+    .flip-clock-segment-piece-top,
+    .flip-clock-segment-piece-flip-top {
+        clip-path: $clip-path-top;
+    }
+    .flip-clock-segment-piece-bottom,
+    .flip-clock-segment-piece-flip-bottom {
+        clip-path: $clip-path-bottom;
+    }
+    @if $x != 0 and $y != 0 {
+        &::before {
+            content: '';
+            position: absolute;
+            top: calc(50% - #{$y});
+            left: 0;
+            width: #{$x};
+            bottom: calc(50% - #{$y});
+            background-color: $background-color;
+            background-image: $background-image;
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - #{$y});
+            right: 0;
+            width: #{$x};
+            bottom: calc(50% - #{$y});
+            background-color: $background-color;
+            background-image: $background-image;
+        }
+    }
+}

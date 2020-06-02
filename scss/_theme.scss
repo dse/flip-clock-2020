@@ -3,8 +3,8 @@ $flip-clock-segment-gutter:                 1vw;
 $flip-clock-window-gutter:                  1vw;
 $segment-border-radius:                     1vw;
 $flip-clock-border-radius:                  $segment-border-radius + $flip-clock-window-padding;
-$segment-horizontal-padding:                1vw;
-$segment-horizontal-padding--date:          1vw;
+$segment-horizontal-padding:                2vw;
+$segment-horizontal-padding--date:          2vw;
 $segment-ampm-position-left:                1vw;
 $segment-ampm-position-top:                 20%; /* depends on the font */
 $segment-ampm-position-bottom:              17.5%; /* depends on the font */
@@ -34,6 +34,9 @@ $segment-background-gradient: null;
 $segment-gradient-overlay: null;
 
 $flip-clock-molasses-top-darken:    0.25;
+
+$flip-clock-cylinder-width: 1vw;
+$flip-clock-cylinder-height: 2vw;
 
 @if true {
     $background-gradient: linear-gradient(
@@ -333,4 +336,18 @@ html.molasses {
             left: 0.0625em;
         }
     }
+}
+
+.flip-clock-segment {
+    @include flip-clock-segment-clip(
+        $x: $flip-clock-cylinder-width,
+        $y: $flip-clock-cylinder-height,
+        $background-color: $segment-background-color,
+        $background-image: linear-gradient(
+            to bottom,
+            rgba(white, 0.125),
+            rgba(black, 0.5)
+        ),
+        $hsep: 2px
+    );
 }
