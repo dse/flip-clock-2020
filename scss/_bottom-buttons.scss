@@ -4,20 +4,29 @@
 
 .bottom-buttons {
     position: fixed;
-    bottom: 0.5rem;
-    left: 1rem;
-    right: 1rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
     font-size: 1rem;
     &::after {
         content: '';
         clear: both;
     }
+    background-color: black;
+    background-image: none;
 }
 .bottom-left-buttons {
     float: left;
+    width: 4em;
+    padding: 0.5em;
 }
 .bottom-right-buttons {
     float: right;
+    width: calc(100% - 4em);
+    padding: 0.5em;
+    text-align: right;
+    white-space: nowrap;
+    overflow-x: scroll;
 }
 .bottom-left-buttons,
 .bottom-right-buttons {
