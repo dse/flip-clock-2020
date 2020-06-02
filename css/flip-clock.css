@@ -289,6 +289,7 @@
   display: inline-block;
   vertical-align: middle;
   border: 2px solid black;
+  background-color: black;
   -webkit-box-sizing: padding-box;
           box-sizing: padding-box;
   height: 1.4em;
@@ -296,6 +297,17 @@
   border-radius: 1em;
   position: relative;
   top: -0.1em;
+}
+
+.push-button::before {
+  content: '';
+  position: absolute;
+  border-radius: -webkit-calc(1em - 3px);
+  border-radius: calc(1em - 3px);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: #ccc;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
   background-image: linear-gradient(to bottom, #eee, #999);
@@ -313,6 +325,17 @@
   background-image: -webkit-gradient(linear, left top, left bottom, from(#999), to(#fff));
   background-image: linear-gradient(to bottom, #999, #fff);
   content: '';
+}
+
+.push-button:active, .push-button:focus {
+  outline: none;
+}
+
+.push-button:active::before, .push-button:active::after {
+  -webkit-transform: translateY(1px) scale(0.98);
+      -ms-transform: translateY(1px) scale(0.98);
+          transform: translateY(1px) scale(0.98);
+  opacity: 0.95;
 }
 
 [type="checkbox"].toggle-switch {
