@@ -228,6 +228,177 @@
   display: inline-block;
 }
 
+.css-reset {
+  all: unset;
+}
+
+.bottom-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 1rem;
+  background-color: black;
+  background-image: none;
+}
+
+.bottom-buttons::after {
+  content: '';
+  clear: both;
+}
+
+.bottom-left-buttons {
+  float: left;
+  width: 4em;
+  padding: 0.5em;
+}
+
+.bottom-right-buttons {
+  float: right;
+  width: -webkit-calc(100% - 4em);
+  width: calc(100% - 4em);
+  padding: 0.5em;
+  text-align: right;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+.bottom-left-buttons,
+.bottom-right-buttons {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.bottom-left-buttons button,
+.bottom-right-buttons button {
+  color: inherit;
+  text-shadow: 0.125em 0.125em 0.125em rgba(0, 0, 0, 0.5);
+}
+
+.bottom-buttons label {
+  display: inline-block;
+}
+
+.bottom-buttons label + label {
+  margin-left: 1em;
+}
+
+/**
+ * Push Buttons and Switches
+ */
+.push-button {
+  display: inline-block;
+  vertical-align: middle;
+  border: 2px solid black;
+  -webkit-box-sizing: padding-box;
+          box-sizing: padding-box;
+  height: 1.4em;
+  width: 2.8em;
+  border-radius: 1em;
+  position: relative;
+  top: -0.1em;
+  background-color: #ccc;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
+  background-image: linear-gradient(to bottom, #eee, #999);
+}
+
+.push-button::after {
+  content: '';
+  position: absolute;
+  border-radius: -webkit-calc(1em - 3px);
+  border-radius: calc(1em - 3px);
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#999), to(#fff));
+  background-image: linear-gradient(to bottom, #999, #fff);
+  content: '';
+}
+
+[type="checkbox"].toggle-switch {
+  width: 0;
+  opacity: 0;
+  display: none;
+}
+
+[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch {
+  display: inline-block;
+  vertical-align: middle;
+  border: 2px solid black;
+  -webkit-box-sizing: padding-box;
+          box-sizing: padding-box;
+  height: 1.4em;
+  width: 2.8em;
+  background-color: black;
+  border-radius: 1em;
+  position: relative;
+  top: -0.1em;
+  overflow: hidden;
+}
+
+[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch::before {
+  background-color: #cc6600;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 50%;
+  width: 100%;
+  height: 1.4em;
+  border-radius: -webkit-calc(1em - 2px);
+  border-radius: calc(1em - 2px);
+  content: '';
+  -webkit-transition: right 125ms;
+  transition: right 125ms;
+}
+
+[type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch::before {
+  right: 0;
+}
+
+[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch > .inner {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 50%;
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: -webkit-calc(1em - 2px);
+  border-radius: calc(1em - 2px);
+  background-color: #ccc;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
+  background-image: linear-gradient(to bottom, #eee, #999);
+  content: '';
+  -webkit-transition: right 125ms;
+  transition: right 125ms;
+}
+
+[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch > .inner::after {
+  content: '';
+  position: absolute;
+  border-radius: -webkit-calc(1em - 2px - 1px);
+  border-radius: calc(1em - 2px - 1px);
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#999), to(#fff));
+  background-image: linear-gradient(to bottom, #999, #fff);
+}
+
+[type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch > .inner {
+  right: 0;
+}
+
+.bottom-buttons a {
+  color: inherit;
+  -webkit-text-decoration-style: dotted;
+          text-decoration-style: dotted;
+}
+
 /* depends on the font */
 /* depends on the font */
 /* does not darken text */
@@ -552,165 +723,9 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.125), transparent, rgba(0, 0, 0, 0.5));
 }
 
-.css-reset {
-  all: unset;
-}
-
 .bottom-buttons {
-  position: fixed;
-  bottom: 0.5rem;
-  left: 1rem;
-  right: 1rem;
-  font-size: 1rem;
-}
-
-.bottom-buttons::after {
-  content: '';
-  clear: both;
-}
-
-.bottom-left-buttons {
-  float: left;
-}
-
-.bottom-right-buttons {
-  float: right;
-}
-
-.bottom-left-buttons,
-.bottom-right-buttons {
-  color: rgba(255, 255, 255, 0.25);
-}
-
-.bottom-left-buttons button,
-.bottom-right-buttons button {
-  color: inherit;
-  text-shadow: 0.125em 0.125em 0.125em rgba(0, 0, 0, 0.5);
-}
-
-.bottom-buttons label {
-  display: inline-block;
-}
-
-.bottom-buttons label + label {
-  margin-left: 1em;
-}
-
-/**
- * Push Buttons and Switches
- */
-.push-button {
-  display: inline-block;
-  vertical-align: middle;
-  border: 2px solid black;
-  -webkit-box-sizing: padding-box;
-          box-sizing: padding-box;
-  height: 1.4em;
-  width: 2.8em;
-  border-radius: 1em;
-  position: relative;
-  top: -0.1em;
-  background-color: #ccc;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
-  background-image: linear-gradient(to bottom, #eee, #999);
-}
-
-.push-button::after {
-  content: '';
-  position: absolute;
-  border-radius: -webkit-calc(1em - 3px);
-  border-radius: calc(1em - 3px);
-  top: 1px;
-  bottom: 1px;
-  left: 1px;
-  right: 1px;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#999), to(#fff));
-  background-image: linear-gradient(to bottom, #999, #fff);
-  content: '';
-}
-
-[type="checkbox"].toggle-switch {
-  width: 0;
-  opacity: 0;
-  display: none;
-}
-
-[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch {
-  display: inline-block;
-  vertical-align: middle;
-  border: 2px solid black;
-  -webkit-box-sizing: padding-box;
-          box-sizing: padding-box;
-  height: 1.4em;
-  width: 2.8em;
-  background-color: black;
-  border-radius: 1em;
-  position: relative;
-  top: -0.1em;
-  overflow: hidden;
-}
-
-[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch::before {
-  background-color: #cc6600;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
-  right: 50%;
-  width: 100%;
-  height: 1.4em;
-  border-radius: -webkit-calc(1em - 2px);
-  border-radius: calc(1em - 2px);
-  content: '';
-  -webkit-transition: right 125ms;
-  transition: right 125ms;
-}
-
-[type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch::before {
-  right: 0;
-}
-
-[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch > .inner {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
-  right: 50%;
-  height: 1.4em;
-  width: 1.4em;
-  border-radius: -webkit-calc(1em - 2px);
-  border-radius: calc(1em - 2px);
-  background-color: #ccc;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
-  background-image: linear-gradient(to bottom, #eee, #999);
-  content: '';
-  -webkit-transition: right 125ms;
-  transition: right 125ms;
-}
-
-[type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch > .inner::after {
-  content: '';
-  position: absolute;
-  border-radius: -webkit-calc(1em - 2px - 1px);
-  border-radius: calc(1em - 2px - 1px);
-  top: 1px;
-  bottom: 1px;
-  left: 1px;
-  right: 1px;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#999), to(#fff));
-  background-image: linear-gradient(to bottom, #999, #fff);
-}
-
-[type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch > .inner {
-  right: 0;
-}
-
-.bottom-buttons a {
-  color: inherit;
-  -webkit-text-decoration-style: dotted;
-          text-decoration-style: dotted;
+  background-color: #181818;
+  background-image: none;
 }
 
 /* stupid font */
