@@ -394,9 +394,14 @@ var Segment = (function () {
             }
 
             this.tick();
+            var topFlag = false;
+            var bottomFlag = false;
             var frame = function (ms) {
                 var state = (ms - startMs) / Segment.transitionTime;
                 if (state >= 1) {
+                    if (!topFlag) {
+                        this.topText.innerHTML = newText;
+                    }
                     this.bottomText.innerHTML = newText;
                     this.element.removeAttribute('data-animation-frame');
                     this.currentStateIndex = nextStateIndex;
@@ -407,18 +412,27 @@ var Segment = (function () {
                 var rotate = state * state; // [0, 1]
                 var cosine = Math.cos(rotate * Math.PI); // [1, -1]
                 if (cosine >= 0) {
-                    this.flipTopText.innerHTML = currentText;
-                    this.flipBottomText.innerHTML = newText;
-                    this.topText.innerHTML = newText;
+                    if (!topFlag) {
+                        this.topText.innerHTML = newText;
+                        this.flipTopText.innerHTML = currentText;
+                        topFlag = true;
+                    }
                     this.element.setAttribute('data-animation-frame', 1);
                     this.flipTop.style.transform = 'scaleY(' + Math.abs(cosine) + ')';
                 } else {
+                    if (!topFlag) {
+                        this.topText.innerHTML = newText;
+                        topFlag = true;
+                    }
+                    if (!bottomFlag) {
+                        this.flipBottomText.innerHTML = newText;
+                        bottomFlag = true;
+                    }
                     this.element.setAttribute('data-animation-frame', 2);
                     this.flipBottom.style.transform = 'scaleY(' + Math.abs(cosine) + ')';
                 }
                 window.requestAnimationFrame(frame);
             }.bind(this);
-
             window.requestAnimationFrame(frame);
 
         }.bind(this));
