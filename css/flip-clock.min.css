@@ -35,12 +35,15 @@
 
 .flip-clock-line-inner {
   display: -webkit-inline-box;
+  display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-pack: center;
+  -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: start;
+  -webkit-align-items: flex-start;
       -ms-flex-align: start;
           align-items: flex-start;
 }
@@ -52,6 +55,7 @@
 .flip-clock-window {
   background-color: black;
   display: -webkit-inline-box;
+  display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
   border-radius: 2rem;
@@ -125,72 +129,86 @@
 }
 
 .flip-clock-segment-hour .flip-clock-segment-piece {
+  width: -webkit-calc(2ch);
   width: calc(2ch);
 }
 
 .flip-clock-segment-twelve-hour .flip-clock-segment-piece {
+  width: -webkit-calc(2.5ch);
   width: calc(2.5ch);
 }
 
 .flip-clock-segment-minute .flip-clock-segment-piece {
+  width: -webkit-calc(2ch);
   width: calc(2ch);
 }
 
 .flip-clock-segment-second .flip-clock-segment-piece {
+  width: -webkit-calc(2ch);
   width: calc(2ch);
 }
 
 .flip-clock-segment-year .flip-clock-segment-piece {
+  width: -webkit-calc(4ch);
   width: calc(4ch);
 }
 
 .flip-clock-segment-month .flip-clock-segment-piece {
+  width: -webkit-calc(4ch);
   width: calc(4ch);
 }
 
 .flip-clock-segment-date .flip-clock-segment-piece {
+  width: -webkit-calc(2ch);
   width: calc(2ch);
 }
 
 .flip-clock-segment-day .flip-clock-segment-piece {
+  width: -webkit-calc(4ch);
   width: calc(4ch);
 }
 
 .flip-clock-segment-epoch-digit .flip-clock-segment-piece {
+  width: -webkit-calc(1ch);
   width: calc(1ch);
 }
 
 .flip-clock-date-line .flip-clock-segment-date .flip-clock-segment-piece {
+  width: -webkit-calc(4ch);
   width: calc(4ch);
 }
 
 .flip-clock-segment .flip-clock-segment-piece-top,
 .flip-clock-segment .flip-clock-segment-piece-flip-top {
-  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(50% - 2rem - 1px), calc(100% - 0.5rem - 2px) calc(50% - 2rem - 1px), calc(100% - 0.5rem - 2px) 50%, calc(0.5rem + 2px) 50%, calc(0.5rem + 2px) calc(50% - 2rem - 1px), 0 calc(50% - 2rem - 1px));
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% -webkit-calc(50% - 2rem - 1px), -webkit-calc(100% - 0.5rem - 2px) -webkit-calc(50% - 2rem - 1px), -webkit-calc(100% - 0.5rem - 2px) 50%, -webkit-calc(0.5rem + 2px) 50%, -webkit-calc(0.5rem + 2px) -webkit-calc(50% - 2rem - 1px), 0 -webkit-calc(50% - 2rem - 1px));
           clip-path: polygon(0% 0%, 100% 0%, 100% calc(50% - 2rem - 1px), calc(100% - 0.5rem - 2px) calc(50% - 2rem - 1px), calc(100% - 0.5rem - 2px) 50%, calc(0.5rem + 2px) 50%, calc(0.5rem + 2px) calc(50% - 2rem - 1px), 0 calc(50% - 2rem - 1px));
 }
 
 .flip-clock-segment .flip-clock-segment-piece-bottom,
 .flip-clock-segment .flip-clock-segment-piece-flip-bottom {
-  -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% calc(50% + 2rem + 1px), calc(100% - 0.5rem - 2px) calc(50% + 2rem + 1px), calc(100% - 0.5rem - 2px) calc(50% + 1px), calc(0.5rem + 2px) calc(50% + 1px), calc(0.5rem + 2px) calc(50% + 2rem + 1px), 0 calc(50% + 2rem + 1px));
+  -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% -webkit-calc(50% + 2rem + 1px), -webkit-calc(100% - 0.5rem - 2px) -webkit-calc(50% + 2rem + 1px), -webkit-calc(100% - 0.5rem - 2px) -webkit-calc(50% + 1px), -webkit-calc(0.5rem + 2px) -webkit-calc(50% + 1px), -webkit-calc(0.5rem + 2px) -webkit-calc(50% + 2rem + 1px), 0 -webkit-calc(50% + 2rem + 1px));
           clip-path: polygon(0% 100%, 100% 100%, 100% calc(50% + 2rem + 1px), calc(100% - 0.5rem - 2px) calc(50% + 2rem + 1px), calc(100% - 0.5rem - 2px) calc(50% + 1px), calc(0.5rem + 2px) calc(50% + 1px), calc(0.5rem + 2px) calc(50% + 2rem + 1px), 0 calc(50% + 2rem + 1px));
 }
 
 .flip-clock-segment::before {
   content: '';
   position: absolute;
+  top: -webkit-calc(50% - 2rem);
   top: calc(50% - 2rem);
   left: 0;
   width: 0.5rem;
+  bottom: -webkit-calc(50% - 2rem);
   bottom: calc(50% - 2rem);
 }
 
 .flip-clock-segment::after {
   content: '';
   position: absolute;
+  top: -webkit-calc(50% - 2rem);
   top: calc(50% - 2rem);
   right: 0;
   width: 0.5rem;
+  bottom: -webkit-calc(50% - 2rem);
   bottom: calc(50% - 2rem);
 }
 
@@ -486,6 +504,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece {
+  width: -webkit-calc(2.25ch);
   width: calc(2.25ch);
 }
 
@@ -495,22 +514,24 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 
 .flip-clock-segment .flip-clock-segment-piece-top,
 .flip-clock-segment .flip-clock-segment-piece-flip-top {
-  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(50% - 2vw - 1px), calc(100% - 1vw - 2px) calc(50% - 2vw - 1px), calc(100% - 1vw - 2px) 50%, calc(1vw + 2px) 50%, calc(1vw + 2px) calc(50% - 2vw - 1px), 0 calc(50% - 2vw - 1px));
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% -webkit-calc(50% - 2vw - 1px), -webkit-calc(100% - 1vw - 2px) -webkit-calc(50% - 2vw - 1px), -webkit-calc(100% - 1vw - 2px) 50%, -webkit-calc(1vw + 2px) 50%, -webkit-calc(1vw + 2px) -webkit-calc(50% - 2vw - 1px), 0 -webkit-calc(50% - 2vw - 1px));
           clip-path: polygon(0% 0%, 100% 0%, 100% calc(50% - 2vw - 1px), calc(100% - 1vw - 2px) calc(50% - 2vw - 1px), calc(100% - 1vw - 2px) 50%, calc(1vw + 2px) 50%, calc(1vw + 2px) calc(50% - 2vw - 1px), 0 calc(50% - 2vw - 1px));
 }
 
 .flip-clock-segment .flip-clock-segment-piece-bottom,
 .flip-clock-segment .flip-clock-segment-piece-flip-bottom {
-  -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% calc(50% + 2vw + 1px), calc(100% - 1vw - 2px) calc(50% + 2vw + 1px), calc(100% - 1vw - 2px) calc(50% + 1px), calc(1vw + 2px) calc(50% + 1px), calc(1vw + 2px) calc(50% + 2vw + 1px), 0 calc(50% + 2vw + 1px));
+  -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% -webkit-calc(50% + 2vw + 1px), -webkit-calc(100% - 1vw - 2px) -webkit-calc(50% + 2vw + 1px), -webkit-calc(100% - 1vw - 2px) -webkit-calc(50% + 1px), -webkit-calc(1vw + 2px) -webkit-calc(50% + 1px), -webkit-calc(1vw + 2px) -webkit-calc(50% + 2vw + 1px), 0 -webkit-calc(50% + 2vw + 1px));
           clip-path: polygon(0% 100%, 100% 100%, 100% calc(50% + 2vw + 1px), calc(100% - 1vw - 2px) calc(50% + 2vw + 1px), calc(100% - 1vw - 2px) calc(50% + 1px), calc(1vw + 2px) calc(50% + 1px), calc(1vw + 2px) calc(50% + 2vw + 1px), 0 calc(50% + 2vw + 1px));
 }
 
 .flip-clock-segment::before {
   content: '';
   position: absolute;
+  top: -webkit-calc(50% - 2vw);
   top: calc(50% - 2vw);
   left: 0;
   width: 1vw;
+  bottom: -webkit-calc(50% - 2vw);
   bottom: calc(50% - 2vw);
   background-color: #111111;
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.125)), to(rgba(0, 0, 0, 0.5)));
@@ -520,9 +541,11 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 .flip-clock-segment::after {
   content: '';
   position: absolute;
+  top: -webkit-calc(50% - 2vw);
   top: calc(50% - 2vw);
   right: 0;
   width: 1vw;
+  bottom: -webkit-calc(50% - 2vw);
   bottom: calc(50% - 2vw);
   background-color: #111111;
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.125)), to(rgba(0, 0, 0, 0.5)));
@@ -595,6 +618,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 .push-button::after {
   content: '';
   position: absolute;
+  border-radius: -webkit-calc(1em - 3px);
   border-radius: calc(1em - 3px);
   top: 1px;
   bottom: 1px;
@@ -636,6 +660,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   right: 50%;
   width: 100%;
   height: 1.4em;
+  border-radius: -webkit-calc(1em - 2px);
   border-radius: calc(1em - 2px);
   content: '';
   -webkit-transition: right 125ms;
@@ -655,6 +680,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   right: 50%;
   height: 1.4em;
   width: 1.4em;
+  border-radius: -webkit-calc(1em - 2px);
   border-radius: calc(1em - 2px);
   background-color: #ccc;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
@@ -667,6 +693,7 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 [type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch > .inner::after {
   content: '';
   position: absolute;
+  border-radius: -webkit-calc(1em - 2px - 1px);
   border-radius: calc(1em - 2px - 1px);
   top: 1px;
   bottom: 1px;
