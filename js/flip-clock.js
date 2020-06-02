@@ -379,6 +379,12 @@ var Segment = (function () {
     Segment.prototype.animate2 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {
         window.requestAnimationFrame(function (startMs) {
             var isRushed = nextDisplayedStateIndex !== this.desiredDisplayedStateIndex;
+
+            var transitionTime = Segment.transitionTime;
+            if (isRushed) {
+                transitionTime = transitionTime / 2;
+            }
+
             if (isRushed && isMolasses) {
                 this.topText.innerHTML = newText;
                 this.tick();
@@ -388,8 +394,8 @@ var Segment = (function () {
                         this.currentStateIndex = nextStateIndex;
                         this.currentDisplayedStateIndex = nextDisplayedStateIndex;
                         this.keepMoving();
-                    }.bind(this), Segment.transitionTime * 0.35);
-                }.bind(this), Segment.transitionTime * 0.15);
+                    }.bind(this), transitionTime * 0.7);
+                }.bind(this), transitionTime * 0.3);
                 return;
             }
 
@@ -397,7 +403,7 @@ var Segment = (function () {
             var topFlag = false;
             var bottomFlag = false;
             var frame = function (ms) {
-                var state = (ms - startMs) / Segment.transitionTime;
+                var state = (ms - startMs) / transitionTime;
                 if (state >= 1) {
                     if (!topFlag) {
                         this.topText.innerHTML = newText;
@@ -491,7 +497,7 @@ var Segment = (function () {
         this.animationStyle = index;
     };
 
-    Segment.transitionTime = 100;
+    Segment.transitionTime = 150;
 
     function E(tagName, className) {
         var e = document.createElement(tagName);
