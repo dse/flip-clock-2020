@@ -9,7 +9,7 @@ var sassPaths = [
 ];
 
 var autoprefixerOptions = {
-    browsers: ['last 2 versions', 'ie >= 9', 'safari >= 6']
+    overrideBrowserslist: ['last 2 versions', 'ie >= 9', 'safari >= 6']
 };
 
 function sass() {
