@@ -38,6 +38,8 @@ $flip-clock-molasses-top-darken:    0.25;
 $flip-clock-cylinder-width: 1vw;
 $flip-clock-cylinder-height: 2vw;
 
+$bottom-buttons-background-color: #181818;
+
 @if true {
     $background-gradient: linear-gradient(
         to bottom,
@@ -351,4 +353,9 @@ html.molasses {
         ),
         $hsep: 2px
     );
+}
+
+.bottom-buttons {
+    background-color: $bottom-buttons-background-color;
+    background-image: none;
 }
