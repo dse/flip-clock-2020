@@ -319,7 +319,7 @@ var Segment = (function () {
         var newText     = this.stateText(nextDisplayedStateIndex);
         var currentText = this.topText.innerHTML;
         if (this.animationStyle === 1) {
-            this.animate1(currentText, newText, nextStateIndex, nextDisplayedStateIndex);
+            this.animate2(currentText, newText, nextStateIndex, nextDisplayedStateIndex);
         } else {
             this.animate0(currentText, newText, nextStateIndex, nextDisplayedStateIndex);
         }
@@ -374,6 +374,54 @@ var Segment = (function () {
             return;
         }
         this.audio.play();
+    };
+
+    Segment.prototype.animate2 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {
+        window.requestAnimationFrame(function (startMs) {
+            var isRushed = nextDisplayedStateIndex !== this.desiredDisplayedStateIndex;
+            if (isRushed && isMolasses) {
+                this.topText.innerHTML = newText;
+                this.tick();
+                setTimeout(function () {
+                    this.bottomText.innerHTML = newText;
+                    setTimeout(function () {
+                        this.currentStateIndex = nextStateIndex;
+                        this.currentDisplayedStateIndex = nextDisplayedStateIndex;
+                        this.keepMoving();
+                    }.bind(this), Segment.transitionTime * 0.35);
+                }.bind(this), Segment.transitionTime * 0.15);
+                return;
+            }
+
+            this.tick();
+            var frame = function (ms) {
+                var state = (ms - startMs) / Segment.transitionTime;
+                if (state >= 1) {
+                    this.bottomText.innerHTML = newText;
+                    this.element.removeAttribute('data-animation-frame');
+                    this.currentStateIndex = nextStateIndex;
+                    this.currentDisplayedStateIndex = nextDisplayedStateIndex;
+                    this.keepMoving();
+                    return;
+                }
+                var rotate = state * state; // [0, 1]
+                var cosine = Math.cos(rotate * Math.PI); // [1, -1]
+                if (cosine >= 0) {
+                    this.flipTopText.innerHTML = currentText;
+                    this.flipBottomText.innerHTML = newText;
+                    this.topText.innerHTML = newText;
+                    this.element.setAttribute('data-animation-frame', 1);
+                    this.flipTop.style.transform = 'scaleY(' + Math.abs(cosine) + ')';
+                } else {
+                    this.element.setAttribute('data-animation-frame', 2);
+                    this.flipBottom.style.transform = 'scaleY(' + Math.abs(cosine) + ')';
+                }
+                window.requestAnimationFrame(frame);
+            }.bind(this);
+
+            window.requestAnimationFrame(frame);
+
+        }.bind(this));
     };
 
     Segment.prototype.animate1 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {
