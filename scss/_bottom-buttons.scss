@@ -112,7 +112,7 @@ $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
     height: #{$push-button-switch-height};
     border-radius: calc(#{$push-button-switch-border-radius} - #{$push-button-switch-border-width});
     content: '';
-    transition: right 125ms;
+    transition: right 75ms;
 }
 [type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch::before {
     right: 0;
@@ -128,7 +128,7 @@ $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
     background-color: #{$push-button-switch-bg-color};
     background-image: #{$push-button-switch-bg-image};
     content: '';
-    transition: right 125ms;
+    transition: right 75ms;
     &::after {
         content: '';
         position: absolute;

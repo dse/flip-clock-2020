@@ -349,8 +349,8 @@
   border-radius: -webkit-calc(1em - 2px);
   border-radius: calc(1em - 2px);
   content: '';
-  -webkit-transition: right 125ms;
-  transition: right 125ms;
+  -webkit-transition: right 75ms;
+  transition: right 75ms;
 }
 
 [type="checkbox"]:checked.toggle-switch + :not([type="checkbox"]).toggle-switch::before {
@@ -372,8 +372,8 @@
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#999));
   background-image: linear-gradient(to bottom, #eee, #999);
   content: '';
-  -webkit-transition: right 125ms;
-  transition: right 125ms;
+  -webkit-transition: right 75ms;
+  transition: right 75ms;
 }
 
 [type="checkbox"].toggle-switch + :not([type="checkbox"]).toggle-switch > .inner::after {
