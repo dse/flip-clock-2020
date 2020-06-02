@@ -4,9 +4,9 @@
   top: 50%;
   left: 0;
   width: 100%;
-  -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
   text-align: center;
   line-height: 1;
 }
@@ -78,9 +78,9 @@
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am {
   top: 25%;
-  -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am::before {
@@ -89,9 +89,9 @@
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm {
   bottom: 25%;
-  -ms-transform: translateY(50%);
-      transform: translateY(50%);
   -webkit-transform: translateY(50%);
+      -ms-transform: translateY(50%);
+          transform: translateY(50%);
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm::before {
@@ -166,22 +166,22 @@
 
 .flip-clock-segment-piece-top,
 .flip-clock-segment-piece-flip-top {
-  clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
   -webkit-clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
+          clip-path: polygon(0% 50%, 0% 0%, 100% 0%, 100% 50%);
 }
 
 .flip-clock-segment-piece-bottom,
 .flip-clock-segment-piece-flip-bottom {
-  clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
   -webkit-clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
+          clip-path: polygon(0% calc(50% + 1px), 0% 100%, 100% 100%, 100% calc(50% + 1px));
 }
 
 .flip-clock-segment-piece-flip-top,
 .flip-clock-segment-piece-flip-bottom {
   display: none;
-  -ms-transform: scaleY(0.75);
-      transform: scaleY(0.75);
   -webkit-transform: scaleY(0.75);
+      -ms-transform: scaleY(0.75);
+          transform: scaleY(0.75);
 }
 
 .flip-clock-segment[data-animation-frame="1"] .flip-clock-segment-piece-flip-top {
@@ -509,7 +509,6 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 .bottom-right-buttons button {
   color: inherit;
   text-shadow: 0.125em 0.125em 0.125em rgba(0, 0, 0, 0.5);
-  -webkit-text-shadow: 0.125em 0.125em 0.125em rgba(0, 0, 0, 0.5);
 }
 
 .bottom-buttons label {
