@@ -534,8 +534,8 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   bottom: -webkit-calc(50% - 2vw);
   bottom: calc(50% - 2vw);
   background-color: #111111;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.125)), to(rgba(0, 0, 0, 0.5)));
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.125), rgba(0, 0, 0, 0.5));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.125)), color-stop(transparent), to(rgba(0, 0, 0, 0.5)));
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.125), transparent, rgba(0, 0, 0, 0.5));
 }
 
 .flip-clock-segment::after {
@@ -548,8 +548,8 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   bottom: -webkit-calc(50% - 2vw);
   bottom: calc(50% - 2vw);
   background-color: #111111;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.125)), to(rgba(0, 0, 0, 0.5)));
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.125), rgba(0, 0, 0, 0.5));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.125)), color-stop(transparent), to(rgba(0, 0, 0, 0.5)));
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.125), transparent, rgba(0, 0, 0, 0.5));
 }
 
 .css-reset {
