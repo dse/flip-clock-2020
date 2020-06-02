@@ -799,6 +799,10 @@ var FlipClock = (function () {
     };
 
     FlipClock.prototype.enableAudioByUserRequest = function () {
+        if (this.enabledAudioByUserRequest) {
+            return;
+        }
+        this.enabledAudioByUserRequest = true;
         this.audio.play();
     };
 
