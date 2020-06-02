@@ -36,7 +36,7 @@ function serve() {
 }
 
 function watch() {
-    gulp.watch("scss/*.scss", gulp.parallel(sassDev, sassProd));
+    gulp.watch("scss/*.scss", gulp.series(sass));
 }
 
 gulp.task('sass', gulp.series(sass));
