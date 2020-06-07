@@ -377,12 +377,14 @@ var Segment = (function () {
     };
 
     Segment.prototype.animate2 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {
+        var rushFactor = 2;
+        var v0init = 0.125;
         window.requestAnimationFrame(function (startMs) {
             var isRushed = nextDisplayedStateIndex !== this.desiredDisplayedStateIndex;
 
             var transitionTime = Segment.transitionTime;
             if (isRushed) {
-                transitionTime = transitionTime / 2;
+                transitionTime = transitionTime / rushFactor;
             }
 
             if (isRushed && isMolasses) {
@@ -403,8 +405,9 @@ var Segment = (function () {
             var topFlag = false;
             var bottomFlag = false;
             var frame = function (ms) {
-                var state = (ms - startMs) / transitionTime;
+                var state = (ms - startMs) / transitionTime; // from 0 to 1
                 if (state >= 1) {
+                    // animation is complete
                     if (!topFlag) {
                         this.topText.innerHTML = newText;
                     }
@@ -415,8 +418,13 @@ var Segment = (function () {
                     this.keepMoving();
                     return;
                 }
-                var rotate = state * state; // [0, 1]
-                var cosine = Math.cos(rotate * Math.PI); // [1, -1]
+
+                var v0 = v0init;
+                if (isRushed) {
+                    v0 = v0 * rushFactor;
+                }
+                var theta = Math.PI * (Math.sin(Math.PI / 2 * state) * (1 - v0) + state * v0); // from 0 to Math.PI
+                var cosine = Math.cos(theta); // from 1 to -1
                 if (cosine >= 0) {
                     if (!topFlag) {
                         this.topText.innerHTML = newText;
