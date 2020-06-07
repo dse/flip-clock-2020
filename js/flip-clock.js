@@ -377,31 +377,28 @@ var Segment = (function () {
     };
 
     Segment.prototype.animate2 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {
-        var rushFactor = 2;
-        var v0init = 0.125;
+        var isRushed = nextDisplayedStateIndex !== this.desiredDisplayedStateIndex;
+        var transitionTime = Segment.transitionTime;
+        var v0 = 0.125;
+        if (isRushed) {
+            transitionTime = transitionTime / 2;
+            v0 = v0 * 2;
+        }
+        this.tick();
         window.requestAnimationFrame(function (startMs) {
-            var isRushed = nextDisplayedStateIndex !== this.desiredDisplayedStateIndex;
-
-            var transitionTime = Segment.transitionTime;
-            if (isRushed) {
-                transitionTime = transitionTime / rushFactor;
-            }
-
-            if (isRushed && isMolasses) {
-                this.topText.innerHTML = newText;
-                this.tick();
-                setTimeout(function () {
-                    this.bottomText.innerHTML = newText;
-                    setTimeout(function () {
-                        this.currentStateIndex = nextStateIndex;
-                        this.currentDisplayedStateIndex = nextDisplayedStateIndex;
-                        this.keepMoving();
-                    }.bind(this), transitionTime * 0.7);
-                }.bind(this), transitionTime * 0.3);
-                return;
-            }
-
-            this.tick();
+            // if (isRushed && isMolasses) {
+            //     this.topText.innerHTML = newText;
+            //     this.tick();
+            //     setTimeout(function () {
+            //         this.bottomText.innerHTML = newText;
+            //         setTimeout(function () {
+            //             this.currentStateIndex = nextStateIndex;
+            //             this.currentDisplayedStateIndex = nextDisplayedStateIndex;
+            //             this.keepMoving();
+            //         }.bind(this), transitionTime * 0.7);
+            //     }.bind(this), transitionTime * 0.3);
+            //     return;
+            // }
             var topFlag = false;
             var bottomFlag = false;
             var frame = function (ms) {
@@ -417,11 +414,6 @@ var Segment = (function () {
                     this.currentDisplayedStateIndex = nextDisplayedStateIndex;
                     this.keepMoving();
                     return;
-                }
-
-                var v0 = v0init;
-                if (isRushed) {
-                    v0 = v0 * rushFactor;
                 }
                 var theta = Math.PI * (Math.sin(Math.PI / 2 * state) * (1 - v0) + state * v0); // from 0 to Math.PI
                 var cosine = Math.cos(theta); // from 1 to -1
