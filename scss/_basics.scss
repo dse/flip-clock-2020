@@ -15,7 +15,7 @@
     margin-left: 1rem;
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour {
+.flip-clock-segment.flip-clock-segment-12-hour {
     .ampm {
         position: absolute;
         &.am {
@@ -64,7 +64,7 @@
 }
 
 .flip-clock-segment-hour        .flip-clock-segment-piece { width: calc(2ch); }
-.flip-clock-segment-twelve-hour .flip-clock-segment-piece { width: calc(2.5ch); }
+.flip-clock-segment-12-hour     .flip-clock-segment-piece { width: calc(2.5ch); }
 .flip-clock-segment-minute      .flip-clock-segment-piece { width: calc(2ch); }
 .flip-clock-segment-second      .flip-clock-segment-piece { width: calc(2ch); }
 .flip-clock-segment-year        .flip-clock-segment-piece { width: calc(4ch); }

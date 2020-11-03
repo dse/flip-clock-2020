@@ -1,0 +1,19 @@
+/* -*- javascript -*- */
+{
+    // Documentation for all JSHint options: <https://jshint.com/docs/options/>
+    "bitwise": true,            // prohibits use of bitwise opberators
+    "browser": true,            // defines globals exposed by web browsers
+    "curly": true,              // requires {} in loops and conditionals
+    "eqeqeq": true,             // prohibits == and != in favor of === and !==
+    "esversion": 5,             // 3, 5, 6, 7, 8, or 9.  5 is IE11 baseline.
+    "forin": true,              // requires `for in` loops to filter items
+    "freeze": true,             // prohibits overwriting native prototypes
+    "futurehostile": true,      // warns about future keywords, reserved words
+    "latedef": "nofunc",        // prohibits use of variables before definition
+    "leanswitch": true,         // prohibits unnecessary switch clauses
+    "nocomma": true,            // prohibits comma operator
+    "nonbsp": true,             // warns about U+00A0 NO-BREAK SPACE characters
+    "nonew": true,              // prohibits side-effect-only use of new
+    "singleGroups": true,       // prohibits unnecessary use of grouping oper.
+    "undef": true               // prohibits use of undeclared variables
+}

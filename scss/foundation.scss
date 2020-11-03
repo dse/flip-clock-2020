@@ -4,8 +4,6 @@
 @import '../node_modules/foundation-sites/scss/foundation';
 @import 'motion-ui';
 
-@debug $form-label-color;
-
 // Global styles
 @include foundation-global-styles;
 @include foundation-forms;

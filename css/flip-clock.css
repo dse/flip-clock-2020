@@ -72,7 +72,7 @@
   margin-left: 1rem;
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
+.flip-clock-segment.flip-clock-segment-12-hour .ampm {
   position: absolute;
   text-transform: uppercase;
   font-size: 10%;
@@ -80,29 +80,29 @@
   left: 1rem;
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am {
+.flip-clock-segment.flip-clock-segment-12-hour .ampm.am {
   top: 25%;
   -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am::before {
+.flip-clock-segment.flip-clock-segment-12-hour .ampm.am::before {
   content: 'am';
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm {
+.flip-clock-segment.flip-clock-segment-12-hour .ampm.pm {
   bottom: 25%;
   -webkit-transform: translateY(50%);
       -ms-transform: translateY(50%);
           transform: translateY(50%);
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm::before {
+.flip-clock-segment.flip-clock-segment-12-hour .ampm.pm::before {
   content: 'pm';
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece .numeric-value {
+.flip-clock-segment.flip-clock-segment-12-hour .flip-clock-segment-piece .numeric-value {
   position: relative;
   left: 0.125em;
 }
@@ -133,7 +133,7 @@
   width: calc(2ch);
 }
 
-.flip-clock-segment-twelve-hour .flip-clock-segment-piece {
+.flip-clock-segment-12-hour .flip-clock-segment-piece {
   width: -webkit-calc(2.5ch);
   width: calc(2.5ch);
 }
@@ -732,8 +732,8 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece {
-  width: -webkit-calc(2.25ch);
-  width: calc(2.25ch);
+  width: -webkit-calc(2.5ch);
+  width: calc(2.5ch);
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece .numeric-value {
