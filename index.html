@@ -11,18 +11,19 @@
         <title>Flip Clock</title>
 
         <script>
-            // Mozilla/5.0 (iPad; CPU OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36
+            // iPad 2:        Mozilla/5.0 (iPad; CPU OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36
+            // iPhone 6 plus: 12.4.6 16G183; 12.4.7 16G192
             if (/\bMobile\/13G36\b/.test(navigator.userAgent) || /(?:^|\?|&)molasses(?:$|=|&)/.test(location.search)) {
                 document.documentElement.classList.add('molasses');
                 document.documentElement.setAttribute('data-molasses', '');
             }
         </script>
 
-        <link rel="stylesheet" href="node_modules/foundation-sites/dist/css/foundation.min.css">
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
 
         <script>
             var cachebuster = new Date().getTime();
+            document.write('<' + 'link rel="stylesheet" href="css/foundation.min.css?cachebuster=' + cachebuster + '">');
             document.write('<' + 'link rel="stylesheet" href="css/flip-clock.min.css?cachebuster=' + cachebuster + '">');
         </script>
 
@@ -72,36 +73,42 @@
                 </div>
             </div>
 
-            <!-- &zwj; shuts up a tidy warning -->
-            <div class="bottom-buttons">
-                <div class="bottom-left-buttons">
-                    <a href="https://webonastick.com/lc/">LED</a>
-                </div>
-                <div class="bottom-right-buttons">
-                    <label class="css-reset">
-                        <button class="push-button" data-flip-clock-reload>&zwj;</button>
-                        Reload
-                    </label>
-                    <label class="css-reset">
+            <div class="bottom-right-buttons">
+                <a data-open="settingsModal" href="javascript:void(0);"><i class="fas fa-cog"></i></a>
+            </div>
+
+            <div class="reveal" data-reveal id="settingsModal">
+                <button class="close-button" data-close aria-label="Close modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h1 class="h3">
+                    Settings
+                </h1>
+                <div class="margin-bottom-1">
+                    <label class="margin-bottom-half">
                         <input type="checkbox" class="toggle-switch" name="enable-ticks" value="true" data-flip-clock-enable-ticks>
                         <span class="toggle-switch"><span class="inner">&zwj;</span></span>
                         Ticks
                     </label>
-                    <label class="css-reset">
+                    <label class="margin-bottom-half">
                         <input type="checkbox" class="toggle-switch" name="enable-seconds-ticks" value="true" data-flip-clock-enable-seconds-ticks>
                         <span class="toggle-switch"><span class="inner">&zwj;</span></span>
-                        &Prime;Ticks
+                        Ticks for Seconds
                     </label>
-                    <label class="css-reset">
+                    <label class="margin-bottom-half">
                         <input type="checkbox" class="toggle-switch" name="twenty-four-hour" value="true" data-flip-clock-twenty-four-hour>
                         <span class="toggle-switch"><span class="inner">&zwj;</span></span>
-                        24HR
+                        24-Hour Mode
                     </label>
                 </div>
+                <p>
+                    <a href="/lc/">LED Clock</a>
+                </p>
             </div>
 
             <script src="node_modules/jquery/dist/jquery.min.js"></script>
             <script src="node_modules/foundation-sites/dist/js/foundation.min.js"></script>
+            <script src="node_modules/what-input/dist/what-input.min.js"></script>
             <script>
                 var $ = jQuery;
                 $(document).foundation();

@@ -232,7 +232,33 @@
   all: unset;
 }
 
-.bottom-buttons {
+.bottom-left-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 0.5em;
+}
+
+.bottom-right-buttons {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 0.5em;
+}
+
+.bottom-left-buttons,
+.bottom-right-buttons {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.bottom-left-buttons a,
+.bottom-right-buttons a {
+  color: inherit;
+  -webkit-text-decoration-style: dotted;
+          text-decoration-style: dotted;
+}
+
+.bottom-panel {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -242,18 +268,18 @@
   background-image: none;
 }
 
-.bottom-buttons::after {
+.bottom-panel::after {
   content: '';
   clear: both;
 }
 
-.bottom-left-buttons {
+.bottom-panel-left {
   float: left;
   width: 4em;
   padding: 0.5em;
 }
 
-.bottom-right-buttons {
+.bottom-panel-right {
   float: right;
   width: -webkit-calc(100% - 4em);
   width: calc(100% - 4em);
@@ -263,22 +289,22 @@
   overflow-x: scroll;
 }
 
-.bottom-left-buttons,
-.bottom-right-buttons {
+.bottom-panel-left,
+.bottom-panel-right {
   color: rgba(255, 255, 255, 0.25);
 }
 
-.bottom-left-buttons button,
-.bottom-right-buttons button {
+.bottom-panel-left button,
+.bottom-panel-right button {
   color: inherit;
   text-shadow: 0.125em 0.125em 0.125em rgba(0, 0, 0, 0.5);
 }
 
-.bottom-buttons label {
+.bottom-panel label {
   display: inline-block;
 }
 
-.bottom-buttons label + label {
+.bottom-panel label + label {
   margin-left: 1em;
 }
 
@@ -338,6 +364,16 @@
   opacity: 0.95;
 }
 
+.toggle-switch {
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
+.toggle-switch::before {
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
 [type="checkbox"].toggle-switch {
   width: 0;
   opacity: 0;
@@ -348,8 +384,6 @@
   display: inline-block;
   vertical-align: middle;
   border: 2px solid black;
-  -webkit-box-sizing: padding-box;
-          box-sizing: padding-box;
   height: 1.4em;
   width: 2.8em;
   background-color: black;
@@ -416,7 +450,7 @@
   right: 0;
 }
 
-.bottom-buttons a {
+.bottom-panel a {
   color: inherit;
   -webkit-text-decoration-style: dotted;
           text-decoration-style: dotted;
@@ -830,4 +864,8 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
           font-feature-settings: "kerx" 1, "pnum" 1;
   font-variant-numeric: proportional-nums;
   /* pnum */
+}
+
+.margin-bottom-half {
+  margin-bottom: 0.5rem !important;
 }

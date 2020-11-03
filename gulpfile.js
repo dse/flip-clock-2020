@@ -2,6 +2,7 @@ var gulp          = require('gulp');
 var browserSync   = require('browser-sync').create();
 var $             = require('gulp-load-plugins')();
 var autoprefixer  = require('autoprefixer');
+var cleanCSS      = require('gulp-clean-css');
 
 var sassPaths = [
     'node_modules/foundation-sites/scss',
@@ -13,17 +14,18 @@ var autoprefixerOptions = {
 };
 
 function sass() {
-    return gulp.src('scss/*.scss')
+    return gulp.src('scss/*.scss', { sourcemaps: true })
         .pipe($.sass({
             includePaths: sassPaths,
-            outputStyle: 'expanded' // if css compressed **file size**
+            outputStyle: 'expanded'
         }).on('error', $.sass.logError))
         .pipe($.postcss([
             autoprefixer(autoprefixerOptions)
         ]))
         .pipe(gulp.dest('css'))
+        .pipe(cleanCSS())
         .pipe($.rename({ extname: '.min.css' }))
-        .pipe(gulp.dest('css'))
+        .pipe(gulp.dest('css', { sourcemaps: '.' }))
         .pipe(browserSync.stream());
 }
 

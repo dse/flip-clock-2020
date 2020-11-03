@@ -2,7 +2,28 @@
     all: unset;
 }
 
-.bottom-buttons {
+.bottom-left-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 0.5em;
+}
+.bottom-right-buttons {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 0.5em;
+}
+.bottom-left-buttons,
+.bottom-right-buttons {
+    color: rgba(white, 0.25);
+    a {
+        color: inherit;
+        text-decoration-style: dotted;
+    }
+}
+
+.bottom-panel {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -15,12 +36,12 @@
     background-color: black;
     background-image: none;
 }
-.bottom-left-buttons {
+.bottom-panel-left {
     float: left;
     width: 4em;
     padding: 0.5em;
 }
-.bottom-right-buttons {
+.bottom-panel-right {
     float: right;
     width: calc(100% - 4em);
     padding: 0.5em;
@@ -28,19 +49,19 @@
     white-space: nowrap;
     overflow-x: scroll;
 }
-.bottom-left-buttons,
-.bottom-right-buttons {
+.bottom-panel-left,
+.bottom-panel-right {
     color: rgba(white, 0.25);
 }
-.bottom-left-buttons button,
-.bottom-right-buttons button {
+.bottom-panel-left button,
+.bottom-panel-right button {
     color: inherit;
     text-shadow: .125em .125em .125em rgba(0, 0, 0, 0.5);
 }
-.bottom-buttons label {
+.bottom-panel label {
     display: inline-block;
 }
-.bottom-buttons label + label {
+.bottom-panel label + label {
     margin-left: 1em;
 }
 
@@ -103,6 +124,13 @@ $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
     }
 }
 
+.toggle-switch {
+    box-sizing: content-box;
+}
+.toggle-switch::before {
+    box-sizing: content-box;
+}
+
 [type="checkbox"].toggle-switch {
     width: 0;
     opacity: 0;
@@ -112,7 +140,6 @@ $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
     display: inline-block;
     vertical-align: middle;
     border: #{$push-button-switch-border};
-    box-sizing: padding-box;
     height: #{$push-button-switch-height};
     width: #{$push-button-switch-width};
     background-color: black;
@@ -163,7 +190,7 @@ $push-button-switch-bg-image-reverse: linear-gradient(to bottom, #999, #fff);
     right: 0;
 }
 
-.bottom-buttons a {
+.bottom-panel a {
     color: inherit;
     text-decoration-style: dotted;
 }
