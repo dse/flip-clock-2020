@@ -26,19 +26,11 @@
             document.write('<' + 'link rel="stylesheet" href="css/foundation.min.css?cachebuster=' + cachebuster + '">');
             document.write('<' + 'link rel="stylesheet" href="css/flip-clock.min.css?cachebuster=' + cachebuster + '">');
         </script>
-
-        <style>
-            .flip-clock                    .flip-clock-day-window   .flip-clock-segment-piece { width: 6ch; }
-            .flip-clock                    .flip-clock-month-window .flip-clock-segment-piece { width: 6ch; }
-            .flip-clock                    .flip-clock-date-window  .flip-clock-segment-piece { width: 6ch; }
-            .flip-clock.flip-clock-12-hour .flip-clock-day-window   .flip-clock-segment-piece { width: 7.5ch; }
-            .bottom-buttons { text-transform: uppercase; }
-        </style>
     </head>
     <body class="flip-clock-page">
         <div class="body-inner">
 
-            <div data-flip-clock class="flip-clock flip-clock--helvetica-neue-bold-condensed flip-clock--fake-proportional-numerals" id="flip-clock">
+            <div data-flip-clock class="flip-clock" id="flip-clock">
                 <div class="flip-clock-line flip-clock-date-line" data-flip-clock-line>
                     <div class="flip-clock-line-inner">
                         <div class="flip-clock-window flip-clock-day-window">
@@ -114,6 +106,7 @@
                 $(document).foundation();
             </script>
 
+            <script src="js/jfont-checker.js"></script>
             <script>
                 document.write('<' + 'script defer src="js/flip-clock.js?cachebuster=' + cachebuster + '"></' + 'script>');
                 document.write('<' + 'script defer src="js/flip-clock-page.js?cachebuster=' + cachebuster + '"></' + 'script>');

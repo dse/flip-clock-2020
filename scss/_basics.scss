@@ -35,11 +35,11 @@
         text-transform: uppercase;
         font-size: 10%;
         text-align: left;
-        left: 1rem;
+        left: 2vw;
     }
     .flip-clock-segment-piece .numeric-value {
         position: relative;
-        left: 0.125em;
+        left: $flipclock-ampm-factor * 0.5em;
     }
 }
 
@@ -63,17 +63,23 @@
     bottom: 0;
 }
 
-.flip-clock-segment-hour        .flip-clock-segment-piece { width: calc(2ch); }
-.flip-clock-segment-12-hour     .flip-clock-segment-piece { width: calc(2.5ch); }
-.flip-clock-segment-minute      .flip-clock-segment-piece { width: calc(2ch); }
-.flip-clock-segment-second      .flip-clock-segment-piece { width: calc(2ch); }
-.flip-clock-segment-year        .flip-clock-segment-piece { width: calc(4ch); }
-.flip-clock-segment-month       .flip-clock-segment-piece { width: calc(4ch); }
-.flip-clock-segment-date        .flip-clock-segment-piece { width: calc(2ch); }
-.flip-clock-segment-day         .flip-clock-segment-piece { width: calc(4ch); }
-.flip-clock-segment-epoch-digit .flip-clock-segment-piece { width: calc(1ch); }
+.flip-clock-segment-hour        .flip-clock-segment-piece { width: 2ch; }
+.flip-clock-segment-minute      .flip-clock-segment-piece { width: 2ch; }
+.flip-clock-segment-second      .flip-clock-segment-piece { width: 2ch; }
+.flip-clock-segment-day         .flip-clock-segment-piece { width: 6ch; }
+.flip-clock-segment-month       .flip-clock-segment-piece { width: 6ch; }
+.flip-clock-segment-date        .flip-clock-segment-piece { width: 6ch; }
 
-.flip-clock-date-line .flip-clock-segment-date .flip-clock-segment-piece { width: calc(4ch); }
+.flip-clock.flip-clock-12-hour {
+    .flip-clock-segment-hour .flip-clock-segment-piece {
+        width: (1 + $flipclock-ampm-factor) * 2ch;
+    }
+    .flip-clock-segment-day  .flip-clock-segment-piece {
+        width: (1 + $flipclock-ampm-factor) * 6ch;
+    }
+}
+
+.flip-clock-segment-epoch-digit .flip-clock-segment-piece { width: 1ch; }
 
 .flip-clock-segment {
     @include flip-clock-segment-clip();
