@@ -1,8 +1,8 @@
 .flip-clock-window {
     background-color: black;
     display: inline-flex;
-    border-radius: 2rem;
-    padding: 1rem;
+    border-radius: $flipclock-outer-border-radius;
+    padding: $flipclock-outer-padding;
 }
 
 .flip-clock-segment {
@@ -12,30 +12,30 @@
 }
 
 .flip-clock-segment + .flip-clock-segment {
-    margin-left: 1rem;
+    margin-left: $flipclock-segment-gutter;
 }
 
 .flip-clock-segment.flip-clock-segment-12-hour {
     .ampm {
         position: absolute;
         &.am {
-            top: 25%;
+            top: $flipclock-am-top;
             transform: translateY(-50%);
             &::before {
                 content: 'am';
             }
         }
         &.pm {
-            bottom: 25%;
+            bottom: $flipclock-pm-bottom;
             transform: translateY(50%);
             &::before {
                 content: 'pm';
             }
         }
         text-transform: uppercase;
-        font-size: 10%;
+        font-size: $flipclock-ampm-font-size;
         text-align: left;
-        left: 2vw;
+        left: $flipclock-ampm-left;
     }
     .flip-clock-segment-piece .numeric-value {
         position: relative;
@@ -45,9 +45,9 @@
 
 .flip-clock-segment-piece {
     text-align: center;
-    border-radius: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    border-radius: $flipclock-inner-border-radius;;
+    padding-left: $flipclock-inner-padding;
+    padding-right: $flipclock-inner-padding;
     background-color: #111111;
     color: white;
     display: inline-block;
@@ -66,20 +66,22 @@
 .flip-clock-segment-hour        .flip-clock-segment-piece { width: 2ch; }
 .flip-clock-segment-minute      .flip-clock-segment-piece { width: 2ch; }
 .flip-clock-segment-second      .flip-clock-segment-piece { width: 2ch; }
-.flip-clock-segment-day         .flip-clock-segment-piece { width: 6ch; }
-.flip-clock-segment-month       .flip-clock-segment-piece { width: 6ch; }
-.flip-clock-segment-date        .flip-clock-segment-piece { width: 6ch; }
+.flip-clock-segment-day         .flip-clock-segment-piece { width: 2ch / $flipclock-date-size; }
+.flip-clock-segment-month       .flip-clock-segment-piece { width: 2ch / $flipclock-date-size; }
+.flip-clock-segment-date        .flip-clock-segment-piece { width: 2ch / $flipclock-date-size; }
 
 .flip-clock.flip-clock-12-hour {
     .flip-clock-segment-hour .flip-clock-segment-piece {
         width: (1 + $flipclock-ampm-factor) * 2ch;
     }
     .flip-clock-segment-day  .flip-clock-segment-piece {
-        width: (1 + $flipclock-ampm-factor) * 6ch;
+        width: (1 + $flipclock-ampm-factor) * 2ch / $flipclock-date-size;
     }
 }
 
-.flip-clock-segment-epoch-digit .flip-clock-segment-piece { width: 1ch; }
+.flip-clock-segment-epoch-digit .flip-clock-segment-piece {
+    width: 1ch;
+}
 
 .flip-clock-segment {
     @include flip-clock-segment-clip();

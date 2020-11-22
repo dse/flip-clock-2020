@@ -14,13 +14,13 @@
     margin-top: 1rem;
 }
 .flip-clock-date-line {
-    font-size: 6vw;
+    font-size: $flipclock-font-size * $flipclock-date-size;
 }
 .flip-clock-time-line {
-    font-size: 18vw;
+    font-size: $flipclock-font-size;
 }
 .flip-clock-epoch-line {
-    font-size: 6vw;
+    font-size: $flipclock-font-size * $flipclock-epoch-size;
 }
 
 /* horizontal layout */
@@ -33,5 +33,5 @@
     align-items: flex-start;
 }
 .flip-clock-line .flip-clock-window + .flip-clock-window {
-    margin-left: 1rem;
+    margin-left: $flipclock-window-gutter;
 }
