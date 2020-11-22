@@ -81,7 +81,7 @@
 }
 
 .flip-clock-segment.flip-clock-segment-12-hour .ampm.am {
-  top: 25%;
+  top: 12.5%;
   -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
@@ -92,7 +92,7 @@
 }
 
 .flip-clock-segment.flip-clock-segment-12-hour .ampm.pm {
-  bottom: 25%;
+  bottom: 16.5%;
   -webkit-transform: translateY(50%);
       -ms-transform: translateY(50%);
           transform: translateY(50%);
@@ -104,7 +104,7 @@
 
 .flip-clock-segment.flip-clock-segment-12-hour .flip-clock-segment-piece .numeric-value {
   position: relative;
-  left: 0.0625em;
+  left: 0em;
 }
 
 .flip-clock-segment-piece {
@@ -153,11 +153,11 @@
 }
 
 .flip-clock.flip-clock-12-hour .flip-clock-segment-hour .flip-clock-segment-piece {
-  width: 2.25ch;
+  width: 2ch;
 }
 
 .flip-clock.flip-clock-12-hour .flip-clock-segment-day .flip-clock-segment-piece {
-  width: 6.75ch;
+  width: 6ch;
 }
 
 .flip-clock-segment-epoch-digit .flip-clock-segment-piece {
@@ -222,18 +222,18 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  padding: 0.5em;
 }
 
 .bottom-right-buttons {
   position: fixed;
   bottom: 0;
   right: 0;
-  padding: 0.5em;
 }
 
 .bottom-left-buttons,
 .bottom-right-buttons {
+  font-size: 200%;
+  padding: 0.5em;
   color: rgba(255, 255, 255, 0.25);
 }
 
@@ -463,7 +463,7 @@
     --segment-background-color:               #111111;
     --segment-background-gradient:            linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
     --segment-foreground-color:               #ffffff;
-    --font-family:                            Arial, sans-serif;
+    --font-family:                            HelveticaNeue-CondensedBold, Helvetica Neue, Helvetica, Arial, sans-serif;
     --font-weight:                            normal;
     --font-style:                             normal;
     --transition-duration:                    300ms;
@@ -512,7 +512,7 @@ body.flip-clock-page::before {
  * Overall styles
  */
 .flip-clock {
-  font-family: "Arial", sans-serif;
+  font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-weight: normal;
   font-style: normal;
 }
