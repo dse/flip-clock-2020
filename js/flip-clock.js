@@ -1,4 +1,4 @@
-/*global Symbol, AudioContext, console, checkfont */
+/*global getWhichFontFamily, FlipClockAudio, TimeTicker */
 
 function absoluteURL(url) {
     var a = document.createElement('a');
@@ -20,13 +20,11 @@ var Segment = (function () {
         if (options.enableAudio) {
             this.enableAudio = true;
         }
-        console.debug("Segment: enableAudio initialized to " + JSON.stringify(this.enableAudio));
 
         this.is24Hour = false;
         if (options.is24Hour) {
             this.is24Hour = true;
         }
-        console.debug("Segment: is24Hour initialized to " + JSON.stringify(this.is24Hour));
 
         if (options.states && options.states instanceof Array) {
             this.states = options.states;
@@ -381,14 +379,12 @@ var Segment = (function () {
 
     Segment.prototype.setIs24Hour = function (flag) {
         flag = !!flag;
-        console.debug("Segment: setting is24Hour to " + JSON.stringify(flag));
         this.is24Hour = !!flag;
         this.addOrRemove12HourClass();
         this.refresh();
     };
     Segment.prototype.setEnableAudio = function (flag) {
         flag = !!flag;
-        console.debug("Segment: setting enableAudio to " + JSON.stringify(flag));
         this.enableAudio = flag;
     };
     Segment.prototype.setAnimationStyle = function (index) {
@@ -448,7 +444,6 @@ var FlipClock = (function () {
         this.elements.epoch  = Array.from(this.element.querySelectorAll('[data-flip-clock-epoch]'));
 
         var date = testRollover || new Date();
-        console.debug(date);
 
         if (this.elements.year) {
             this.segmentArray.push(
@@ -641,7 +636,6 @@ var FlipClock = (function () {
 
     FlipClock.prototype.setIs24Hour = function (flag) {
         flag = !!flag;
-        console.debug("FlipClock: setting is24Hour to " + JSON.stringify(flag));
         this.is24Hour = flag;
         if (this.segments.hour) {
             this.segments.hour.setIs24Hour(flag);
