@@ -1,3 +1,5 @@
+/*global FlipClock */
+
 function empty(value) {
     return value !== value || value === undefined || value === null || value === '';
     //     ^^^^^^^^^^^^^^^
@@ -300,7 +302,6 @@ var FlipClockPage = {
         this.computeAndSetZoomValue();
 
         value = localStorage.getItem('flip-clock--twenty-four-hour');
-        console.debug("FlipClockPage: localStorage.getItem('flip-clock--twenty-four-hour') returned " + JSON.stringify(value));
         if (value !== null) {
             try {
                 value = !!JSON.parse(value);
@@ -310,7 +311,6 @@ var FlipClockPage = {
         } else {
             value = false;
         }
-        console.debug("value is now " + JSON.stringify(value) + "; setting is24Hour to it");
         this.flipClock.setIs24Hour(value);
     },
 
@@ -375,9 +375,7 @@ var FlipClockPage = {
         }
         Array.from(document.querySelectorAll('[data-flip-clock-twenty-four-hour]')).forEach(function (input) {
             var flag = this.flipClock.is24Hour;
-            console.debug("FlipClockPage: is24Hour is " + JSON.stringify(flag));
             flag = !!flag;
-            console.debug("FlipClockPage: setting checked flag on 24-hour checkbox to " + JSON.stringify(flag));
             input.checked = flag;
         }.bind(this));
         Array.from(document.querySelectorAll('[data-flip-clock-enable-ticks]')).forEach(function (input) {
