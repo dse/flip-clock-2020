@@ -27,10 +27,10 @@ function loadScriptSync(url, options) {
 
 var cacheBuster = window.hasCacheBuster ? ('?cacheBuster=' + new Date().getTime()) : '';
 
-loadScriptSync('js/polyfills.js' + cacheBuster);
-loadScriptSync('js/timer.js' + cacheBuster);
-loadScriptSync('js/jfont-checker.js' + cacheBuster);
-loadScriptSync('js/which-font-family.js' + cacheBuster);
-loadScriptSync('js/audio-ticker.js' + cacheBuster);
-loadScriptSync('js/flip-clock.js' + cacheBuster);
-loadScriptSync('js/flip-clock-page.js' + cacheBuster);
+loadScriptSync('/c/js/polyfills.js' + cacheBuster);
+loadScriptSync('/c/js/timer.js' + cacheBuster);
+loadScriptSync('/c/js/jfont-checker.js' + cacheBuster);
+loadScriptSync('/c/js/which-font-family.js' + cacheBuster);
+loadScriptSync('/c/js/audio-ticker.js' + cacheBuster);
+loadScriptSync('/c/js/flip-clock.js' + cacheBuster);
+loadScriptSync('/c/js/flip-clock-page.js' + cacheBuster);
