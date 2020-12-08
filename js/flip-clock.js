@@ -1,40 +1,10 @@
 /*global Symbol, AudioContext, console, checkfont */
 
-var TimeTicker = (function () {
-    function TimeTicker(options) {
-        this.testRollover = options && options.testRollover;
-    }
-    TimeTicker.prototype.start = function () {
-        var date = new Date();
-        if (this.testRollover) {
-            this.msOffset = this.testRollover.getTime() - 20000 - date.getTime();
-            delete this.testRollover;
-        }
-        if (this.msOffset) {
-            date.setTime(date.getTime() + this.msOffset);
-        }
-        this.callback(date);
-        this.timeout = setTimeout(function () {
-            this.start();
-        }.bind(this), 1000 - date.getTime() % 1000);
-    };
-    TimeTicker.prototype.stop = function () {
-        if (this.timeout) {
-            clearTimeout(this.timeout);
-            this.timeout = null;
-        }
-    };
-    return TimeTicker;
-}());
-
 function absoluteURL(url) {
     var a = document.createElement('a');
     a.href = url;
     return a.href;
 }
-
-// polyfill
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 // stackoverflow says absolute URLs work in safari
 var tickURL = absoluteURL('sounds/tick2.wav');

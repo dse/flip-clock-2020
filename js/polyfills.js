@@ -113,3 +113,6 @@ if (!Array.from) {
         };
     })();
 }
+
+// polyfill
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
