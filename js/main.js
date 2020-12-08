@@ -28,6 +28,7 @@ var cacheBuster = window.hasCacheBuster ? ('?cacheBuster=' + new Date().getTime(
 loadScriptSync('js/polyfills.js' + cacheBuster);
 loadScriptSync('js/timer.js' + cacheBuster);
 loadScriptSync('js/jfont-checker.js' + cacheBuster);
+loadScriptSync('js/which-font-family.js' + cacheBuster);
 loadScriptSync('js/audio-ticker.js' + cacheBuster);
 loadScriptSync('js/flip-clock.js' + cacheBuster);
 loadScriptSync('js/flip-clock-page.js' + cacheBuster);
