@@ -700,14 +700,6 @@ var FlipClock = (function () {
         }.bind(this));
     };
 
-    FlipClock.prototype.enableAudioByUserRequest = function () {
-        if (this.enabledAudioByUserRequest) {
-            return;
-        }
-        this.enabledAudioByUserRequest = true;
-        this.audio.play();
-    };
-
     return FlipClock;
 }());
 
