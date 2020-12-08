@@ -4,34 +4,48 @@ var FlipClockAudio;
 
 if (window.AudioContext && (location.protocol === 'http:' || location.protocol === 'https:')) {
     FlipClockAudio = (function () {
-        var context = new AudioContext();
-        var audioCollection = {};
-        function FlipClockAudio(url) {
-            this.audio = audioCollection[url];
-            if (!this.audio) {
-                this.audio = audioCollection[url] = {};
-                var request = new XMLHttpRequest();
-                request.open('GET', url, true);
-                request.responseType = 'arraybuffer';
-                request.onload = function () {
-                    context.decodeAudioData(request.response, function (buffer) {
-                        this.audio.buffer = buffer;
-                    }.bind(this));
-                }.bind(this);
-                request.send();
-            }
-        }
-        FlipClockAudio.prototype.play = function () {
-            if (!this.audio.buffer) {
-                return;
-            }
-            var source = context.createBufferSource();
-            source.buffer = this.audio.buffer;
-            source.connect(context.destination);
-            source.start(0);
+        var FlipClockAudio = function (url) {
+            this.url = url;
         };
+        Object.assign(FlipClockAudio.prototype, {
+            play: function () {
+                if (!FlipClockAudio.audioContext || FlipClockAudio.audioContext.state === 'suspended') {
+                    FlipClockAudio.audioContext = new AudioContext();
+                }
+                if (!FlipClockAudio.audioContext) {
+                    return;
+                }
+                if (this.isLoading) {
+                    return;
+                }
+                if (!this.audioBuffer) {
+                    this.isLoading = true;
+                    var request = new XMLHttpRequest();
+                    request.open('GET', this.url, true);
+                    request.responseType = 'arraybuffer';
+                    request.onload = function () {
+                        FlipClockAudio.audioContext.decodeAudioData(request.response, function (buffer) {
+                            this.audioBuffer = buffer;
+                            this.isLoading = false;
+                        }.bind(this));
+                    }.bind(this);
+                    request.send();
+                }
+                if (!this.audioBuffer) {
+                    return;
+                }
+                if (FlipClockAudio.audioContext.state === 'suspended') {
+                    return;
+                }
+                var source = FlipClockAudio.audioContext.createBufferSource();
+                source.buffer = this.audioBuffer;
+                source.connect(FlipClockAudio.audioContext.destination);
+                source.start(0);
+            }
+        });
         return FlipClockAudio;
     }());
+
 } else {
     // fallback that works well in Chrome but not Safari.
     FlipClockAudio = (function () {
