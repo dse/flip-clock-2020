@@ -1,3 +1,5 @@
+/*jshint -W126 */
+
 function loadScriptSync(url, options) {
     "use strict";
     var xhr = new window.XMLHttpRequest();
