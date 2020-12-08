@@ -25,6 +25,7 @@ function loadScriptSync(url, options) {
 
 var cacheBuster = window.hasCacheBuster ? ('?cacheBuster=' + new Date().getTime()) : '';
 
+loadScriptSync('js/polyfills.js' + cacheBuster);
 loadScriptSync('js/jfont-checker.js' + cacheBuster);
 loadScriptSync('js/audio-ticker.js' + cacheBuster);
 loadScriptSync('js/flip-clock.js' + cacheBuster);
