@@ -7,7 +7,6 @@ function empty(value) {
 }
 
 var FlipClockPage = {
-    fakeItalic: false,
     fontStyle: 'normal',
     testRollover: undefined,
 
@@ -94,20 +93,21 @@ var FlipClockPage = {
                 this.avoidTextSelection();
                 checked = event.target.checked;
                 this.flipClock.setIs24Hour(checked);
+                this.savePropertiesToStorage();
                 event.preventDefault();
             }
             if (event.target.hasAttribute('data-flip-clock-enable-ticks')) {
                 this.avoidTextSelection();
-                this.flipClock.enableAudioByUserRequest();
                 checked = event.target.checked;
                 this.flipClock.setEnableTicks(checked);
+                this.savePropertiesToStorage();
                 event.preventDefault();
             }
             if (event.target.hasAttribute('data-flip-clock-enable-seconds-ticks')) {
                 this.avoidTextSelection();
-                this.flipClock.enableAudioByUserRequest();
                 checked = event.target.checked;
                 this.flipClock.setEnableSecondsTicks(checked);
+                this.savePropertiesToStorage();
                 event.preventDefault();
             }
         }.bind(this);
@@ -148,22 +148,15 @@ var FlipClockPage = {
     },
 
     setPropertiesFromStorage: function () {
-        var style = document.documentElement.style;
-        var value;
+        this.flipClock.setIs24Hour(!!JSON.parse(localStorage.getItem('flip-clock--twenty-four-hour') || 'false'));
+        this.flipClock.setEnableTicks(!!JSON.parse(localStorage.getItem('flip-clock--enable-ticks') || 'false'));
+        this.flipClock.setEnableSecondsTicks(!!JSON.parse(localStorage.getItem('flip-clock--enable-seconds-ticks') || 'false'));
+    },
 
-        this.computeAndSetZoomValue();
-
-        value = localStorage.getItem('flip-clock--twenty-four-hour');
-        if (value !== null) {
-            try {
-                value = !!JSON.parse(value);
-            } catch (e) {
-                value = false;
-            }
-        } else {
-            value = false;
-        }
-        this.flipClock.setIs24Hour(value);
+    savePropertiesToStorage: function () {
+        localStorage.setItem('flip-clock--twenty-four-hour', JSON.stringify(!!this.flipClock.is24Hour));
+        localStorage.setItem('flip-clock--enable-ticks', JSON.stringify(!!this.flipClock.enableTicks));
+        localStorage.setItem('flip-clock--enable-seconds-ticks', JSON.stringify(!!this.flipClock.enableSecondsTicks));
     },
 
     setFormValues: function () {
@@ -175,10 +168,14 @@ var FlipClockPage = {
             input.checked = flag;
         }.bind(this));
         Array.from(document.querySelectorAll('[data-flip-clock-enable-ticks]')).forEach(function (input) {
-            input.checked = false;
+            var flag = this.flipClock.enableTicks;
+            flag = !!flag;
+            input.checked = flag;
         }.bind(this));
         Array.from(document.querySelectorAll('[data-flip-clock-enable-seconds-ticks]')).forEach(function (input) {
-            input.checked = false;
+            var flag = this.flipClock.enableSecondsTicks;
+            flag = !!flag;
+            input.checked = flag;
         }.bind(this));
     },
 
@@ -213,31 +210,12 @@ var FlipClockPage = {
         }
     },
 
-    addOrRemoveFakeItalicClass: function () {
-        Array.from(document.querySelectorAll('.flip-clock')).forEach(function (element) {
-            element.classList[this.fakeItalic    ? 'add' : 'remove']('with-fake-italic');
-            element.classList[(!this.fakeItalic) ? 'add' : 'remove']('without-fake-italic');
-        }.bind(this));
-    },
-
-    addOrRemoveItalicClass: function () {
-        Array.from(document.querySelectorAll('.flip-clock')).forEach(function (element) {
-            element.classList[this.fontStyle === 'normal'  ? 'add' : 'remove']('with-font-style--normal');
-            element.classList[this.fontStyle === 'italic'  ? 'add' : 'remove']('with-font-style--italic');
-            element.classList[this.fontStyle === 'oblique' ? 'add' : 'remove']('with-font-style--oblique');
-        }.bind(this));
-    },
-
     setDefaults: function () {
         var style = document.documentElement.style;
-
         this.computeAndSetZoomValue();
-
         this.flipClock.setIs24Hour(false);
+        this.flipClock.setEnableTicks(false);
+        this.flipClock.setEnableSecondsTicks(false);
         this.setFormValues();
-
-        try {
-            localStorage.removeItem('flip-clock--twenty-four-hour');
-        } catch (e) { }
-    }
+    },
 };
