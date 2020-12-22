@@ -64,7 +64,6 @@ var FlipClockPage = {
                 maxWidth = line.clientWidth;
             }
         });
-        console.log(maxWidth);
         this.setZoomValue(document.body.clientWidth / maxWidth * 0.95);
     },
 
