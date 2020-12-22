@@ -26,7 +26,7 @@
             // iPhone 6 plus:
             //     12.4.6 16G183;
             //     12.4.7 16G192
-            if (/\bMobile\/13G36\b/.test(navigator.userAgent) || /(?:^|\?|&)molasses(?:$|=|&)/.test(location.search)) {
+            if (/\bMobile\/(13G36|16G183|16G192)\b/.test(navigator.userAgent) || /(?:^|\?|&)molasses(?:$|=|&)/.test(location.search)) {
                 document.documentElement.classList.add('molasses');
                 document.documentElement.setAttribute('data-molasses', '');
             }
