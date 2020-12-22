@@ -582,9 +582,7 @@ var FlipClock = (function () {
         this.audio = new FlipClockAudio(tickURL);
 
         this.element.classList.add('flip-clock');
-        this.ticker = new TimeTicker({
-            testRollover: testRollover
-        });
+        this.ticker = new TimeTicker();
         this.ticker.callback = this.setTime.bind(this);
         this.ticker.start();
         this.addOrRemove12HourClass();
@@ -653,7 +651,8 @@ var FlipClock = (function () {
         }
     };
 
-    FlipClock.prototype.setTime = function (date) {
+    FlipClock.prototype.setTime = function () {
+        var date = new Date();
         if (this.segments.year) {
             this.segments.year.setDesiredValue(date.getFullYear(), 11/3 * FlipClock.segmentDelay);
         }
