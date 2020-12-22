@@ -8,7 +8,6 @@ $segment-horizontal-padding--date:          2vw;
 $segment-ampm-position-left:                1vw;
 $segment-ampm-position-top:                 20%; /* depends on the font */
 $segment-ampm-position-bottom:              17.5%; /* depends on the font */
-$segment-fake-italic-horizontal-padding:    0.25em;
 $background-color:                          #181818;
 $segment-background-color:                  #111111;
 $segment-foreground-color:                  #ffffff;
@@ -193,20 +192,6 @@ html.molasses {
             opacity: $flip-clock-molasses-top-darken;
         }
     }
-}
-
-/**
- * Styles required for fake italics.
- */
-
-.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment::before,
-.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
-    padding-right: $segment-fake-italic-horizontal-padding;
-}
-
-.flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
-.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
-    padding-right: $segment-fake-italic-horizontal-padding;
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour {

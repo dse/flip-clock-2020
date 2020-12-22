@@ -574,19 +574,6 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   opacity: 0.25;
 }
 
-/**
- * Styles required for fake italics.
- */
-.flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment::before,
-.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
-  padding-right: 0.25em;
-}
-
-.flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment-piece-inner,
-.flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
-  padding-right: 0.25em;
-}
-
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece {
   width: -webkit-calc(2.5ch);
   width: calc(2.5ch);
