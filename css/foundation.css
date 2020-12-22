@@ -3588,6 +3588,35 @@ ul.no-bullet, ol.no-bullet {
   }
 }
 
+.close-button {
+  position: absolute;
+  z-index: 10;
+  color: #8a8a8a;
+  cursor: pointer;
+}
+
+[data-whatinput='mouse'] .close-button {
+  outline: 0;
+}
+
+.close-button:hover, .close-button:focus {
+  color: #0a0a0a;
+}
+
+.close-button.small {
+  right: 0.66rem;
+  top: 0.33em;
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+.close-button.medium, .close-button {
+  right: 1rem;
+  top: 0.5rem;
+  font-size: 2em;
+  line-height: 1;
+}
+
 html.is-reveal-open {
   position: fixed;
   width: 100%;
