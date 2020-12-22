@@ -485,19 +485,19 @@ body.flip-clock-page::before {
 }
 
 .flip-clock-line + .flip-clock-line {
-  margin-top: 1vw;
+  margin-top: 2vw;
 }
 
 .flip-clock-line .flip-clock-window + .flip-clock-window {
-  margin-left: 1vw;
+  margin-left: 2vw;
 }
 
 /**
  * Viewmaster styles
  */
 .flip-clock-window {
-  border-radius: 2vw;
-  padding: 1vw;
+  border-radius: 2.5vw;
+  padding: 1.5vw;
 }
 
 /* "highlighting" simulacrum */
@@ -512,7 +512,7 @@ body.flip-clock-page::before {
  * Segment sizing and layout
  */
 .flip-clock-segment + .flip-clock-segment {
-  margin-left: 1vw;
+  margin-left: 2vw;
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
