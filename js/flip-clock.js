@@ -412,10 +412,7 @@ var Segment = (function () {
 var FlipClock = (function () {
     function FlipClock(options) {
         this.is24Hour = false;
-        var testRollover;
-
-        this.enableThemeConfiguration = options && options.enableThemeConfiguration;
-        this.enableGoodies            = options && options.enableGoodies;
+        this.enableGoodies = options && options.enableGoodies;
 
         if (options) {
             if (!this.element && options.elementId) {
@@ -424,10 +421,9 @@ var FlipClock = (function () {
             if (!this.element && options.element) {
                 this.element = options.element;
             }
-            testRollover = options.testRollover;
         }
         if (!this.element) {
-            return;
+            throw new Error('FlipClock: no element');
         }
 
         this.elements = {};
@@ -443,7 +439,7 @@ var FlipClock = (function () {
         this.elements.second = this.element.querySelector('[data-flip-clock-second]');
         this.elements.epoch  = Array.from(this.element.querySelectorAll('[data-flip-clock-epoch]'));
 
-        var date = testRollover || new Date();
+        var date = new Date();
 
         if (this.elements.year) {
             this.segmentArray.push(
@@ -582,10 +578,11 @@ var FlipClock = (function () {
         this.audio = new FlipClockAudio(tickURL);
 
         this.element.classList.add('flip-clock');
+        this.addOrRemove12HourClass();
+
         this.ticker = new TimeTicker();
         this.ticker.callback = this.setTime.bind(this);
         this.ticker.start();
-        this.addOrRemove12HourClass();
     }
 
     FlipClock.segmentDelay = 50;

@@ -8,7 +8,6 @@ function empty(value) {
 
 var FlipClockPage = {
     fontStyle: 'normal',
-    testRollover: undefined,
 
     avoidTextSelection: function () {
         // thanks https://stackoverflow.com/questions/3779534/how-do-i-disable-text-selection-with-css-or-javascript
@@ -29,12 +28,13 @@ var FlipClockPage = {
     },
 
     init: function (options) {
-        this.enableGoodies            = options && options.enableGoodies;
+        this.enableGoodies = options && options.enableGoodies;
+        this.element = options && options.element;
         this.flipClock = new FlipClock({
-            elementId:                'flip-clock',
-            testRollover:             this.testRollover,
-            enableGoodies:            this.enableGoodies
+            element: this.element,
+            enableGoodies: this.enableGoodies
         });
+        this.computeAndSetZoomValue();
         this.flipClock.setAnimationStyle(1);
         this.setPropertiesFromStorage();
         this.setFormValues();
@@ -61,6 +61,7 @@ var FlipClockPage = {
                 maxWidth = line.clientWidth;
             }
         });
+        console.log(maxWidth);
         this.setZoomValue(document.body.clientWidth / maxWidth * 0.95);
     },
 
@@ -112,15 +113,6 @@ var FlipClockPage = {
             }
         }.bind(this);
 
-        var setDefaultsHandler = function (event) {
-            if (!event.target.closest('[data-flip-clock-set-defaults]')) {
-                return;
-            }
-            this.avoidTextSelection();
-            this.setDefaults();
-            event.preventDefault();
-        }.bind(this);
-
         var reloadHandler = function (event) {
             if (!event.target.closest('[data-flip-clock-reload]')) {
                 return;
@@ -138,7 +130,6 @@ var FlipClockPage = {
 
         document.addEventListener('input', formCheckboxHandler);
         document.addEventListener('change', formCheckboxHandler);
-        document.addEventListener('click', setDefaultsHandler);
         document.addEventListener('click', reloadHandler);
         document.addEventListener('click', resetHandler);
 
@@ -208,14 +199,5 @@ var FlipClockPage = {
             input.selectedIndex = option.index;
             return option;
         }
-    },
-
-    setDefaults: function () {
-        var style = document.documentElement.style;
-        this.computeAndSetZoomValue();
-        this.flipClock.setIs24Hour(false);
-        this.flipClock.setEnableTicks(false);
-        this.flipClock.setEnableSecondsTicks(false);
-        this.setFormValues();
     },
 };
