@@ -52,31 +52,6 @@
     }
 }
 
-.flip-clock--helvetica-neue-bold-condensed {
-    &.flip-clock--fake-proportional-numerals {
-    }
-    &.flip-clock--pnum {
-        font-feature-settings: "pnum" 1;
-        font-variant-numeric: proportional-nums;     /* pnum */
-    }
-    &.flip-clock--kern {
-        font-feature-settings: "kern" 1;
-        font-kerning: normal;                        /* kern */
-    }
-    &.flip-clock--kerx {
-        font-feature-settings: "kerx" 1;
-    }
-    &.flip-clock--kern.flip-clock--pnum {
-        font-feature-settings: "kern" 1, "pnum" 1;
-        font-kerning: normal;                        /* kern */
-        font-variant-numeric: proportional-nums;     /* pnum */
-    }
-    &.flip-clock--kerx.flip-clock--pnum {
-        font-feature-settings: "kerx" 1, "pnum" 1;
-        font-variant-numeric: proportional-nums;     /* pnum */
-    }
-}
-
 .margin-bottom-half {
     margin-bottom: 0.5rem !important;
 }
