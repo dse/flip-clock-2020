@@ -44,17 +44,17 @@
         <div class="body-inner">
 
             <div data-flip-clock class="flip-clock" id="flipClock">
-                <div id="flipClockDate" class="flip-clock-line flip-clock-date-line" data-flip-clock-line>
+                <div id="flipClockDate" class="flip-clock-line flip-clock-date-line" data-flip-clock-line data-flip-clock-date-line>
                     <div class="flip-clock-line-inner">
-                        <div id="flipClockDay" class="flip-clock-window flip-clock-day-window">
+                        <div id="flipClockDay" class="flip-clock-window flip-clock-day-window" data-flip-clock-day-window>
                             <div data-flip-clock-day class="flip-clock-segment flip-clock-segment-day">
                             </div>
                         </div>
-                        <div id="flipClockMonth" class="flip-clock-window flip-clock-month-window">
+                        <div id="flipClockMonth" class="flip-clock-window flip-clock-month-window" data-flip-clock-month-window>
                             <div data-flip-clock-month class="flip-clock-segment flip-clock-segment-month">
                             </div>
                         </div>
-                        <div id="flipClockDate" class="flip-clock-window flip-clock-date-window">
+                        <div id="flipClockDate" class="flip-clock-window flip-clock-date-window" data-flip-clock-date-window>
                             <div data-flip-clock-date class="flip-clock-segment flip-clock-segment-date">
                             </div>
                         </div>
@@ -62,15 +62,15 @@
                 </div>
                 <div id="flipClockTime" class="flip-clock-line flip-clock-time-line" data-flip-clock-line>
                     <div class="flip-clock-line-inner">
-                        <div id="flipClockHour" class="flip-clock-window flip-clock-time-window">
+                        <div id="flipClockHour" class="flip-clock-window flip-clock-time-window" data-flip-clock-hour-window>
                             <div data-flip-clock-hour class="flip-clock-segment flip-clock-segment-hour">
                             </div>
                         </div>
-                        <div id="flipClockMinute" class="flip-clock-window flip-clock-time-window">
+                        <div id="flipClockMinute" class="flip-clock-window flip-clock-time-window" data-flip-clock-minute-window>
                             <div data-flip-clock-minute class="flip-clock-segment flip-clock-segment-minute">
                             </div>
                         </div>
-                        <div id="flipClockSecond" class="flip-clock-window flip-clock-time-window">
+                        <div id="flipClockSecond" class="flip-clock-window flip-clock-time-window" data-flip-clock-second-window>
                             <div data-flip-clock-second class="flip-clock-segment flip-clock-segment-second">
                             </div>
                         </div>
@@ -90,12 +90,12 @@
                     Settings
                 </h1>
                 <div class="margin-bottom-1">
-                    <label class="margin-bottom-half">
+                    <label class="margin-bottom-half" data-label-flip-clock-enable-ticks>
                         <input type="checkbox" class="toggle-switch" name="enable-ticks" value="true" data-flip-clock-enable-ticks>
                         <span class="toggle-switch"><span class="inner">&zwj;</span></span>
                         Ticks
                     </label>
-                    <label class="margin-bottom-half">
+                    <label class="margin-bottom-half" data-label-flip-clock-enable-seconds-ticks>
                         <input type="checkbox" class="toggle-switch" name="enable-seconds-ticks" value="true" data-flip-clock-enable-seconds-ticks>
                         <span class="toggle-switch"><span class="inner">&zwj;</span></span>
                         Ticks for Seconds
@@ -119,28 +119,22 @@
             <script>
                 (function () {
                     window.hasCacheBuster = true;
-                    var noDate = /(^|\?|&)nodate($|=|&)/.test(location.search);
+                    var noDate   = /(^|\?|&)nodate($|=|&)/.test(location.search);
                     var noSecond = /(^|\?|&)nosecond($|=|&)/.test(location.search);
-                    var noAudio = /(^|\?|&)noaudio($|=|&)/.test(location.search);
+                    var noAudio  = /(^|\?|&)noaudio($|=|&)/.test(location.search);
+                    var removeElement = function (element) {
+                        element.parentNode.removeChild(element);
+                    };
                     if (noDate) {
-                        (function () {
-                            var x = document.getElementById('flipClockDate');
-                            if (x) {
-                                x.parentNode.removeChild(x);
-                            }
-                        }());
+                        Array.from(document.querySelectorAll('[data-flip-clock-date-line]')).forEach(removeElement);
                     }
                     if (noSecond) {
-                        (function () {
-                            var x = document.getElementById('flipClockMonth');
-                            if (x) {
-                                x.parentNode.removeChild(x);
-                            }
-                            x = document.getElementById('flipClockSecond');
-                            if (x) {
-                                x.parentNode.removeChild(x);
-                            }
-                        }());
+                        Array.from(document.querySelectorAll('[data-flip-clock-second-window]')).forEach(removeElement);
+                        Array.from(document.querySelectorAll('[data-flip-clock-month-window]')).forEach(removeElement);
+                    }
+                    if (noAudio) {
+                        Array.from(document.querySelectorAll('[data-label-flip-clock-enable-ticks]')).forEach(removeElement);
+                        Array.from(document.querySelectorAll('[data-label-flip-clock-enable-seconds-ticks]')).forEach(removeElement);
                     }
                     var scripts = [
                         'js/polyfills.js',
