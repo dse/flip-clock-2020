@@ -446,46 +446,6 @@
 /* depends on the font */
 /* does not darken text */
 /* this darkens text.  experiment tweaking this with segment-background-gradient. */
-@supports (--foo: green) {
-  html.has-theme-support {
-    --flip-clock-window-padding:              1vw;
-    --flip-clock-segment-gutter:              1vw;
-    --flip-clock-window-gutter:               1vw;
-    --segment-border-radius:                  1vw;
-    --flip-clock-border-radius:               2vw;
-    --segment-horizontal-padding:             2vw;
-    --segment-ampm-position-left:             1vw;
-    --segment-ampm-position-top:              20%;
-    --segment-ampm-position-bottom:           17.5%;
-    --segment-fake-italic-horizontal-padding: 0.25em;
-    --background-color:                       #181818;
-    --background-gradient:                    linear-gradient(to bottom, #242424, #121212);
-    --segment-background-color:               #111111;
-    --segment-background-gradient:            linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
-    --segment-foreground-color:               #ffffff;
-    --font-family:                            HelveticaNeue-CondensedBold, Helvetica Neue, Helvetica, Arial, sans-serif;
-    --font-weight:                            normal;
-    --font-style:                             normal;
-    --transition-duration:                    300ms;
-    --rushed-transition-duration:             50ms;
-    --flip-clock-window-border-width:         2px;
-    --flip-clock-segment-highlight-width:     2px;
-  }
-  html.has-theme-support .flip-clock-date-window {
-    --segment-horizontal-padding:             2vw;
-  }
-  html.has-theme-support .flip-clock-epoch-window {
-    --flip-clock-window-padding:              1vw;
-    --flip-clock-segment-gutter:              1vw;
-    --flip-clock-window-gutter:               1vw;
-    --segment-border-radius:                  1vw;
-    --segment-horizontal-padding:             1vw;
-    --flip-clock-border-radius:               2vw;
-    --flip-clock-window-border-width:         2px;
-    --flip-clock-segment-highlight-width:     2px;
-  }
-}
-
 body.flip-clock-page {
   min-height: 100vh;
   overflow: hidden;
@@ -517,14 +477,6 @@ body.flip-clock-page::before {
   font-style: normal;
 }
 
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock {
-    font-family: var(--font-family);
-    font-weight: var(--font-weight);
-    font-style: var(--font-style);
-  }
-}
-
 /**
  * Overall layout
  */
@@ -532,30 +484,12 @@ body.flip-clock-page::before {
   color: #ffffff;
 }
 
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-line {
-    color: var(--segment-foreground-color);
-  }
-}
-
 .flip-clock-line + .flip-clock-line {
   margin-top: 1vw;
 }
 
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-line + .flip-clock-line {
-    margin-top: var(--flip-clock-window-gutter);
-  }
-}
-
 .flip-clock-line .flip-clock-window + .flip-clock-window {
   margin-left: 1vw;
-}
-
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-line .flip-clock-window + .flip-clock-window {
-    margin-left: var(--flip-clock-window-gutter);
-  }
 }
 
 /**
@@ -566,13 +500,6 @@ body.flip-clock-page::before {
   padding: 1vw;
 }
 
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-window {
-    border-radius: var(--flip-clock-border-radius);
-    padding: var(--flip-clock-window-padding);
-  }
-}
-
 /* "highlighting" simulacrum */
 .flip-clock-window {
   border-style: solid;
@@ -581,23 +508,11 @@ body.flip-clock-page::before {
   border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
 }
 
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-window {
-    border-width: 0 0 var(--flip-clock-window-border-width) 0;
-  }
-}
-
 /**
  * Segment sizing and layout
  */
 .flip-clock-segment + .flip-clock-segment {
   margin-left: 1vw;
-}
-
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-segment + .flip-clock-segment {
-    margin-left: var(--flip-clock-segment-gutter);
-  }
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
@@ -610,18 +525,6 @@ body.flip-clock-page::before {
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm {
   bottom: 17.5%;
-}
-
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
-    left: var(--segment-ampm-position-left);
-  }
-  html.has-theme-support .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am {
-    top: var(--segment-ampm-position-top);
-  }
-  html.has-theme-support .flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm {
-    bottom: var(--segment-ampm-position-bottom);
-  }
 }
 
 /**
@@ -640,31 +543,12 @@ html:not(.molasses) .flip-clock-segment-piece {
   background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
 }
 
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-segment-piece {
-    background-color: var(--segment-background-color);
-    color: var(--segment-foreground-color);
-    border-radius: var(--segment-border-radius);
-    padding-left: var(--segment-horizontal-padding);
-    padding-right: var(--segment-horizontal-padding);
-  }
-  html:not(.molasses) html.has-theme-support .flip-clock-segment-piece {
-    background-image: var(--segment-background-gradient);
-  }
-}
-
 /* "highlighting" simulacrum */
 .flip-clock-segment-piece {
   border-style: solid;
   border-width: 2px 0 0 0;
   background-clip: padding-box;
   border-color: rgba(255, 255, 255, 0.25) transparent rgba(0, 0, 0, 0.5) transparent;
-}
-
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock-segment-piece {
-    border-width: var(--flip-clock-segment-highlight-width) 0 0 0;
-  }
 }
 
 html:not(.molasses) .flip-clock-segment-piece::after {
@@ -698,23 +582,9 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   padding-right: 0.25em;
 }
 
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment::before, html.has-theme-support
-  .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
-    padding-right: var(--segment-fake-italic-horizontal-padding);
-  }
-}
-
 .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
   padding-right: 0.25em;
-}
-
-@supports (--foo: green) {
-  html.has-theme-support .flip-clock.with-fake-italic.with-font-style--italic .flip-clock-segment-piece-inner, html.has-theme-support
-  .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
-    padding-right: var(--segment-fake-italic-horizontal-padding);
-  }
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece {
@@ -814,43 +684,6 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
 .flip-clock[data-font-family="HelveticaNeue-CondensedBold"] .numeric-value[data-numeric-value="11"] {
   letter-spacing: 0em;
   margin-right: -0.05em;
-}
-
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--pnum {
-  -webkit-font-feature-settings: "pnum" 1;
-          font-feature-settings: "pnum" 1;
-  font-variant-numeric: proportional-nums;
-  /* pnum */
-}
-
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--kern {
-  -webkit-font-feature-settings: "kern" 1;
-          font-feature-settings: "kern" 1;
-  -webkit-font-kerning: normal;
-          font-kerning: normal;
-  /* kern */
-}
-
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--kerx {
-  -webkit-font-feature-settings: "kerx" 1;
-          font-feature-settings: "kerx" 1;
-}
-
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--kern.flip-clock--pnum {
-  -webkit-font-feature-settings: "kern" 1, "pnum" 1;
-          font-feature-settings: "kern" 1, "pnum" 1;
-  -webkit-font-kerning: normal;
-          font-kerning: normal;
-  /* kern */
-  font-variant-numeric: proportional-nums;
-  /* pnum */
-}
-
-.flip-clock--helvetica-neue-bold-condensed.flip-clock--kerx.flip-clock--pnum {
-  -webkit-font-feature-settings: "kerx" 1, "pnum" 1;
-          font-feature-settings: "kerx" 1, "pnum" 1;
-  font-variant-numeric: proportional-nums;
-  /* pnum */
 }
 
 .margin-bottom-half {
