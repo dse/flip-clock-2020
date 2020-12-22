@@ -29,12 +29,9 @@ var FlipClockPage = {
 
     init: function (options) {
         this.enableGoodies = options && options.enableGoodies;
-        this.element = options && options.element;
-        if (options && options.hasOwnProperty('enableAudio')) {
-            this.enableAudio = options.enableAudio;
-        } else {
-            this.enableAudio = true;
-        }
+        this.element       = options && options.element;
+        this.enableAudio   = !!(options && options.enableAudio);
+        console.log('FlipClockPage: audio ' + this.enableAudio ? 'ENABLED' : 'DISABLED');
         this.flipClock = new FlipClock({
             element: this.element,
             enableGoodies: this.enableGoodies,
@@ -45,7 +42,6 @@ var FlipClockPage = {
         this.setPropertiesFromStorage();
         this.setFormValues();
         this.addEvents();
-
     },
 
     clearZoomValue: function () {

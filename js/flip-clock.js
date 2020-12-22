@@ -3,13 +3,9 @@
 var FlipClock = (function () {
     function FlipClock(options) {
         this.is24Hour = false;
-        this.enableGoodies = options && options.enableGoodies;
-
-        if (options && options.hasOwnProperty('enableAudio')) {
-            this.enableAudio = options.enableAudio;
-        } else {
-            this.enableAudio = true;
-        }
+        this.enableGoodies = !!(options && options.enableGoodies);
+        this.enableAudio   = !!(options && options.enableAudio);
+        console.log('FlipClock: audio ' + this.enableAudio ? 'ENABLED' : 'DISABLED');
 
         if (options) {
             if (!this.element && options.elementId) {
@@ -46,6 +42,7 @@ var FlipClock = (function () {
                     startAt: date.getFullYear() - 20,
                     endAt: date.getFullYear() + 29,
                     element: this.elements.year,
+                    enableAudio: this.enableAudio,
                     flipClock: this
                 })
             );
@@ -68,6 +65,7 @@ var FlipClock = (function () {
                         'DEC'
                     ],
                     element: this.elements.month,
+                    enableAudio: this.enableAudio,
                     flipClock: this
                 })
             );
@@ -78,6 +76,7 @@ var FlipClock = (function () {
                     startAt: 1,
                     endAt: 31,
                     element: this.elements.date,
+                    enableAudio: this.enableAudio,
                     flipClock: this
                 })
             );
@@ -95,6 +94,7 @@ var FlipClock = (function () {
                         'SAT'
                     ],
                     element: this.elements.day,
+                    enableAudio: this.enableAudio,
                     flipClock: this
                 })
             );
@@ -107,6 +107,7 @@ var FlipClock = (function () {
                     digitCount: 2,
                     stateCount: 24,
                     element: this.elements.hour,
+                    enableAudio: this.enableAudio,
                     flipClock: this
                 })
             );
@@ -117,6 +118,7 @@ var FlipClock = (function () {
                     digitCount: 2,
                     stateCount: 60,
                     element: this.elements.minute,
+                    enableAudio: this.enableAudio,
                     flipClock: this
                 })
             );
@@ -127,6 +129,7 @@ var FlipClock = (function () {
                     digitCount: 2,
                     stateCount: 60,
                     element: this.elements.second,
+                    enableAudio: this.enableAudio,
                     flipClock: this
                 })
             );
@@ -142,6 +145,7 @@ var FlipClock = (function () {
                     digitCount: 1,
                     stateCount: 10,
                     element: element,
+                    enableAudio: this.enableAudio,
                     flipClock: this
                 });
                 this.segments.epoch.push(segment);
@@ -193,9 +197,9 @@ var FlipClock = (function () {
         var segments = this.segmentArray.filter(function (segment) {
             return !segment.isSeconds;
         });
-        segments.forEach(function (segment) {
-            segment.setEnableAudio(flag);
-        });
+        // segments.forEach(function (segment) {
+        //     segment.setEnableAudio(flag);
+        // });
     };
 
     FlipClock.prototype.setEnableSecondsTicks = function (flag) {
@@ -204,9 +208,9 @@ var FlipClock = (function () {
         var segments = this.segmentArray.filter(function (segment) {
             return segment.isSeconds;
         });
-        segments.forEach(function (segment) {
-            segment.setEnableAudio(flag);
-        });
+        // segments.forEach(function (segment) {
+        //     segment.setEnableAudio(flag);
+        // });
     };
 
     FlipClock.prototype.setEnableAudio = function (flag) {
