@@ -12,9 +12,11 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/c/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/c/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/c/favicon/favicon-16x16.png">
+        <link rel="icon" type="image/x-icon" href="/c/favicon/favicon.ico">
         <link rel="manifest" href="/c/favicon/site.webmanifest">
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
+        <meta name="msapplication-config" content="/c/favicon/browserconfig.xml">
 
         <title>Flip Clock</title>
 
@@ -22,7 +24,8 @@
             // iPad 2:
             //     Mozilla/5.0 (iPad; CPU OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36
             // iPhone 6 plus:
-            //     12.4.6 16G183; 12.4.7 16G192
+            //     12.4.6 16G183;
+            //     12.4.7 16G192
             if (/\bMobile\/13G36\b/.test(navigator.userAgent) || /(?:^|\?|&)molasses(?:$|=|&)/.test(location.search)) {
                 document.documentElement.classList.add('molasses');
                 document.documentElement.setAttribute('data-molasses', '');
@@ -108,46 +111,66 @@
                     |
                     <a href="/lc/">LED Clock</a>
                 </p>
+                <p style="opacity: 0.5; font-size: smaller; font-family: 'Courier New', 'Courier', monospace;">
+                    <script>document.write(navigator.userAgent);</script>
+                </p>
             </div>
 
-            <script src="node_modules/jquery/dist/jquery.min.js"></script>
-            <script src="node_modules/foundation-sites/dist/js/foundation.min.js"></script>
-            <script src="node_modules/what-input/dist/what-input.min.js"></script>
             <script>
-                var $ = jQuery;
-                $(document).foundation();
-            </script>
-
-            <script>
-                window.hasCacheBuster = true;
-                if (/(^|\?|&)nodate($|=|&)/.test(location.search)) {
-                    (function () {
-                        var x = document.getElementById('flipClockDate');
-                        if (x) {
-                            x.parentNode.removeChild(x);
+                (function () {
+                    window.hasCacheBuster = true;
+                    var noDate = /(^|\?|&)nodate($|=|&)/.test(location.search);
+                    var noSecond = /(^|\?|&)nosecond($|=|&)/.test(location.search);
+                    var noAudio = /(^|\?|&)noaudio($|=|&)/.test(location.search);
+                    if (noDate) {
+                        (function () {
+                            var x = document.getElementById('flipClockDate');
+                            if (x) {
+                                x.parentNode.removeChild(x);
+                            }
+                        }());
+                    }
+                    if (noSecond) {
+                        (function () {
+                            var x = document.getElementById('flipClockMonth');
+                            if (x) {
+                                x.parentNode.removeChild(x);
+                            }
+                            x = document.getElementById('flipClockSecond');
+                            if (x) {
+                                x.parentNode.removeChild(x);
+                            }
+                        }());
+                    }
+                    var scripts = [
+                        'js/polyfills.js',
+                        'js/timer.js',
+                        'js/jfont-checker.js',
+                        'js/which-font-family.js',
+                        'js/audio-ticker.js',
+                        'js/flip-clock.js',
+                        'js/flip-clock-page.js',
+                        'js/modals.js',
+                    ];
+                    function documentWriteScript(url) {
+                        document.write('<script src="' + url + '"><' + '/script>');
+                    }
+                    scripts.forEach(function (script) {
+                        if (window.hasCacheBuster) {
+                            script += '?' + new Date().getTime();
                         }
-                    }());
-                }
-                if (/(^|\?|&)nosecond($|=|&)/.test(location.search)) {
-                    (function () {
-                        var x = document.getElementById('flipClockMonth');
-                        if (x) {
-                            x.parentNode.removeChild(x);
-                        }
-                        x = document.getElementById('flipClockSecond');
-                        if (x) {
-                            x.parentNode.removeChild(x);
-                        }
-                    }());
-                }
-                document.write('<' + 'script defer src="js/main.js"></' + 'script>');
-                document.addEventListener('DOMContentLoaded', function () {
-                    FlipClockPage.init({
-                        element: document.getElementById('flipClock'),
-                        enableThemeConfiguration: false,
-                        enableGoodies: true
+                        documentWriteScript(script);
                     });
-                });
+                    window.addEventListener('load', function () {
+                        FlipClockPage.init({
+                            element: document.getElementById('flipClock'),
+                            enableThemeConfiguration: false,
+                            enableGoodies: true,
+                            enableAudio: !noAudio
+                        });
+                        Modals.init();
+                    });
+                }());
             </script>
 
         </div>
