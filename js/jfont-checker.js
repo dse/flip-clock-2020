@@ -56,7 +56,13 @@
             containerA.offsetHeight === containerB.offsetHeight;
     }
 
+    var checkFontCache = {};
+
     function checkfont(font, DOM){
+        if (!DOM && font in checkFontCache) {
+            return checkFontCache[font];
+        }
+
         var rootEle = html;
         if (DOM && DOM.children && DOM.children.length) {
             rootEle = DOM.children[0];
@@ -70,23 +76,31 @@
 
         font = font.replace(reg, "");
 
-        rootEle.appendChild(containerA);
-        rootEle.appendChild(containerB);
+        document.body.appendChild(containerA);
+        document.body.appendChild(containerB);
+        // TODO: maybe do this instead:
+        // rootEle.appendChild(containerA);
+        // rootEle.appendChild(containerB);
 
         //First Check
         containerA.style.fontFamily = font + ",monospace";
         containerB.style.fontFamily = "monospace";
 
-        if(checkDimension()){
-            //Assume Arial exists, Second Check
-            containerA.style.fontFamily = font + ",Arial";
-            containerB.style.fontFamily = "Arial";
+        if (checkDimension()){
+            if (font === 'Arial') {
+                containerA.style.fontFamily = font + ",monospace";
+                containerB.style.fontFamily = "monospace";
+            } else {
+                containerA.style.fontFamily = font + ",Arial";
+                containerB.style.fontFamily = "Arial";
+            }
             result = !checkDimension();
         } else {
             result = true;
         }
 
         cleanUp();
+        checkFontCache[font] = result;
         return result;
     }
 
