@@ -1,30 +1,13 @@
 /*global getWhichFontFamily, FlipClockAudio, TimeTicker */
 
-function absoluteURL(url) {
-    var a = document.createElement('a');
-    a.href = url;
-    return a.href;
-}
-
-// stackoverflow says absolute URLs work in safari
-var tickURL = absoluteURL('sounds/tick2.wav');
-
 var Segment = (function () {
     function Segment(options) {
         this.animationStyle = 1;
-        this.digitCount = options.digitCount;
-        this.flipClock = options.flipClock;
-        this.isHour = options.isHour;
-
-        this.enableAudio = false;
-        if (options.enableAudio) {
-            this.enableAudio = true;
-        }
-
-        this.is24Hour = false;
-        if (options.is24Hour) {
-            this.is24Hour = true;
-        }
+        this.digitCount     = options.digitCount;
+        this.flipClock      = options.flipClock;
+        this.isHour         = !!options.isHour;
+        this.enableAudio    = !!(options && options.enableAudio);
+        this.is24Hour       = !!(options && options.is24Hour);
 
         if (options.states && options.states instanceof Array) {
             this.states = options.states;
@@ -117,7 +100,9 @@ var Segment = (function () {
         this.flipTopText     = flipTopText;
         this.flipBottomText  = flipBottomText;
 
-        this.audio = new FlipClockAudio(tickURL);
+        if (this.enableAudio && !this.audio) {
+            this.audio = new FlipClockAudio();
+        }
 
         this.callback = [];
         this.addOrRemove12HourClass();
@@ -269,6 +254,9 @@ var Segment = (function () {
         if (!this.enableAudio) {
             return;
         }
+        if (!this.audio) {
+            this.audio = new FlipClockAudio();
+        }
         this.audio.play();
     };
 
@@ -414,6 +402,12 @@ var FlipClock = (function () {
         this.is24Hour = false;
         this.enableGoodies = options && options.enableGoodies;
 
+        if (options && options.hasOwnProperty('enableAudio')) {
+            this.enableAudio = options.enableAudio;
+        } else {
+            this.enableAudio = true;
+        }
+
         if (options) {
             if (!this.element && options.elementId) {
                 this.element = document.getElementById(options.elementId);
@@ -422,6 +416,7 @@ var FlipClock = (function () {
                 this.element = options.element;
             }
         }
+
         if (!this.element) {
             throw new Error('FlipClock: no element');
         }
@@ -572,10 +567,6 @@ var FlipClock = (function () {
                 }
             });
         }
-
-        // for shits and giggles but also so we can plan a thingy on
-        // user request
-        this.audio = new FlipClockAudio(tickURL);
 
         this.element.classList.add('flip-clock');
         this.addOrRemove12HourClass();
