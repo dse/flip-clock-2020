@@ -2,10 +2,21 @@
 
 var FlipClockAudio;
 
+function absoluteURL(url) {
+    var a = document.createElement('a');
+    a.href = url;
+    return a.href;
+}
+
 if (window.AudioContext && (location.protocol === 'http:' || location.protocol === 'https:')) {
+    console.log('using FlipClockAudio object with AudioContext');
     FlipClockAudio = (function () {
         var FlipClockAudio = function (url) {
-            this.url = url;
+            if (url) {
+                this.url = absoluteURL(url);
+            } else {
+                this.url = absoluteURL('sounds/tick2.wav');
+            }
         };
         Object.assign(FlipClockAudio.prototype, {
             play: function () {
@@ -45,8 +56,8 @@ if (window.AudioContext && (location.protocol === 'http:' || location.protocol =
         });
         return FlipClockAudio;
     }());
-
 } else {
+    console.log('using FlipClockAudio object without AudioContext');
     // fallback that works well in Chrome but not Safari.
     FlipClockAudio = (function () {
         function FlipClockAudio(url) {
