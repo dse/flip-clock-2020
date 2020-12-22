@@ -40,75 +40,29 @@ $flip-clock-cylinder-height: 2vw;
 
 $bottom-buttons-background-color: #181818;
 
-@if true {
-    $background-gradient: linear-gradient(
-        to bottom,
-        color-multiply($background-color, 1.5),
-        color-multiply($background-color, 0.75)
-    );
-}
+$background-gradient: linear-gradient(
+    to bottom,
+    color-multiply($background-color, 1.5),
+    color-multiply($background-color, 0.75)
+);
 
 /* does not darken text */
-@if true {
-    $segment-background-gradient: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(black, 0.25) 50%,
-        transparent 50%,
-        rgba(black, 0.25) 100%
-    );
-}
+$segment-background-gradient: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(black, 0.25) 50%,
+    transparent 50%,
+    rgba(black, 0.25) 100%
+);
 
 /* this darkens text.  experiment tweaking this with segment-background-gradient. */
-@if true {
-    $segment-gradient-overlay: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(black, 0.25) 50%,
-        transparent 50%,
-        rgba(black, 0.25) 100%
-    );
-}
-
-@supports (--foo: green) {
-    html.has-theme-support {
-        --flip-clock-window-padding:              #{$flip-clock-window-padding};
-        --flip-clock-segment-gutter:              #{$flip-clock-segment-gutter};
-        --flip-clock-window-gutter:               #{$flip-clock-window-gutter};
-        --segment-border-radius:                  #{$segment-border-radius};
-        --flip-clock-border-radius:               #{$flip-clock-border-radius};
-        --segment-horizontal-padding:             #{$segment-horizontal-padding};
-        --segment-ampm-position-left:             #{$segment-ampm-position-left};
-        --segment-ampm-position-top:              #{$segment-ampm-position-top};
-        --segment-ampm-position-bottom:           #{$segment-ampm-position-bottom};
-        --segment-fake-italic-horizontal-padding: #{$segment-fake-italic-horizontal-padding};
-        --background-color:                       #{$background-color};
-        --background-gradient:                    #{$background-gradient};
-        --segment-background-color:               #{$segment-background-color};
-        --segment-background-gradient:            #{$segment-background-gradient};
-        --segment-foreground-color:               #{$segment-foreground-color};
-        --font-family:                            #{$font-family};
-        --font-weight:                            #{$font-weight};
-        --font-style:                             #{$font-style};
-        --transition-duration:                    #{$transition-duration};
-        --rushed-transition-duration:             #{$rushed-transition-duration};
-        --flip-clock-window-border-width:         #{$flip-clock-window-border-width};
-        --flip-clock-segment-highlight-width:     #{$flip-clock-segment-highlight-width};
-    }
-    html.has-theme-support .flip-clock-date-window {
-        --segment-horizontal-padding:             #{$segment-horizontal-padding--date};
-    }
-    html.has-theme-support .flip-clock-epoch-window {
-        --flip-clock-window-padding:              #{$flip-clock-window-padding--epoch};
-        --flip-clock-segment-gutter:              #{$flip-clock-segment-gutter--epoch};
-        --flip-clock-window-gutter:               #{$flip-clock-window-gutter--epoch};
-        --segment-border-radius:                  #{$segment-border-radius--epoch};
-        --segment-horizontal-padding:             #{$segment-horizontal-padding--epoch};
-        --flip-clock-border-radius:               #{$flip-clock-border-radius--epoch};
-        --flip-clock-window-border-width:         #{$flip-clock-window-border-width--epoch};
-        --flip-clock-segment-highlight-width:     #{$flip-clock-segment-highlight-width--epoch};
-    }
-}
+$segment-gradient-overlay: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(black, 0.25) 50%,
+    transparent 50%,
+    rgba(black, 0.25) 100%
+);
 
 body.flip-clock-page {
     min-height: 100vh;
@@ -138,13 +92,6 @@ body.flip-clock-page {
     font-family: $font-family;
     font-weight: $font-weight;
     font-style: $font-style;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            font-family: var(--font-family);
-            font-weight: var(--font-weight);
-            font-style: var(--font-style);
-        }
-    }
 }
 
 /**
@@ -153,29 +100,14 @@ body.flip-clock-page {
 
 .flip-clock-line {
     color: $segment-foreground-color;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            color: var(--segment-foreground-color);
-        }
-    }
 }
 
 .flip-clock-line + .flip-clock-line {
     margin-top: #{$flip-clock-window-gutter};
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            margin-top: var(--flip-clock-window-gutter);
-        }
-    }
 }
 
 .flip-clock-line .flip-clock-window + .flip-clock-window {
     margin-left: $flip-clock-window-gutter;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            margin-left: var(--flip-clock-window-gutter);
-        }
-    }
 }
 
 /**
@@ -185,12 +117,6 @@ body.flip-clock-page {
 .flip-clock-window {
     border-radius: $flip-clock-border-radius;
     padding: $flip-clock-window-padding;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            border-radius: var(--flip-clock-border-radius);
-            padding: var(--flip-clock-window-padding);
-        }
-    }
 }
 
 /* "highlighting" simulacrum */
@@ -199,11 +125,6 @@ body.flip-clock-page {
     border-width: 0 0 #{$flip-clock-window-border-width} 0;
     background-clip: padding-box;
     border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            border-width: 0 0 var(--flip-clock-window-border-width) 0;
-        }
-    }
 }
 
 /**
@@ -212,11 +133,6 @@ body.flip-clock-page {
 
 .flip-clock-segment + .flip-clock-segment {
     margin-left: $flip-clock-segment-gutter;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            margin-left: var(--flip-clock-segment-gutter);
-        }
-    }
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
@@ -226,17 +142,6 @@ body.flip-clock-page {
     }
     &.pm {
         bottom: $segment-ampm-position-bottom;
-    }
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            left: var(--segment-ampm-position-left);
-            &.am {
-                top: var(--segment-ampm-position-top);
-            }
-            &.pm {
-                bottom: var(--segment-ampm-position-bottom);
-            }
-        }
     }
 }
 
@@ -253,18 +158,6 @@ body.flip-clock-page {
     border-radius: $segment-border-radius;
     padding-left: $segment-horizontal-padding;
     padding-right: $segment-horizontal-padding;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            background-color: var(--segment-background-color);
-            @at-root html:not(.molasses) & {
-                background-image: var(--segment-background-gradient);
-            }
-            color: var(--segment-foreground-color);
-            border-radius: var(--segment-border-radius);
-            padding-left: var(--segment-horizontal-padding);
-            padding-right: var(--segment-horizontal-padding);
-        }
-    }
 }
 
 /* "highlighting" simulacrum */
@@ -273,11 +166,6 @@ body.flip-clock-page {
     border-width: #{$flip-clock-segment-highlight-width} 0 0 0;
     background-clip: padding-box;
     border-color: rgba(255, 255, 255, 0.25) transparent rgba(0, 0, 0, 0.5) transparent;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            border-width: var(--flip-clock-segment-highlight-width) 0 0 0;
-        }
-    }
 }
 
 @if $segment-gradient-overlay != null {
@@ -314,21 +202,11 @@ html.molasses {
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment::before,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment::before {
     padding-right: $segment-fake-italic-horizontal-padding;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            padding-right: var(--segment-fake-italic-horizontal-padding);
-        }
-    }
 }
 
 .flip-clock.with-fake-italic.with-font-style--italic  .flip-clock-segment-piece-inner,
 .flip-clock.with-fake-italic.with-font-style--oblique .flip-clock-segment-piece-inner {
     padding-right: $segment-fake-italic-horizontal-padding;
-    @supports (--foo: green) {
-        @at-root html.has-theme-support & {
-            padding-right: var(--segment-fake-italic-horizontal-padding);
-        }
-    }
 }
 
 .flip-clock-segment.flip-clock-segment-twelve-hour {
