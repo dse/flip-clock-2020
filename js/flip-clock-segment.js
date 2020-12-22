@@ -1,3 +1,5 @@
+/*global FlipClockAudio */
+
 var Segment = (function () {
     function Segment(options) {
         this.animationStyle = 1;
@@ -98,7 +100,7 @@ var Segment = (function () {
         this.flipTopText     = flipTopText;
         this.flipBottomText  = flipBottomText;
 
-        if (this.enableAudio && !this.audio) {
+        if (this.enableAudio && !this.audio && window.FlipClockAudio) {
             this.audio = new FlipClockAudio();
         }
 
@@ -252,10 +254,12 @@ var Segment = (function () {
         if (!this.enableAudio) {
             return;
         }
-        if (!this.audio) {
+        if (!this.audio && window.FlipClockAudio) {
             this.audio = new FlipClockAudio();
         }
-        this.audio.play();
+        if (this.audio) {
+            this.audio.play();
+        }
     };
 
     Segment.prototype.animate2 = function (currentText, newText, nextStateIndex, nextDisplayedStateIndex) {

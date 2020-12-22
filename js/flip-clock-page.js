@@ -31,7 +31,6 @@ var FlipClockPage = {
         this.enableGoodies = options && options.enableGoodies;
         this.element       = options && options.element;
         this.enableAudio   = !!(options && options.enableAudio);
-        console.log('FlipClockPage: audio ' + this.enableAudio ? 'ENABLED' : 'DISABLED');
         this.flipClock = new FlipClock({
             element: this.element,
             enableGoodies: this.enableGoodies,

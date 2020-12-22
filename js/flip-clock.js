@@ -1,11 +1,10 @@
-/*global getWhichFontFamily, FlipClockAudio, TimeTicker, Segment */
+/*global getWhichFontFamily, TimeTicker, Segment */
 
 var FlipClock = (function () {
     function FlipClock(options) {
         this.is24Hour = false;
         this.enableGoodies = !!(options && options.enableGoodies);
         this.enableAudio   = !!(options && options.enableAudio);
-        console.log('FlipClock: audio ' + this.enableAudio ? 'ENABLED' : 'DISABLED');
 
         if (options) {
             if (!this.element && options.elementId) {
@@ -197,9 +196,9 @@ var FlipClock = (function () {
         var segments = this.segmentArray.filter(function (segment) {
             return !segment.isSeconds;
         });
-        // segments.forEach(function (segment) {
-        //     segment.setEnableAudio(flag);
-        // });
+        segments.forEach(function (segment) {
+            segment.setEnableAudio(flag);
+        });
     };
 
     FlipClock.prototype.setEnableSecondsTicks = function (flag) {
@@ -208,9 +207,9 @@ var FlipClock = (function () {
         var segments = this.segmentArray.filter(function (segment) {
             return segment.isSeconds;
         });
-        // segments.forEach(function (segment) {
-        //     segment.setEnableAudio(flag);
-        // });
+        segments.forEach(function (segment) {
+            segment.setEnableAudio(flag);
+        });
     };
 
     FlipClock.prototype.setEnableAudio = function (flag) {
