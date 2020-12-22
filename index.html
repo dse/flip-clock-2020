@@ -7,12 +7,22 @@
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" /><!-- default, black, and black-translucent -->
+        <meta name="apple-mobile-web-app-title" content="Flip Clock">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/c/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/c/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/c/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/c/favicon/site.webmanifest">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
 
         <title>Flip Clock</title>
 
         <script>
-            // iPad 2:        Mozilla/5.0 (iPad; CPU OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36
-            // iPhone 6 plus: 12.4.6 16G183; 12.4.7 16G192
+            // iPad 2:
+            //     Mozilla/5.0 (iPad; CPU OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G36
+            // iPhone 6 plus:
+            //     12.4.6 16G183; 12.4.7 16G192
             if (/\bMobile\/13G36\b/.test(navigator.userAgent) || /(?:^|\?|&)molasses(?:$|=|&)/.test(location.search)) {
                 document.documentElement.classList.add('molasses');
                 document.documentElement.setAttribute('data-molasses', '');
@@ -30,34 +40,34 @@
     <body class="flip-clock-page">
         <div class="body-inner">
 
-            <div data-flip-clock class="flip-clock" id="flip-clock">
-                <div class="flip-clock-line flip-clock-date-line" data-flip-clock-line>
+            <div data-flip-clock class="flip-clock" id="flipClock">
+                <div id="flipClockDate" class="flip-clock-line flip-clock-date-line" data-flip-clock-line>
                     <div class="flip-clock-line-inner">
-                        <div class="flip-clock-window flip-clock-day-window">
+                        <div id="flipClockDay" class="flip-clock-window flip-clock-day-window">
                             <div data-flip-clock-day class="flip-clock-segment flip-clock-segment-day">
                             </div>
                         </div>
-                        <div class="flip-clock-window flip-clock-month-window">
+                        <div id="flipClockMonth" class="flip-clock-window flip-clock-month-window">
                             <div data-flip-clock-month class="flip-clock-segment flip-clock-segment-month">
                             </div>
                         </div>
-                        <div class="flip-clock-window flip-clock-date-window">
+                        <div id="flipClockDate" class="flip-clock-window flip-clock-date-window">
                             <div data-flip-clock-date class="flip-clock-segment flip-clock-segment-date">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="flip-clock-line flip-clock-time-line" data-flip-clock-line>
+                <div id="flipClockTime" class="flip-clock-line flip-clock-time-line" data-flip-clock-line>
                     <div class="flip-clock-line-inner">
-                        <div class="flip-clock-window flip-clock-time-window">
+                        <div id="flipClockHour" class="flip-clock-window flip-clock-time-window">
                             <div data-flip-clock-hour class="flip-clock-segment flip-clock-segment-hour">
                             </div>
                         </div>
-                        <div class="flip-clock-window flip-clock-time-window">
+                        <div id="flipClockMinute" class="flip-clock-window flip-clock-time-window">
                             <div data-flip-clock-minute class="flip-clock-segment flip-clock-segment-minute">
                             </div>
                         </div>
-                        <div class="flip-clock-window flip-clock-time-window">
+                        <div id="flipClockSecond" class="flip-clock-window flip-clock-time-window">
                             <div data-flip-clock-second class="flip-clock-segment flip-clock-segment-second">
                             </div>
                         </div>
@@ -94,6 +104,8 @@
                     </label>
                 </div>
                 <p>
+                    <a href="/c/">Flip Clock</a>
+                    |
                     <a href="/lc/">LED Clock</a>
                 </p>
             </div>
@@ -107,11 +119,31 @@
             </script>
 
             <script>
+                window.hasCacheBuster = true;
+                if (/(^|\?|&)nodate($|=|&)/.test(location.search)) {
+                    (function () {
+                        var x = document.getElementById('flipClockDate');
+                        if (x) {
+                            x.parentNode.removeChild(x);
+                        }
+                    }());
+                }
+                if (/(^|\?|&)nosecond($|=|&)/.test(location.search)) {
+                    (function () {
+                        var x = document.getElementById('flipClockMonth');
+                        if (x) {
+                            x.parentNode.removeChild(x);
+                        }
+                        x = document.getElementById('flipClockSecond');
+                        if (x) {
+                            x.parentNode.removeChild(x);
+                        }
+                    }());
+                }
                 document.write('<' + 'script defer src="js/main.js"></' + 'script>');
-                document.write('<' + 'script defer src="js/flip-clock-page.js?cachebuster=' + cachebuster + '"></' + 'script>');
                 document.addEventListener('DOMContentLoaded', function () {
                     FlipClockPage.init({
-                        element: document.getElementById('flip-clock'),
+                        element: document.getElementById('flipClock'),
                         enableThemeConfiguration: false,
                         enableGoodies: true
                     });
