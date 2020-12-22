@@ -30,15 +30,22 @@ var FlipClockPage = {
     init: function (options) {
         this.enableGoodies = options && options.enableGoodies;
         this.element = options && options.element;
+        if (options && options.hasOwnProperty('enableAudio')) {
+            this.enableAudio = options.enableAudio;
+        } else {
+            this.enableAudio = true;
+        }
         this.flipClock = new FlipClock({
             element: this.element,
-            enableGoodies: this.enableGoodies
+            enableGoodies: this.enableGoodies,
+            enableAudio: this.enableAudio
         });
         this.computeAndSetZoomValue();
         this.flipClock.setAnimationStyle(1);
         this.setPropertiesFromStorage();
         this.setFormValues();
         this.addEvents();
+
     },
 
     clearZoomValue: function () {
