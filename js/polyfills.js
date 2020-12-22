@@ -146,3 +146,25 @@ if (typeof Object.assign !== 'function') {
         configurable: true
     });
 }
+
+/**
+ * String.prototype.padStart polyfill
+ * https://github.com/behnammodi/polyfill/blob/master/string.polyfill.js
+ */
+if (!String.prototype.padStart) {
+    /*jshint -W016, -W121 */
+    String.prototype.padStart = function padStart(targetLength, padString) {
+        targetLength = targetLength >> 0;
+        padString = String(typeof padString !== 'undefined' ? padString : ' ');
+        if (this.length > targetLength) {
+            return String(this);
+        } else {
+            targetLength = targetLength - this.length;
+            if (targetLength > padString.length) {
+                padString += padString.repeat(targetLength / padString.length);
+            }
+            return padString.slice(0, targetLength) + String(this);
+        }
+    };
+    /*jshint +W016, +W121 */
+}
