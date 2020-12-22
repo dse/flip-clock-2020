@@ -17,7 +17,6 @@
  **/
 
 /*jshint -W049 */
-/*global console */
 
 (function(){
     var containerA, containerB, html = document.getElementsByTagName("html")[0],
@@ -69,9 +68,7 @@
 
         // NOTE: HelveticaNeue-CondensedBold, removed \- from rx above
 
-        console.log('<', font);
         font = font.replace(reg, "");
-        console.log('>', font);
 
         rootEle.appendChild(containerA);
         rootEle.appendChild(containerB);
@@ -79,8 +76,6 @@
         //First Check
         containerA.style.fontFamily = font + ",monospace";
         containerB.style.fontFamily = "monospace";
-
-        console.log(containerA.offsetWidth, containerA.offsetHeight, containerB.offsetWidth, containerB.offsetHeight);
 
         if(checkDimension()){
             //Assume Arial exists, Second Check
