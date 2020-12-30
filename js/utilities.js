@@ -25,3 +25,20 @@ function appendJS(url, options) {
 function removeElement(element) {
     element.parentNode.removeChild(element);
 }
+function forEachSearchParam(callback) {
+    location.search.replace(/^\?/, '').replace(/\+/g, ' ').split(/&/).forEach(function (nv) {
+        if (nv === '') {
+            return;
+        }
+        var n, v, matches = /=/.exec(nv);
+        if (matches) {
+            n = decodeURIComponent(nv.slice(0, matches[0].start));
+            v = decodeURIComponent(nv.slice(matches[0].start + 1));
+        } else {
+            n = decodeURIComponent(nv);
+            v = '';
+        }
+        callback(n, v);
+    });
+}
+
