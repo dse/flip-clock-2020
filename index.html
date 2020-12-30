@@ -20,13 +20,7 @@
 
         <title>Flip Clock</title>
 
-        <script>
-        </script>
-
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css">
-
-        <script>
-        </script>
     </head>
     <body class="flip-clock-page">
         <div class="body-inner">
@@ -105,36 +99,9 @@
             </div>
         </div>
 
+        <script src="js/utilities.js"></script>
         <script>
             (function () {
-                function alterURL(url) {
-                    if (window.hasCacheBuster) {
-                        if (/\?/.test(url)) {
-                            url += '&cachebuster=' + new Date().getTime();
-                        } else {
-                            url += '?cachebuster=' + new Date().getTime();
-                        }
-                    }
-                    return url;
-                }
-                function appendCSS(url, options) {
-                    url = alterURL(url);
-                    var link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.href = url;
-                    document.head.appendChild(link);
-                }
-                function appendJS(url, options) {
-                    url = alterURL(url);
-                    var script = document.createElement('script');
-                    script.src = url;
-                    script.defer = !!(options && options.defer);
-                    document.head.appendChild(script);
-                }
-                function removeElement(element) {
-                    element.parentNode.removeChild(element);
-                }
-
                 var isiPad   = /\biPad\b/.test(navigator.userAgent);
                 var isiPhone = /\biPhone\b/.test(navigator.userAgent);
                 var isiOS9   = /\bOS\s+9_/.test(navigator.userAgent);
@@ -158,30 +125,46 @@
                 appendCSS('css/foundation.min.css');
                 appendCSS('css/flip-clock.min.css');
 
-                appendJS('js/polyfills.js', { defer: true });
+                appendJS('js/polyfills.js',                  { defer: true });
                 // appendJS('js/AudioContextMonkeyPatch.js', { defer: true }); // necessary?
-                appendJS('js/timer.js', { defer: true });
-                appendJS('js/jfont-checker.js', { defer: true });
-                appendJS('js/which-font-family.js', { defer: true });
-                appendJS('js/audio-ticker.js', { defer: true });
-                appendJS('js/flip-clock-segment.js', { defer: true });
-                appendJS('js/flip-clock.js', { defer: true });
-                appendJS('js/flip-clock-page.js', { defer: true });
-                appendJS('js/modals.js', { defer: true });
+                appendJS('js/timer.js',                      { defer: true });
+                appendJS('js/jfont-checker.js',              { defer: true });
+                appendJS('js/which-font-family.js',          { defer: true });
+                appendJS('js/audio-ticker.js',               { defer: true });
+                appendJS('js/flip-clock-segment.js',         { defer: true });
+                appendJS('js/flip-clock.js',                 { defer: true });
+                appendJS('js/flip-clock-page.js',            { defer: true });
+                appendJS('js/modals.js',                     { defer: true });
 
-                var noDate   = /(^|\?|&)nodate($|=|&)/i.test(location.search);
-                var noSecond = /(^|\?|&)nosecond($|=|&)/i.test(location.search);
-                var noAudio  = /(^|\?|&)noaudio($|=|&)/i.test(location.search);
-                if (noDate) {
-                    Array.from(document.querySelectorAll('[data-flip-clock-date-line]')).forEach(removeElement);
-                }
-                if (noSecond) {
-                    Array.from(document.querySelectorAll('[data-flip-clock-second-window]')).forEach(removeElement);
-                    Array.from(document.querySelectorAll('[data-flip-clock-month-window]')).forEach(removeElement);
-                }
-                if (noAudio) {
-                    Array.from(document.querySelectorAll('[data-label-flip-clock-enable-ticks]')).forEach(removeElement);
-                    Array.from(document.querySelectorAll('[data-label-flip-clock-enable-seconds-ticks]')).forEach(removeElement);
+                var fontFamily;
+                var fontWeight;
+                var fontStyle;
+                var noAudio = false;
+
+                forEachSearchParam(function (name, value) {
+                    console.log(name, value);
+                    if (name.toLowerCase() === 'nodate') {
+                        Array.from(document.querySelectorAll('[data-flip-clock-date-line]')).forEach(removeElement);
+                    } else if (name.toLowerCase() === 'nosecond') {
+                        Array.from(document.querySelectorAll('[data-flip-clock-second-window]')).forEach(removeElement);
+                        Array.from(document.querySelectorAll('[data-flip-clock-month-window]')).forEach(removeElement);
+                    } else if (name.toLowerCase() === 'noaudio') {
+                        Array.from(document.querySelectorAll('[data-label-flip-clock-enable-ticks]')).forEach(removeElement);
+                        Array.from(document.querySelectorAll('[data-label-flip-clock-enable-seconds-ticks]')).forEach(removeElement);
+                        noAudio = true;
+                    } else if (name.toLowerCase() === 'futura') {
+                        fontFamily = "Futura, Helvetica Neue, Helvetica, Arial, sans-serif";
+                    } else if (name.toLowerCase() === 'helvetica') {
+                        fontFamily = "Helvetica Neue, Helvetica, Arial, sans-serif";
+                    } else if (name.toLowerCase() === 'arial') {
+                        fontFamily = "Arial, Helvetica Neue, Helvetica, sans-serif";
+                    }
+                });
+
+                if (fontFamily != null) {
+                    document.querySelector('.flip-clock').forEach(function (flipClock) {
+                        flipClock.style.fontFamily = fontFamily;
+                    });
                 }
 
                 window.addEventListener('load', function () {
