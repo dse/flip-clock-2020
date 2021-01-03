@@ -6,7 +6,7 @@ var cleanCSS      = require('gulp-clean-css');
 
 var sassPaths = [
     'node_modules/foundation-sites/scss',
-    'node_modules/motion-ui/src'
+    // 'node_modules/motion-ui/src',
 ];
 
 var autoprefixerOptions = {
