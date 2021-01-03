@@ -2,6 +2,11 @@
     all: unset;
 }
 
+.bottom-buttons {
+    background-color: $flip-clock-bottom-buttons-background-color;
+    background-image: none;
+}
+
 .bottom-left-buttons {
     position: fixed;
     bottom: 0;

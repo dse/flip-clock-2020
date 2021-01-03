@@ -1,6 +1,4 @@
 body.flip-clock-page {
-    min-height: 100vh;
-    overflow: hidden;
     background-image: url('../images/texture.jpg');
     background-repeat: no-repeat;
     background-position: center;
@@ -18,42 +16,7 @@ body.flip-clock-page {
     }
 }
 
-/**
- * Overall styles
- */
-
-.flip-clock {
-    font-family: $font-family;
-    font-weight: $font-weight;
-    font-style: $font-style;
-}
-
-/**
- * Overall layout
- */
-
-.flip-clock {
-    color: $segment-foreground-color;
-}
-
-.flip-clock-line + .flip-clock-line {
-    margin-top: #{$flip-clock-window-gutter};
-}
-
-.flip-clock-line .flip-clock-window + .flip-clock-window {
-    margin-left: $flip-clock-window-gutter;
-}
-
-/**
- * Viewmaster styles
- */
-
-.flip-clock-window {
-    border-radius: $flip-clock-border-radius;
-    padding: $flip-clock-window-padding;
-}
-
-/* "highlighting" simulacrum */
+/* "highlighting" */
 .flip-clock-window {
     border-style: solid;
     border-width: 0 0 #{$flip-clock-window-border-width} 0;
@@ -61,39 +24,7 @@ body.flip-clock-page {
     border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
 }
 
-/**
- * Segment sizing and layout
- */
-
-.flip-clock-segment + .flip-clock-segment {
-    margin-left: $flip-clock-segment-gutter;
-}
-
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
-    left: $segment-ampm-position-left;
-    &.am {
-        top: $segment-ampm-position-top;
-    }
-    &.pm {
-        bottom: $segment-ampm-position-bottom;
-    }
-}
-
-/**
- * Segment piece styles
- */
-
-.flip-clock-segment-piece {
-    background-color: $segment-background-color;
-    @at-root html:not(.molasses) & {
-        background-image: $segment-background-gradient;
-    }
-    border-radius: $segment-border-radius;
-    padding-left: $segment-horizontal-padding;
-    padding-right: $segment-horizontal-padding;
-}
-
-/* "highlighting" simulacrum */
+/* "highlighting" */
 .flip-clock-segment-piece {
     border-style: solid;
     border-width: #{$flip-clock-segment-highlight-width} 0 0 0;
@@ -101,7 +32,11 @@ body.flip-clock-page {
     border-color: rgba(255, 255, 255, 0.25) transparent rgba(0, 0, 0, 0.5) transparent;
 }
 
-@if $segment-gradient-overlay != null {
+/**
+ * Segment piece styles
+ */
+
+@if $flip-clock-segment-gradient-overlay != null {
     html:not(.molasses) .flip-clock-segment-piece::after {
         content: '';
         position: absolute;
@@ -109,7 +44,7 @@ body.flip-clock-page {
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: $segment-gradient-overlay;
+        background-image: $flip-clock-segment-gradient-overlay;
     }
 }
 html.molasses {
@@ -128,21 +63,12 @@ html.molasses {
     }
 }
 
-.flip-clock-segment.flip-clock-segment-twelve-hour {
-    .flip-clock-segment-piece {
-        width: calc(2.5ch);
-        .numeric-value {
-            left: 0.0625em;
-        }
-    }
-}
-
 .flip-clock-segment {
     @include flip-clock-segment-clip(
         $x: $flip-clock-cylinder-width,
         $y: $flip-clock-cylinder-height,
-        $background-color: $segment-background-color,
-        $background-image: linear-gradient(
+        $flip-clock-background-color: $flip-clock-segment-background-color,
+        $flip-clock-background-image: linear-gradient(
             to bottom,
             rgba(white, 0.125),
             transparent,
@@ -150,9 +76,4 @@ html.molasses {
         ),
         $hsep: 2px
     );
-}
-
-.bottom-buttons {
-    background-color: $bottom-buttons-background-color;
-    background-image: none;
 }

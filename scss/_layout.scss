@@ -11,16 +11,16 @@
 
 /* vertical layout and sizing */
 .flip-clock-line + .flip-clock-line {
-    margin-top: 1rem;
+    margin-top: #{$flip-clock-window-gutter};
 }
 .flip-clock-date-line {
-    font-size: $flipclock-font-size * $flipclock-date-size;
+    font-size: $flip-clock-font-size * $flip-clock-date-size;
 }
 .flip-clock-time-line {
-    font-size: $flipclock-font-size;
+    font-size: $flip-clock-font-size;
 }
 .flip-clock-epoch-line {
-    font-size: $flipclock-font-size * $flipclock-epoch-size;
+    font-size: $flip-clock-font-size * $flip-clock-epoch-size;
 }
 
 /* horizontal layout */
@@ -32,6 +32,10 @@
     justify-content: center;
     align-items: flex-start;
 }
-.flip-clock-line .flip-clock-window + .flip-clock-window {
-    margin-left: $flipclock-window-gutter;
+
+.flip-clock-window + .flip-clock-window {
+    margin-left: $flip-clock-window-gutter;
+}
+.flip-clock-segment + .flip-clock-segment {
+    margin-left: $flip-clock-segment-gutter;
 }

@@ -1,52 +1,56 @@
-$flip-clock-window-padding:                 1.5vw;
-$flip-clock-segment-gutter:                 2vw;
-$flip-clock-window-gutter:                  2vw;
-$segment-border-radius:                     1vw;
-$flip-clock-border-radius:                  $segment-border-radius + $flip-clock-window-padding;
-$segment-horizontal-padding:                2vw;
-$segment-horizontal-padding--date:          2vw;
-$segment-ampm-position-left:                1vw;
-$segment-ampm-position-top:                 20%; /* depends on the font */
-$segment-ampm-position-bottom:              17.5%; /* depends on the font */
-$background-color:                          #181818;
-$segment-background-color:                  #111111;
-$segment-foreground-color:                  #ffffff;
-$font-family:                               'HelveticaNeue-CondensedBold', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-$font-weight:                               normal;
-$font-style:                                normal;
-$transition-duration:                       300ms;
-$rushed-transition-duration:                50ms;
-$flip-clock-window-border-width:            2px;
-$flip-clock-segment-highlight-width:        2px;
+$flip-clock-font-size:                                  18vw;
+$flip-clock-date-size:                                  1/3;
+$flip-clock-epoch-size:                                 1/3;
+$flip-clock-ampm-font-size:                             10%;
 
-$flip-clock-window-padding--epoch:          1vw;
-$flip-clock-segment-gutter--epoch:          1vw;
-$flip-clock-window-gutter--epoch:           1vw;
-$segment-border-radius--epoch:              1vw;
-$segment-horizontal-padding--epoch:         1vw;
-$flip-clock-border-radius--epoch:           $segment-border-radius--epoch + $flip-clock-window-padding--epoch;
-$flip-clock-window-border-width--epoch:     2px;
-$flip-clock-segment-highlight-width--epoch: 2px;
+$flip-clock-font-family:                                'HelveticaNeue-CondensedBold', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$flip-clock-font-weight:                                normal;
+$flip-clock-font-style:                                 normal;
 
-$background-gradient: null;
-$segment-background-gradient: null;
-$segment-gradient-overlay: null;
+$flip-clock-background-color:                           #181818;
+$flip-clock-segment-background-color:                   #111111;
+$flip-clock-segment-foreground-color:                   #ffffff;
 
-$flip-clock-molasses-top-darken:    0.25;
+$flip-clock-window-padding:                             1.5vw;
+$flip-clock-segment-gutter:                             2vw;
+$flip-clock-window-gutter:                              2vw;
+$flip-clock-segment-border-radius:                      1vw;
+$flip-clock-border-radius:                              $flip-clock-segment-border-radius + $flip-clock-window-padding;
+$flip-clock-segment-horizontal-padding:                 2vw;
+$flip-clock-segment-horizontal-padding--date:           2vw;
 
-$flip-clock-cylinder-width: 1vw;
-$flip-clock-cylinder-height: 2vw;
+$flip-clock-segment-ampm-position-left:                 1vw;
+$flip-clock-segment-ampm-position-top:                  20%; /* depends on the font */
+$flip-clock-segment-ampm-position-bottom:               17.5%; /* depends on the font */
 
-$bottom-buttons-background-color: #181818;
+$flip-clock-window-border-width:                        2px;
+$flip-clock-segment-highlight-width:                    2px;
 
-$background-gradient: linear-gradient(
+$flip-clock-window-padding--epoch:                      1vw;
+$flip-clock-segment-gutter--epoch:                      1vw;
+$flip-clock-window-gutter--epoch:                       1vw;
+$flip-clock-segment-border-radius--epoch:               1vw;
+$flip-clock-segment-horizontal-padding--epoch:          1vw;
+$flip-clock-border-radius--epoch:                       $flip-clock-segment-border-radius--epoch + $flip-clock-window-padding--epoch;
+$flip-clock-window-border-width--epoch:                 2px;
+$flip-clock-segment-highlight-width--epoch:             2px;
+
+$flip-clock-molasses-top-darken:                        0.25;
+$flip-clock-cylinder-width:                             1vw;
+$flip-clock-cylinder-height:                            2vw;
+
+// $flip-clock-background-gradient:         null;
+// $flip-clock-segment-background-gradient: null;
+// $flip-clock-segment-gradient-overlay:    null;
+
+$flip-clock-background-gradient: linear-gradient(
     to bottom,
-    color-multiply($background-color, 1.5),
-    color-multiply($background-color, 0.75)
+    color-multiply($flip-clock-background-color, 1.5),
+    color-multiply($flip-clock-background-color, 0.75)
 );
 
 /* does not darken text */
-$segment-background-gradient: linear-gradient(
+$flip-clock-segment-background-gradient: linear-gradient(
     to bottom,
     transparent 0%,
     rgba(black, 0.25) 50%,
@@ -55,10 +59,12 @@ $segment-background-gradient: linear-gradient(
 );
 
 /* this darkens text.  experiment tweaking this with segment-background-gradient. */
-$segment-gradient-overlay: linear-gradient(
+$flip-clock-segment-gradient-overlay: linear-gradient(
     to bottom,
     transparent 0%,
     rgba(black, 0.25) 50%,
     transparent 50%,
     rgba(black, 0.25) 100%
 );
+
+$flip-clock-bottom-buttons-background-color:            #181818;

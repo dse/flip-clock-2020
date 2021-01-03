@@ -17,7 +17,7 @@
 
 /* vertical layout and sizing */
 .flip-clock-line + .flip-clock-line {
-  margin-top: 1rem;
+  margin-top: 2vw;
 }
 
 .flip-clock-date-line {
@@ -52,12 +52,24 @@
           align-items: flex-start;
 }
 
-.flip-clock-line .flip-clock-window + .flip-clock-window {
-  margin-left: 1rem;
+.flip-clock-window + .flip-clock-window {
+  margin-left: 2vw;
+}
+
+.flip-clock-segment + .flip-clock-segment {
+  margin-left: 2vw;
+}
+
+body.flip-clock-page {
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .flip-clock {
-  color: white;
+  color: #ffffff;
+  font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .flip-clock-window {
@@ -66,8 +78,8 @@
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  border-radius: 2rem;
-  padding: 1rem;
+  border-radius: 2.5vw;
+  padding: 1.5vw;
 }
 
 .flip-clock-segment {
@@ -75,20 +87,16 @@
   position: relative;
 }
 
-.flip-clock-segment + .flip-clock-segment {
-  margin-left: 1rem;
-}
-
 .flip-clock-segment.flip-clock-segment-12-hour .ampm {
   position: absolute;
   text-transform: uppercase;
   font-size: 10%;
   text-align: left;
-  left: 2vw;
+  left: 1vw;
 }
 
 .flip-clock-segment.flip-clock-segment-12-hour .ampm.am {
-  top: 12.5%;
+  top: 20%;
   -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
@@ -99,7 +107,7 @@
 }
 
 .flip-clock-segment.flip-clock-segment-12-hour .ampm.pm {
-  bottom: 16.5%;
+  bottom: 17.5%;
   -webkit-transform: translateY(50%);
       -ms-transform: translateY(50%);
           transform: translateY(50%);
@@ -111,19 +119,24 @@
 
 .flip-clock-segment.flip-clock-segment-12-hour .flip-clock-segment-piece .numeric-value {
   position: relative;
-  left: 0em;
+  left: 0;
 }
 
 .flip-clock-segment-piece {
-  text-align: center;
-  border-radius: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
   background-color: #111111;
+  text-align: center;
+  border-radius: 1vw;
+  padding-left: 2vw;
+  padding-right: 2vw;
   display: inline-block;
   width: 2ch;
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
+}
+
+html:not(.molasses) .flip-clock-segment-piece {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.25)), color-stop(50%, transparent), to(rgba(0, 0, 0, 0.25)));
+  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
 }
 
 .flip-clock-segment-piece:not(.flip-clock-segment-piece-top) {
@@ -155,14 +168,6 @@
 }
 
 .flip-clock-segment-date .flip-clock-segment-piece {
-  width: 6ch;
-}
-
-.flip-clock.flip-clock-12-hour .flip-clock-segment-hour .flip-clock-segment-piece {
-  width: 2ch;
-}
-
-.flip-clock.flip-clock-12-hour .flip-clock-segment-day .flip-clock-segment-piece {
   width: 6ch;
 }
 
@@ -222,6 +227,11 @@
 
 .css-reset {
   all: unset;
+}
+
+.bottom-buttons {
+  background-color: #181818;
+  background-image: none;
 }
 
 .bottom-left-buttons {
@@ -449,8 +459,6 @@
 }
 
 body.flip-clock-page {
-  min-height: 100vh;
-  overflow: hidden;
   background-image: url("../images/texture.jpg");
   background-repeat: no-repeat;
   background-position: center;
@@ -470,39 +478,7 @@ body.flip-clock-page::before {
   background-position: center;
 }
 
-/**
- * Overall styles
- */
-.flip-clock {
-  font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  font-weight: normal;
-  font-style: normal;
-}
-
-/**
- * Overall layout
- */
-.flip-clock {
-  color: #ffffff;
-}
-
-.flip-clock-line + .flip-clock-line {
-  margin-top: 2vw;
-}
-
-.flip-clock-line .flip-clock-window + .flip-clock-window {
-  margin-left: 2vw;
-}
-
-/**
- * Viewmaster styles
- */
-.flip-clock-window {
-  border-radius: 2.5vw;
-  padding: 1.5vw;
-}
-
-/* "highlighting" simulacrum */
+/* "highlighting" */
 .flip-clock-window {
   border-style: solid;
   border-width: 0 0 2px 0;
@@ -510,41 +486,7 @@ body.flip-clock-page::before {
   border-color: rgba(0, 0, 0, 0.5) transparent rgba(255, 255, 255, 0.125) transparent;
 }
 
-/**
- * Segment sizing and layout
- */
-.flip-clock-segment + .flip-clock-segment {
-  margin-left: 2vw;
-}
-
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm {
-  left: 1vw;
-}
-
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.am {
-  top: 20%;
-}
-
-.flip-clock-segment.flip-clock-segment-twelve-hour .ampm.pm {
-  bottom: 17.5%;
-}
-
-/**
- * Segment piece styles
- */
-.flip-clock-segment-piece {
-  background-color: #111111;
-  border-radius: 1vw;
-  padding-left: 2vw;
-  padding-right: 2vw;
-}
-
-html:not(.molasses) .flip-clock-segment-piece {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.25)), color-stop(50%, transparent), to(rgba(0, 0, 0, 0.25)));
-  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 50%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
-}
-
-/* "highlighting" simulacrum */
+/* "highlighting" */
 .flip-clock-segment-piece {
   border-style: solid;
   border-width: 2px 0 0 0;
@@ -552,6 +494,9 @@ html:not(.molasses) .flip-clock-segment-piece {
   border-color: rgba(255, 255, 255, 0.25) transparent rgba(0, 0, 0, 0.5) transparent;
 }
 
+/**
+ * Segment piece styles
+ */
 html:not(.molasses) .flip-clock-segment-piece::after {
   content: '';
   position: absolute;
@@ -573,15 +518,6 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   height: 100%;
   background-color: black;
   opacity: 0.25;
-}
-
-.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece {
-  width: -webkit-calc(2.5ch);
-  width: calc(2.5ch);
-}
-
-.flip-clock-segment.flip-clock-segment-twelve-hour .flip-clock-segment-piece .numeric-value {
-  left: 0.0625em;
 }
 
 .flip-clock-segment .flip-clock-segment-piece-top,
@@ -622,11 +558,6 @@ html.molasses .flip-clock-segment-piece-flip-top::after {
   background-color: #111111;
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.125)), color-stop(transparent), to(rgba(0, 0, 0, 0.5)));
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.125), transparent, rgba(0, 0, 0, 0.5));
-}
-
-.bottom-buttons {
-  background-color: #181818;
-  background-image: none;
 }
 
 /* stupid font */

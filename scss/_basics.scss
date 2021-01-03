@@ -1,12 +1,20 @@
+body.flip-clock-page {
+    min-height: 100vh;
+    overflow: hidden;
+}
+
 .flip-clock {
-    color: white;
+    color: $flip-clock-segment-foreground-color;
+    font-family: $flip-clock-font-family;
+    font-weight: $flip-clock-font-weight;
+    font-style: $flip-clock-font-style;
 }
 
 .flip-clock-window {
     background-color: black;
     display: inline-flex;
-    border-radius: $flipclock-outer-border-radius;
-    padding: $flipclock-outer-padding;
+    border-radius: $flip-clock-border-radius;
+    padding: $flip-clock-window-padding;
 }
 
 .flip-clock-segment {
@@ -14,44 +22,44 @@
     position: relative;
 }
 
-.flip-clock-segment + .flip-clock-segment {
-    margin-left: $flipclock-segment-gutter;
-}
-
 .flip-clock-segment.flip-clock-segment-12-hour {
     .ampm {
         position: absolute;
         &.am {
-            top: $flipclock-am-top;
+            top: $flip-clock-segment-ampm-position-top;
             transform: translateY(-50%);
             &::before {
                 content: 'am';
             }
         }
         &.pm {
-            bottom: $flipclock-pm-bottom;
+            bottom: $flip-clock-segment-ampm-position-bottom;
             transform: translateY(50%);
             &::before {
                 content: 'pm';
             }
         }
         text-transform: uppercase;
-        font-size: $flipclock-ampm-font-size;
+        font-size: $flip-clock-ampm-font-size;
         text-align: left;
-        left: $flipclock-ampm-left;
+        left: $flip-clock-segment-ampm-position-left;
     }
     .flip-clock-segment-piece .numeric-value {
         position: relative;
-        left: $flipclock-ampm-factor * 0.5em;
+        left: 0;
     }
 }
 
 .flip-clock-segment-piece {
+    background-color: $flip-clock-segment-background-color;
+    @at-root html:not(.molasses) & {
+        background-image: $flip-clock-segment-background-gradient;
+    }
+
     text-align: center;
-    border-radius: $flipclock-inner-border-radius;;
-    padding-left: $flipclock-inner-padding;
-    padding-right: $flipclock-inner-padding;
-    background-color: #111111;
+    border-radius: $flip-clock-segment-border-radius;
+    padding-left: $flip-clock-segment-horizontal-padding;
+    padding-right: $flip-clock-segment-horizontal-padding;
     display: inline-block;
     width: 2ch;
     box-sizing: content-box;
@@ -68,18 +76,9 @@
 .flip-clock-segment-hour        .flip-clock-segment-piece { width: 2ch; }
 .flip-clock-segment-minute      .flip-clock-segment-piece { width: 2ch; }
 .flip-clock-segment-second      .flip-clock-segment-piece { width: 2ch; }
-.flip-clock-segment-day         .flip-clock-segment-piece { width: 2ch / $flipclock-date-size; }
-.flip-clock-segment-month       .flip-clock-segment-piece { width: 2ch / $flipclock-date-size; }
-.flip-clock-segment-date        .flip-clock-segment-piece { width: 2ch / $flipclock-date-size; }
-
-.flip-clock.flip-clock-12-hour {
-    .flip-clock-segment-hour .flip-clock-segment-piece {
-        width: (1 + $flipclock-ampm-factor) * 2ch;
-    }
-    .flip-clock-segment-day  .flip-clock-segment-piece {
-        width: (1 + $flipclock-ampm-factor) * 2ch / $flipclock-date-size;
-    }
-}
+.flip-clock-segment-day         .flip-clock-segment-piece { width: 2ch / $flip-clock-date-size; }
+.flip-clock-segment-month       .flip-clock-segment-piece { width: 2ch / $flip-clock-date-size; }
+.flip-clock-segment-date        .flip-clock-segment-piece { width: 2ch / $flip-clock-date-size; }
 
 .flip-clock-segment-epoch-digit .flip-clock-segment-piece {
     width: 1ch;
