@@ -88,6 +88,7 @@
                         24-Hour Mode
                     </label>
                 </div>
+                <!--
                 <div class="margin-bottom-1">
                     <label>
                         Font
@@ -95,6 +96,7 @@
                         </select>
                     </label>
                 </div>
+                -->
                 <p>
                     <a href="/c/">Flip Clock</a>
                     |
@@ -142,7 +144,7 @@
                 appendJS('js/flip-clock.js',                 { defer: true });
                 appendJS('js/flip-clock-page.js',            { defer: true });
                 appendJS('js/modals.js',                     { defer: true });
-                appendJS('js/google-fonts.js',               { defer: true });
+                // appendJS('js/google-fonts.js',               { defer: true });
 
                 var noDate = false;
                 var noSecond = false;
@@ -253,7 +255,9 @@
                 });
 
                 window.addEventListener('load', function () {
-                    GoogleFonts.get();
+                    if (window.GoogleFonts) {
+                        GoogleFonts.get();
+                    }
                     FlipClockPage.init({
                         element: document.getElementById('flipClock'),
                         enableThemeConfiguration: false,
