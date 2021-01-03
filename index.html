@@ -109,7 +109,6 @@
         <script src="js/utilities.js"></script>
         <script>
             (function () {
-
                 var isiPad   = /\biPad\b/.test(navigator.userAgent);
                 var isiPhone = /\biPhone\b/.test(navigator.userAgent);
                 var isiOS9   = /\bOS\s+9_/.test(navigator.userAgent);
@@ -133,21 +132,21 @@
                 appendCSS('css/foundation.min.css');
                 appendCSS('css/flip-clock.min.css');
 
-                appendJS('js/polyfills.js', { defer: true });
+                appendJS('js/polyfills.js',                  { defer: true });
                 // appendJS('js/AudioContextMonkeyPatch.js', { defer: true }); // necessary?
-                appendJS('js/timer.js', { defer: true });
-                appendJS('js/jfont-checker.js', { defer: true });
-                appendJS('js/which-font-family.js', { defer: true });
-                appendJS('js/audio-ticker.js', { defer: true });
-                appendJS('js/flip-clock-segment.js', { defer: true });
-                appendJS('js/flip-clock.js', { defer: true });
-                appendJS('js/flip-clock-page.js', { defer: true });
-                appendJS('js/modals.js', { defer: true });
-                appendJS('js/google-fonts.js', { defer: true });
+                appendJS('js/timer.js',                      { defer: true });
+                appendJS('js/jfont-checker.js',              { defer: true });
+                appendJS('js/which-font-family.js',          { defer: true });
+                appendJS('js/audio-ticker.js',               { defer: true });
+                appendJS('js/flip-clock-segment.js',         { defer: true });
+                appendJS('js/flip-clock.js',                 { defer: true });
+                appendJS('js/flip-clock-page.js',            { defer: true });
+                appendJS('js/modals.js',                     { defer: true });
+                appendJS('js/google-fonts.js',               { defer: true });
 
-                var noDate;
-                var noSecond;
-                var noAudio;
+                var noDate = false;
+                var noSecond = false;
+                var noAudio = false;
                 var fontFamily;
                 var fontWeight;
                 var fontStyle;
@@ -237,6 +236,7 @@
                     Array.from(document.querySelectorAll('[data-label-flip-clock-enable-ticks]')).forEach(removeElement);
                     Array.from(document.querySelectorAll('[data-label-flip-clock-enable-seconds-ticks]')).forEach(removeElement);
                 }
+
                 document.querySelectorAll('.flip-clock').forEach(function (flipClock) {
                     if (fontFamily) {
                         flipClock.style.fontFamily = fontFamily;
