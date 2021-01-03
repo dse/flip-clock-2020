@@ -1,3 +1,7 @@
+/* depends on the font */
+/* depends on the font */
+/* does not darken text */
+/* this darkens text.  experiment tweaking this with segment-background-gradient. */
 /* center of screen layout */
 .flip-clock {
   position: fixed;
@@ -444,10 +448,6 @@
           text-decoration-style: dotted;
 }
 
-/* depends on the font */
-/* depends on the font */
-/* does not darken text */
-/* this darkens text.  experiment tweaking this with segment-background-gradient. */
 body.flip-clock-page {
   min-height: 100vh;
   overflow: hidden;
