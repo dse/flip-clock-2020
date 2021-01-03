@@ -52,6 +52,10 @@
   margin-left: 1rem;
 }
 
+.flip-clock {
+  color: white;
+}
+
 .flip-clock-window {
   background-color: black;
   display: -webkit-inline-box;
@@ -64,7 +68,6 @@
 
 .flip-clock-segment {
   display: inline-block;
-  color: transparent;
   position: relative;
 }
 
@@ -113,7 +116,6 @@
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: #111111;
-  color: white;
   display: inline-block;
   width: 2ch;
   -webkit-box-sizing: content-box;
@@ -480,7 +482,7 @@ body.flip-clock-page::before {
 /**
  * Overall layout
  */
-.flip-clock-line {
+.flip-clock {
   color: #ffffff;
 }
 
@@ -532,7 +534,6 @@ body.flip-clock-page::before {
  */
 .flip-clock-segment-piece {
   background-color: #111111;
-  color: #ffffff;
   border-radius: 1vw;
   padding-left: 2vw;
   padding-right: 2vw;

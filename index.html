@@ -88,6 +88,13 @@
                         24-Hour Mode
                     </label>
                 </div>
+                <div class="margin-bottom-1">
+                    <label>
+                        Font
+                        <select data-google-font>
+                        </select>
+                    </label>
+                </div>
                 <p>
                     <a href="/c/">Flip Clock</a>
                     |
@@ -136,10 +143,89 @@
                 appendJS('js/flip-clock.js', { defer: true });
                 appendJS('js/flip-clock-page.js', { defer: true });
                 appendJS('js/modals.js', { defer: true });
+                appendJS('js/google-fonts.js', { defer: true });
 
-                var noDate   = /(^|\?|&)nodate($|=|&)/i.test(location.search);
-                var noSecond = /(^|\?|&)nosecond($|=|&)/i.test(location.search);
-                var noAudio  = /(^|\?|&)noaudio($|=|&)/i.test(location.search);
+                var noDate;
+                var noSecond;
+                var noAudio;
+                var fontFamily;
+                var fontWeight;
+                var fontStyle;
+                var foregroundColor;
+                var backgroundColor;
+
+                function setColor(color) {
+                    if (foregroundColor == null) {
+                        foregroundColor = color;
+                    } else if (backgroundColor == null) {
+                        backgroundColor = color;
+                    }
+                }
+
+                var fontFamilies = {
+                    "futura":      "'Futura', sans-serif",
+                    "arial":       "'Arial', 'Helvetica Neue', 'Helvetica', sans-serif",
+                    "arial-black": "'Arial Black', 'Arial', 'Helvetica Neue', 'Helvetica', sans-serif",
+                    "comic-sans":  "'Comic Sans', 'Comic Sans MS', sans-serif",
+                    "impact":      "'Impact', sans-serif",
+                };
+
+                forEachSearchParam(function (n, v) {
+                    n = n.toLowerCase();
+                    if (isColor(n)) {
+                        setColor(n);
+                    } else {
+                        switch (n) {
+                            case 'nodate':
+                                noDate = true;
+                                break;
+                            case 'nosecond':
+                                noSecond = true;
+                                break;
+                            case 'noaudio':
+                                noAudio = true;
+                                break;
+
+                            case 'futura':
+                                fontFamily = 'futura';
+                                break;
+                            case 'arial':
+                                fontFamily = 'arial';
+                                break;
+                            case 'arialblack':
+                            case 'arial-black':
+                                fontFamily = 'arial-black';
+                                break;
+                            case 'comicsans':
+                            case 'comic-sans':
+                                fontFamily = 'comic-sans';
+                                break;
+                            case 'impact':
+                                fontFamily = 'impact';
+                                break;
+
+                            case 'bold':
+                                fontWeight = 700;
+                                break;
+                            case '800':
+                                fontWeight = 800;
+                                break;
+
+                            case 'italic':
+                                fontStyle = 'italic';
+                                break;
+                        }
+                    }
+                });
+
+                if (fontWeight === 800 && fontFamily === 'arial') {
+                    fontFamily = 'arial-black';
+                }
+
+                if (fontFamily != null && fontFamily in fontFamilies) {
+                    fontFamily = fontFamilies[fontFamily];
+                }
+
                 if (noDate) {
                     Array.from(document.querySelectorAll('[data-flip-clock-date-line]')).forEach(removeElement);
                 }
@@ -151,8 +237,23 @@
                     Array.from(document.querySelectorAll('[data-label-flip-clock-enable-ticks]')).forEach(removeElement);
                     Array.from(document.querySelectorAll('[data-label-flip-clock-enable-seconds-ticks]')).forEach(removeElement);
                 }
+                document.querySelectorAll('.flip-clock').forEach(function (flipClock) {
+                    if (fontFamily) {
+                        flipClock.style.fontFamily = fontFamily;
+                    }
+                    if (fontStyle) {
+                        flipClock.style.fontStyle = fontStyle;
+                    }
+                    if (fontWeight) {
+                        flipClock.style.fontWeight = fontWeight;
+                    }
+                    if (foregroundColor) {
+                        flipClock.style.color = foregroundColor;
+                    }
+                });
 
                 window.addEventListener('load', function () {
+                    GoogleFonts.get();
                     FlipClockPage.init({
                         element: document.getElementById('flipClock'),
                         enableThemeConfiguration: false,

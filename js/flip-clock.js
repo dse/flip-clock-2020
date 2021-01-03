@@ -293,6 +293,23 @@ var FlipClock = (function () {
         }.bind(this));
     };
 
+    FlipClock.prototype.setFont = function (font) {
+        /*jshint -W126 */
+        var fontFamily  = (font && font.family)  || '';
+        var fontWeight  = (font && font.weight)  || '';
+        var fontStyle   = (font && font.style)   || '';
+        var fontStretch = (font && font.stretch) || '';
+        /*jshint +W126 */
+        this.element.style.fontFamily  = fontFamily;
+        this.element.style.fontWeight  = fontWeight;
+        this.element.style.fontStyle   = fontStyle;
+        this.element.style.fontStretch = fontStretch;
+        this.element.setAttribute('data-font-family',  fontFamily);
+        this.element.setAttribute('data-font-weight',  fontWeight);
+        this.element.setAttribute('data-font-style',   fontStyle);
+        this.element.setAttribute('data-font-stretch', fontStretch);
+    };
+
     return FlipClock;
 }());
 

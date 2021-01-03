@@ -97,7 +97,7 @@ body.flip-clock-page {
  * Overall layout
  */
 
-.flip-clock-line {
+.flip-clock {
     color: $segment-foreground-color;
 }
 
@@ -153,7 +153,6 @@ body.flip-clock-page {
     @at-root html:not(.molasses) & {
         background-image: $segment-background-gradient;
     }
-    color: $segment-foreground-color;
     border-radius: $segment-border-radius;
     padding-left: $segment-horizontal-padding;
     padding-right: $segment-horizontal-padding;

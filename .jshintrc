@@ -15,5 +15,6 @@
     "nonbsp": true,             // warns about U+00A0 NO-BREAK SPACE characters
     "nonew": true,              // prohibits side-effect-only use of new
     "singleGroups": true,       // prohibits unnecessary use of grouping oper.
-    "undef": true               // prohibits use of undeclared variables
+    "undef": true,              // prohibits use of undeclared variables
+    "eqnull": true              // suppress warnings about == null comparisons
 }

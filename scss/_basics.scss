@@ -1,3 +1,7 @@
+.flip-clock {
+    color: white;
+}
+
 .flip-clock-window {
     background-color: black;
     display: inline-flex;
@@ -7,7 +11,6 @@
 
 .flip-clock-segment {
     display: inline-block;
-    color: transparent;
     position: relative;
 }
 
@@ -49,7 +52,6 @@
     padding-left: $flipclock-inner-padding;
     padding-right: $flipclock-inner-padding;
     background-color: #111111;
-    color: white;
     display: inline-block;
     width: 2ch;
     box-sizing: content-box;
